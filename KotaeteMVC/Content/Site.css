@@ -20,5 +20,45 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+.ask-text-area {
+    width: 500px;
+}
+
+.avatar {
+    width: 100%;
+    height: auto;
+    /*margin-top: -15px !important;*/
+}
+
+#profile-body {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+#profile-header {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+#profile-column {
+    
+}
+
+#page-body {
+    margin-top: 20px;
+}
+
+.user-name {
+    font-size:1.2em;
+    margin-left: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.profile-body {
+    padding: 10px;
 }

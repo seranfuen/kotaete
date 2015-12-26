@@ -1,21 +1,88 @@
 ﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.ProfileUserName;
 }
 
-<h2>@Model.AskedUserName</h2>
-@using (Html.BeginForm("AskQuestion", "User"))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-    <div class="form-group">
-        <div class="col-md-4, row">
-            @Html.TextAreaFor(model => model.QuestionContent)
+<div class="container" id="page-body">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading" id="profile-header">
+                    <div class="row">
+                        <div class="user-name">
+                            @Model.ProfileUserName
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" id="profile-body">
+                    <div class="row">
+                        @if (Model.AvatarUrl != null)
+                        {
+                            <img class="avatar" src="@Model.AvatarUrl" alt="@Model.ProfileUserName" />
+                        }
+                    </div>
+                    <div class="profile-body">
+                        <div class="row">
+                            @if (Model.CurrentUserAuthenticated)
+                            {
+                                if (Model.FollowsYou)
+                                {
+                                    <p>Follows you</p>
+                                }
+                                else
+                                {
+                                    <p>The bastard isn't following you</p>
+                                }
+                            }
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.Bio))
+                        {
+                        <div class="row">
+                            <p>@Model.Bio</p>
+                        </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Location))
+                        {
+                        <div class="row">
+                            <p>Location: @Model.Location</p>
+                        </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Homepage))
+                        {
+                        <div class="row">
+                            <a href="@Model.Homepage" target="_blank">@Model.Homepage</a>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-        @Html.HiddenFor(model => model.AskedUserName)
-        <div class="col-md-4, row">
-            <input type="submit" value="Ask" />
+
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Ask a question!
+                </div>
+                @using (Html.BeginForm("AskQuestion", "User", FormMethod.Post, new { @class = "panel-body" }))
+            {
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+                    <div class="form-group">
+                        <div>
+                            @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question, oniichan~" })
+                            @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.ProfileUserName)
+                    <div class="form-group pull-left">
+                        <div>
+                            <input type="submit" value="Ask" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-}
+</div>

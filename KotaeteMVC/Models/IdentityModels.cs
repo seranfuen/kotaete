@@ -32,6 +32,21 @@ namespace KotaeteMVC.Models
         [ScaffoldColumn(false)]
         public virtual List<QuestionDetail> QuestionsReceived { get; set; }
 
+        [ScaffoldColumn(false)]
+        public virtual string Avatar { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual string ScreenName { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual string Location { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual string Bio { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual string Homepage { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -51,12 +66,20 @@ namespace KotaeteMVC.Models
 
         private static void SetUsersFollowing(ApplicationDbContext context)
         {
-            var user1 = context.Users.First(user => user.UserName == "User1");
-            var user2 = context.Users.First(user => user.UserName == "User2");
-            var user3 = context.Users.First(user => user.UserName == "User3");
+            var user1 = context.Users.First(user => user.UserName == "user1@kotaete.com");
+            var user2 = context.Users.First(user => user.UserName == "user2@kotaete.com");
+            var user3 = context.Users.First(user => user.UserName == "user3@kotaete.com");
+            user1.ScreenName = "Zakaichou";
+            user1.Avatar = "mikan3b.jpg";
+            user1.Location = "My harem";
+            user1.Bio = "I love lolimoutos!! Give me lolimoutos!!";
+            user1.Homepage = @"http://www.twitter.com/lewdhaou";
+            user2.ScreenName = "User2";
+            user3.ScreenName = "User3";
 
             user1.Following.Add(user3);
             user1.Following.Add(user2);
+
             user3.Following.Add(user1);
 
             context.SaveChanges();

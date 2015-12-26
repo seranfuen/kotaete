@@ -10,8 +10,21 @@ namespace KotaeteMVC.Models
     /// </summary>
     public class ProfileQuestionViewModel
     {
-        public virtual string AskedUserName { get; set; }
+
+        public virtual string ProfileUserName { get; set; }
 
         public virtual string QuestionContent { get; set; }
+
+        public virtual bool FollowsYou { get; set; }
+
+        public virtual bool CurrentUserAuthenticated { get; set; }
+
+        public virtual string AvatarUrl { get; set; }
+
+        public virtual string Location { get; set; }
+
+        public virtual string Bio { get; set; }
+
+        public virtual string Homepage { get; set; }
     }
 }
