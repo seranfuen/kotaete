@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KotaeteMVC.Models
 {
@@ -20,12 +21,16 @@ namespace KotaeteMVC.Models
         }
 
         [ScaffoldColumn(false)]
-        [InverseProperty("Following")]
-        public List<ApplicationUser> Followers { get; set; }
+        public virtual List<ApplicationUser> Followers { get; set; }
 
         [ScaffoldColumn(false)]
-        [InverseProperty("Followers")]
-        public List<ApplicationUser> Following { get; set; }
+        public virtual List<ApplicationUser> Following { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual List<QuestionDetail> QuestionsAsked { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual List<QuestionDetail> QuestionsReceived { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -40,6 +45,25 @@ namespace KotaeteMVC.Models
     {
         protected override void Seed(ApplicationDbContext context)
         {
+            AddTestUsers(context);
+            SetUsersFollowing(context);
+        }
+
+        private static void SetUsersFollowing(ApplicationDbContext context)
+        {
+            var user1 = context.Users.First(user => user.UserName == "User1");
+            var user2 = context.Users.First(user => user.UserName == "User2");
+            var user3 = context.Users.First(user => user.UserName == "User3");
+
+            user1.Following.Add(user3);
+            user1.Following.Add(user2);
+            user3.Following.Add(user1);
+
+            context.SaveChanges();
+        }
+
+        private static void AddTestUsers(ApplicationDbContext context)
+        {
             var store = new RoleStore<IdentityRole>(context);
             var manager = new RoleManager<IdentityRole>(store);
             var adminRole = new IdentityRole { Name = "Admin" };
@@ -50,34 +74,26 @@ namespace KotaeteMVC.Models
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            var userAdmin = new ApplicationUser { UserName = "Admin" };
+            var userAdmin = new ApplicationUser { UserName = "admin@kotaete.com", Email = "admin@kotaete.com" };
 
-            userManager.Create(userAdmin, "ChangeItAsap!");
-            userManager.AddToRole(userAdmin.Id, "Admin");
-
-            var user1 = new ApplicationUser { UserName = "User1" };
-
-            userManager.Create(user1, "ChangeItAsap!");
-            userManager.AddToRole(user1.Id, "User");
-
-            var user2 = new ApplicationUser { UserName = "User2" };
+            var user1 = new ApplicationUser { UserName = "user1@kotaete.com", Email = "user1@kotaete.com" };
+            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com" };
+            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com" };
 
             userManager.Create(user2, "ChangeItAsap!");
             userManager.AddToRole(user2.Id, "User");
 
-            var user3 = new ApplicationUser { UserName = "User3" };
+            userManager.Create(user1, "ChangeItAsap!");
+            userManager.AddToRole(user1.Id, "User");
+
+            userManager.Create(userAdmin, "N0Rm!1944!");
+            userManager.AddToRole(userAdmin.Id, "Admin");
 
             userManager.Create(user3, "ChangeItAsap!");
             userManager.AddToRole(user3.Id, "User");
 
-            user1.Following.Add(user2);
-            user2.Followers.Add(user1);
-            user1.Following.Add(user3);
-            user3.Following.Add(user1);
-            user3.Followers.Add(user1);
-            user1.Followers.Add(user3);
-
-       }
+            context.SaveChanges();
+        }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -85,7 +101,7 @@ namespace KotaeteMVC.Models
         public ApplicationDbContext()
             : base("TestConnection", throwIfV1Schema: false)
         {
-            Database.SetInitializer<ApplicationDbContext>(new TestKotaeteInitializer());
+            Database.SetInitializer(new TestKotaeteInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -95,8 +111,8 @@ namespace KotaeteMVC.Models
                 Map(x =>
                 {
                     x.ToTable("FollowingFollowerApplicationUsers");
-                    x.MapLeftKey("Follower");
-                    x.MapRightKey("BeingFollowed");
+                    x.MapLeftKey("BeingFollowed");
+                    x.MapRightKey("Following");
                 });
 
         }
@@ -105,5 +121,9 @@ namespace KotaeteMVC.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<KotaeteMVC.Models.Question> Questions { get; set; }
+
+        public DbSet<QuestionDetail> QuestionDetails { get; set; }
     }
 }

@@ -1,0 +1,12 @@
+﻿@model KotaeteMVC.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Followers";
+}
+
+<h2>@Model.UserName's Followers</h2>
+<ol>
+    @foreach (var follower in Model.Followers)
+    { <li>@follower.UserName</li>}
+</ol>
+

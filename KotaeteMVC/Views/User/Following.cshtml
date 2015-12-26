@@ -1,0 +1,13 @@
+﻿@model KotaeteMVC.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Following";
+}
+
+<h2>Followed by @Model.UserName</h2>
+<ol>
+    @foreach (var followed in Model.Following)
+    {
+    <li>@followed.UserName</li>}
+</ol>
+

@@ -9,15 +9,15 @@ namespace KotaeteMVC.Models
     public class Question
     {
         [ScaffoldColumn(false)]
-        public int QuestionId { get; set; }
+        public virtual int QuestionId { get; set; }
 
         [ScaffoldColumn(false)]
-        public ApplicationUser AskedBy { get; set; }
+        public virtual ApplicationUser AskedBy { get; set; }
 
         [Required]
-        public string Content { get; set; }
+        public virtual string Content { get; set; }
 
         [ScaffoldColumn(false)]
-        public DateTime TimeStamp { get; set; }
+        public virtual DateTime TimeStamp { get; set; }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.AskedUserName</h2>
+@using (Html.BeginForm("AskQuestion", "User"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="form-group">
+        <div class="col-md-4, row">
+            @Html.TextAreaFor(model => model.QuestionContent)
+        </div>
+        @Html.HiddenFor(model => model.AskedUserName)
+        <div class="col-md-4, row">
+            <input type="submit" value="Ask" />
+        </div>
+    </div>
+}

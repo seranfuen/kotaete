@@ -10,20 +10,20 @@ namespace KotaeteMVC.Models
     public class Answer
     {
         [ScaffoldColumn(false)]
-        public int AnswerId { get; set; }
+        public virtual int AnswerId { get; set; }
 
         [Display(Name = "Your answer")]
         [Required]
-        public string Content { get; set; }
+        public virtual string Content { get; set; }
 
         [ScaffoldColumn(false)]
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         [ScaffoldColumn(false)]
-        public QuestionDetail Question { get; set; }
+        public virtual QuestionDetail Question { get; set; }
 
         [ScaffoldColumn(false)]
-        public DateTime TimeStamp { get; set; }
+        public virtual DateTime TimeStamp { get; set; }
 
     }
 }

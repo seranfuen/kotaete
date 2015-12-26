@@ -11,20 +11,20 @@ namespace KotaeteMVC.Models
     public class QuestionDetail
     {
         [ScaffoldColumn(false)]
-        public int QuestionDetailId { get; set; }
+        public virtual int QuestionDetailId { get; set; }
 
         [ScaffoldColumn(false)]
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
 
         [InverseProperty("QuestionsAsked")]
         [ScaffoldColumn(false)]
-        public ApplicationUser AskedBy { get; set; }
+        public virtual ApplicationUser AskedBy { get; set; }
 
         [InverseProperty("QuestionsReceived")]
         [ScaffoldColumn(false)]
-        public ApplicationUser AskedTo { get; set; }
+        public virtual ApplicationUser AskedTo { get; set; }
 
         [ScaffoldColumn(false)]
-        public DateTime TimeStamp { get; set; }
+        public virtual DateTime TimeStamp { get; set; }
     }
 }
