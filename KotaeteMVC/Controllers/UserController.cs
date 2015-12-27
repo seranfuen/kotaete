@@ -15,6 +15,8 @@ namespace KotaeteMVC.Controllers
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [Route("user/{userName}")]
+        [Route("user/{userName}/{request}")]
         public ActionResult Index(string userName, string request = "")
         {
             var user = GetUserWithScreenName(userName);
@@ -56,6 +58,7 @@ namespace KotaeteMVC.Controllers
 
         private ApplicationUser GetUserWithScreenName(string screenName)
         {
+            if (string.IsNullOrWhiteSpace(screenName)) return null;
             return db.Users.FirstOrDefault(usr => usr.ScreenName == screenName);
         }
 
