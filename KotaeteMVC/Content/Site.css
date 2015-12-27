@@ -60,5 +60,42 @@ textarea {
 }
 
 .profile-body {
-    padding: 10px;
+    padding: 0.5em;
+    padding-top: 0.1em;
+}
+
+.follow-button {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width:80%;
+}
+
+.button-row {
+    margin-bottom: 0.8em;
+    text-align: center;
+}
+
+.follow-indication {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 0px;
+    margin-bottom: 0.5em;
+}
+
+.follow-indication span {
+    width:100%;
+    display:block;
+    padding: 0.5em;
+    border-radius: 0px;
+}
+
+.user-alert {
+    padding: 0.5em;
+    margin-bottom: 0.8em;
+}
+
+#alert-container {
+    margin-top: 0.5em;
+    width:50%;
 }

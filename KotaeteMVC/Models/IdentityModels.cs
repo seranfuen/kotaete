@@ -77,6 +77,8 @@ namespace KotaeteMVC.Models
             user2.ScreenName = "User2";
             user3.ScreenName = "User3";
 
+
+
             user1.Following.Add(user3);
             user1.Following.Add(user2);
 
@@ -97,11 +99,12 @@ namespace KotaeteMVC.Models
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            var userAdmin = new ApplicationUser { UserName = "admin@kotaete.com", Email = "admin@kotaete.com" };
+            var userAdmin = new ApplicationUser { UserName = "admin@kotaete.com", Email = "admin@kotaete.com", ScreenName = "Admin" };
 
             var user1 = new ApplicationUser { UserName = "user1@kotaete.com", Email = "user1@kotaete.com" };
-            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com" };
-            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com" };
+            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com", ScreenName = "Kuro von Einzbern" };
+            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern"};
+            var user4 = new ApplicationUser { UserName = "duck@kotaete.com", Email = "duck@kotaete.com", ScreenName = "Mrs Duck II", Avatar = "DSCF2744.JPG", Location = "Polvoranca", Bio = "I am a duck", Homepage = "http://google.com" };
 
             userManager.Create(user2, "ChangeItAsap!");
             userManager.AddToRole(user2.Id, "User");
@@ -114,6 +117,9 @@ namespace KotaeteMVC.Models
 
             userManager.Create(user3, "ChangeItAsap!");
             userManager.AddToRole(user3.Id, "User");
+
+            userManager.Create(user4, "ChangeItAsap!");
+            userManager.AddToRole(user4.Id, "User");
 
             context.SaveChanges();
         }

@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity;
 
 namespace KotaeteMVC.Controllers
 {
-    public class UserController : Controller
+    public class UserController : AlertControllerBase
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -28,22 +28,33 @@ namespace KotaeteMVC.Controllers
             if (request == "Followers")
             {
                 return View("Followers", user);
-            } else if (request == "Following")
+            }
+            else if (request == "Following")
             {
                 return View("Following", user);
             }
             var currentUser = GetCurrentUser();
-            var userProfile = new ProfileQuestionViewModel()
+            ProfileQuestionViewModel userProfile = GetProfileQuestionViewModel(userName);
+            return View(userProfile);
+        }
+
+        private ProfileQuestionViewModel GetProfileQuestionViewModel(string profileUserName)
+        {
+            var currentUser = GetCurrentUser();
+            var user = GetUserWithScreenName(profileUserName);
+            var profile = new ProfileQuestionViewModel()
             {
-                ProfileUserName = userName,
+                ProfileUserName = profileUserName,
                 FollowsYou = currentUser != null && user.Following.Any(usr => usr.Equals(currentUser)),
+                Following = currentUser != null && user.Followers.Any(usr => usr.Equals(currentUser)),
+                IsOwnProfile = currentUser != null && currentUser.Equals(user),
                 CurrentUserAuthenticated = currentUser != null,
                 AvatarUrl = GetAvatarUrl(user),
                 Bio = user.Bio,
                 Location = user.Location,
                 Homepage = user.Homepage
             };
-            return View(userProfile);
+            return profile;
         }
 
         private string GetAvatarUrl(ApplicationUser user)
@@ -92,6 +103,50 @@ namespace KotaeteMVC.Controllers
                 return View("Index", question.ProfileUserName);
             }
             return View("Index", question);
+        }
+
+        [Route("follow")]
+        [Authorize]
+        public ActionResult FollowUnfollowUser([Bind(Include = "UserToFollowName, Action")] FollowUserViewModel followRequest)
+        {
+            var userToFollow = GetUserWithScreenName(followRequest.UserToFollowName);
+            if (userToFollow == null)
+            {
+                return new HttpUnauthorizedResult("The user " + followRequest.UserToFollowName + " does not exist");
+            }
+            var current = GetCurrentUser();
+            if (followRequest.Action == "Follow")
+            {
+                if (current.Following.Any(usr => usr.Equals(userToFollow)))
+                {
+                    AddAlertDanger("You are already following this user", "Cannot follow", true);
+                } else
+                {
+                    current.Following.Add(userToFollow);
+                    AddAlertSuccess("You are now following " + userToFollow.ScreenName, "Success", true);
+                }
+            } else if (followRequest.Action == "Unfollow")
+            {
+                if (current.Following.Any(usr => usr.Equals(userToFollow)) == false)
+                {
+                    AddAlertDanger("You were not following this user", "Cannot unfollow", true);
+                } else
+                {
+                    current.Following.Remove(userToFollow);
+                    AddAlertSuccess(userToFollow.ScreenName + " was successfully unfollowed", "Success", true);
+                }
+            } else
+            {
+                return new HttpUnauthorizedResult("Invalid action");
+            }
+            try
+            {
+                db.SaveChanges();
+            } catch (Exception e)
+            {
+                AddAlertDangerOverride("There was an error saving the changes!", "Critical");
+            }
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         private ApplicationUser GetCurrentUser()

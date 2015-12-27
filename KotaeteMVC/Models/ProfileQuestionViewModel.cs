@@ -17,6 +17,10 @@ namespace KotaeteMVC.Models
 
         public virtual bool FollowsYou { get; set; }
 
+        public virtual bool Following { get; set; }
+
+        public virtual bool IsOwnProfile { get; set; }
+
         public virtual bool CurrentUserAuthenticated { get; set; }
 
         public virtual string AvatarUrl { get; set; }
