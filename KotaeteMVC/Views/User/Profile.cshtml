@@ -1,0 +1,61 @@
+﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+
+<div class="panel panel-default">
+    <div class="panel-heading" id="profile-header">
+        <div class="row">
+            <div class="user-name">
+                @Model.ProfileUserName
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" id="profile-body">
+        <div class="row">
+            @if (Model.AvatarUrl != null)
+            {
+                <img class="avatar" src="/@Model.AvatarUrl" alt="@Model.ProfileUserName" />
+            }
+        </div>
+        <div class="row follow-indication">
+            @if (Model.CurrentUserAuthenticated)
+            {
+                if (Model.IsOwnProfile)
+                {
+                    <span class="label label-default">That's you</span>
+                }
+                else if (Model.FollowsYou)
+                {
+                    <span class="label label-default">Follows you</span>
+                }
+                else
+                {
+                    <span class="label label-warning">The bastard isn't following you</span>
+                }
+            }
+        </div>
+
+        @{ Html.RenderPartial("FollowButton", Model); }
+
+        <div class="profile-body">
+
+            @if (!string.IsNullOrWhiteSpace(Model.Bio))
+            {
+                <div class="row">
+                    <p>@Model.Bio</p>
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.Location))
+            {
+                <div class="row">
+                    <p>Location: @Model.Location</p>
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.Homepage))
+            {
+                <div class="row">
+                    <a href="@Model.Homepage" target="_blank">@Model.Homepage</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

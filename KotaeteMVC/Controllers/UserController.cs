@@ -25,18 +25,36 @@ namespace KotaeteMVC.Controllers
                 ViewBag.UserName = userName;
                 return View("UserNotFound");
             }
+
             if (request == "Followers")
             {
-                return View("Followers", user);
+                return View("Followers", GetFollowersViewModel(user));
             }
             else if (request == "Following")
             {
-                return View("Following", user);
+                return View("Following", GetFollowingViewModel(user));
             }
             var currentUser = GetCurrentUser();
             ProfileQuestionViewModel userProfile = GetProfileQuestionViewModel(userName);
             return View(userProfile);
         }
+
+        private FollowersViewModel GetFollowersViewModel(ApplicationUser user)
+        {
+            var followers = new FollowersViewModel();
+            followers.OwnerProfile = GetProfileQuestionViewModel(user.ScreenName);
+            followers.Followers = user.Followers.Select(follower => GetProfileQuestionViewModel(follower.ScreenName)).ToList();
+            return followers;
+        }
+
+        private FollowersViewModel GetFollowingViewModel(ApplicationUser user)
+        {
+            var followers = new FollowersViewModel();
+            followers.OwnerProfile = GetProfileQuestionViewModel(user.ScreenName);
+            followers.Followers = user.Following.Select(following => GetProfileQuestionViewModel(following.ScreenName)).ToList();
+            return followers;
+        }
+
 
         private ProfileQuestionViewModel GetProfileQuestionViewModel(string profileUserName)
         {
@@ -52,7 +70,8 @@ namespace KotaeteMVC.Controllers
                 AvatarUrl = GetAvatarUrl(user),
                 Bio = user.Bio,
                 Location = user.Location,
-                Homepage = user.Homepage
+                Homepage = user.Homepage,
+                User = user
             };
             return profile;
         }

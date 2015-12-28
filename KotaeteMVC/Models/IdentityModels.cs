@@ -74,10 +74,6 @@ namespace KotaeteMVC.Models
             user1.Location = "My harem";
             user1.Bio = "I love lolimoutos!! Give me lolimoutos!!";
             user1.Homepage = @"http://www.twitter.com/lewdhaou";
-            user2.ScreenName = "User2";
-            user3.ScreenName = "User3";
-
-
 
             user1.Following.Add(user3);
             user1.Following.Add(user2);
@@ -102,8 +98,8 @@ namespace KotaeteMVC.Models
             var userAdmin = new ApplicationUser { UserName = "admin@kotaete.com", Email = "admin@kotaete.com", ScreenName = "Admin" };
 
             var user1 = new ApplicationUser { UserName = "user1@kotaete.com", Email = "user1@kotaete.com" };
-            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com", ScreenName = "Kuro von Einzbern" };
-            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern"};
+            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com", ScreenName = "Kuro von Einzbern", Avatar = "Kuro.jpg" };
+            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern", Avatar = "Illya.jpg" };
             var user4 = new ApplicationUser { UserName = "duck@kotaete.com", Email = "duck@kotaete.com", ScreenName = "Mrs Duck II", Avatar = "DSCF2744.JPG", Location = "Polvoranca", Bio = "I am a duck", Homepage = "http://google.com" };
 
             userManager.Create(user2, "ChangeItAsap!");

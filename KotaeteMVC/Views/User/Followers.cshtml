@@ -1,12 +1,44 @@
-﻿@model KotaeteMVC.Models.ApplicationUser
+﻿@model KotaeteMVC.Models.FollowersViewModel
 
 @{
-    ViewBag.Title = "Followers";
+    ViewBag.Title = Model.OwnerProfile.ProfileUserName + "'s followers";
 }
 
-<h2>@Model.UserName's Followers</h2>
-<ol>
-    @foreach (var follower in Model.Followers)
-    { <li>@follower.UserName</li>}
-</ol>
+<div class="container" id="page-body">
 
+    <div class="row">
+        <div class="col-md-3">
+            @{ Html.RenderPartial("Profile", Model.OwnerProfile); }
+        </div>
+
+        <div class="col-md-9">
+            <h2>Followers</h2>
+
+            @foreach (var user in Model.Followers)
+            {
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="panel-heading">
+                                <div class="col-md-6">
+                                    <img class="avatar" src="/@user.AvatarUrl" alt="@user.ProfileUserName" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.ActionLink(user.ProfileUserName, "Index", new { @userName = user.ProfileUserName })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <p>@user.Bio</p>
+                            @{ Html.RenderPartial("FollowButton", user); }
+                        </div>
+                    </div>
+                </div>
+                                }
+
+        </div>
+    </div>
+
+</div>

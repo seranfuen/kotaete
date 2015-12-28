@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\FollowersViewModel.cs" />
     <Compile Include="Models\FollowUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -260,6 +261,8 @@
     <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Shared\_Alert.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\FollowButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Follow\" />

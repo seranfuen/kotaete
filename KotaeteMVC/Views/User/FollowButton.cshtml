@@ -1,0 +1,24 @@
+﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+
+@if (Model.CurrentUserAuthenticated && Model.IsOwnProfile == false)
+            {
+    <div class="button-row">
+        @using (Html.BeginForm("", "Follow", FormMethod.Post))
+        {
+            @Html.Hidden("UserToFollowName", @Model.ProfileUserName)
+            @Html.Hidden("Action", Model.Following ? "Unfollow" : "Follow")
+            <button type="submit" class="btn btn-lg @if (Model.Following)
+                            { @("btn-danger") }
+                            else { @("btn-primary") } follow-button">
+                @if (Model.Following)
+                {
+                    @("Unfollow")
+                }
+                else
+                {
+                    @("Follow")
+                }
+            </button>
+        }
+    </div>
+}
