@@ -17,26 +17,9 @@
             @foreach (var user in Model.Followers   )
             {
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="row">
-                            <div class="panel-heading">
-                                <div class="col-md-6">
-                                    <img class="avatar" src="/@user.AvatarUrl" alt="@user.ProfileUserName" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @Html.ActionLink(user.ProfileUserName, "Index", new { @userName = user.ProfileUserName })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <p>@user.Bio</p>
-                            @{ Html.RenderPartial("FollowButton", user); }
-                        </div>
-                    </div>
+                    @Html.Partial("MiniProfile", user)  
                 </div>
-                                }
+            }
 
         </div>
     </div>

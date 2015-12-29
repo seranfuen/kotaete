@@ -68,6 +68,7 @@ namespace KotaeteMVC.Controllers
                 IsOwnProfile = currentUser != null && currentUser.Equals(user),
                 CurrentUserAuthenticated = currentUser != null,
                 AvatarUrl = GetAvatarUrl(user),
+                HeaderUrl = GetHeaderAvatar(user),
                 Bio = user.Bio,
                 Location = user.Location,
                 Homepage = user.Homepage,
@@ -78,13 +79,24 @@ namespace KotaeteMVC.Controllers
 
         private string GetAvatarUrl(ApplicationUser user)
         {
-            var url = "Images/Avatars/";
+            var url = "/Images/Avatars/";
             if (user.Avatar != null)
             {
                 return url + user.Avatar;
             }
             return url + "anonymous.jpg";
         }
+
+        private string GetHeaderAvatar(ApplicationUser user)
+        {
+            var url = "/Images/Headers/";
+            if (user.Avatar != null)
+            {
+                return url + user.Header;
+            }
+            return null;
+        }
+
 
         private ApplicationUser GetUserWithScreenName(string screenName)
         {

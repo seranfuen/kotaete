@@ -27,6 +27,8 @@ namespace KotaeteMVC.Models
 
         public virtual string AvatarUrl { get; set; }
 
+        public virtual string HeaderUrl { get; set; }
+
         public virtual string Location { get; set; }
 
         public virtual string Bio { get; set; }

@@ -1,0 +1,21 @@
+﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+
+<div class="profile-container">
+    <div class="panel profile-panel panel-default">
+        <div class="mini-profile-header" @if (Model.HeaderUrl != null) { @Html.Raw("style=\"background-image: url(" + Url.Content(Model.HeaderUrl) + "\"") }>
+
+        </div>
+        <div class="panel-body>">
+            <div class="mini-profile-avatar">
+                <img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" />
+            </div>
+            <div class="mini-profile-username">
+                @Html.ActionLink(Model.ProfileUserName, "Index", new { @userName = Model.ProfileUserName })
+            </div>
+            <div class="mini-profile-button">
+                @{ Html.RenderPartial("FollowButton", Model); }
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -263,6 +263,7 @@
     <Content Include="Views\Shared\_Alert.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\User\FollowButton.cshtml" />
+    <Content Include="Views\User\MiniProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Follow\" />

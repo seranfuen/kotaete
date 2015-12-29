@@ -12,7 +12,7 @@
         <div class="row">
             @if (Model.AvatarUrl != null)
             {
-                <img class="avatar" src="/@Model.AvatarUrl" alt="@Model.ProfileUserName" />
+                <img class="avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" />
             }
         </div>
         <div class="row follow-indication">

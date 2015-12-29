@@ -1,6 +1,6 @@
 ﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
 
-@if (Model.CurrentUserAuthenticated && Model.IsOwnProfile == false)
+@if (Model.IsOwnProfile == false)
             {
     <div class="button-row">
         @using (Html.BeginForm("", "Follow", FormMethod.Post))

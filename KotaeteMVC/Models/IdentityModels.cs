@@ -36,6 +36,9 @@ namespace KotaeteMVC.Models
         public virtual string Avatar { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual string Header { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual string ScreenName { get; set; }
 
         [ScaffoldColumn(false)]
@@ -99,7 +102,7 @@ namespace KotaeteMVC.Models
 
             var user1 = new ApplicationUser { UserName = "user1@kotaete.com", Email = "user1@kotaete.com" };
             var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com", ScreenName = "Kuro von Einzbern", Avatar = "Kuro.jpg" };
-            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern", Avatar = "Illya.jpg" };
+            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern", Avatar = "Illya.jpg", Header = "illyamiyu.jpg" };
             var user4 = new ApplicationUser { UserName = "duck@kotaete.com", Email = "duck@kotaete.com", ScreenName = "Mrs Duck II", Avatar = "DSCF2744.JPG", Location = "Polvoranca", Bio = "I am a duck", Homepage = "http://google.com" };
 
             userManager.Create(user2, "ChangeItAsap!");
