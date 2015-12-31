@@ -33,7 +33,6 @@
             }
         </div>
 
-        @{ Html.RenderPartial("FollowButton", Model); }
 
         <div class="profile-body">
 
@@ -55,7 +54,45 @@
                     <a href="@Model.Homepage" target="_blank">@Model.Homepage</a>
                 </div>
             }
+
+            <div class="profile-stats-container">
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                        <p class="lead">@Html.RouteLink(Model.FollowingCount.ToString(), "userNameRequest", new { userName = Model.User.UserName, request = "Following" }, null)</p>
+                        <p>
+                            Following
+                        </p>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                        <p class="lead">@Html.RouteLink(Model.FollowerCount.ToString(), "userNameRequest", new { userName = Model.User.UserName, request = "Followers" }, null)</p>
+                        <p>
+                            @if (Model.FollowerCount == 1)
+                            { @("Follower") }
+                            else { @("Followers") }
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                        <p class="lead">@Model.QuestionsAsked</p>
+                        <p>
+                            @if (Model.QuestionsAsked == 1)
+                            { @("Question") }
+                            else { @("Questions") }
+                        </p>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                        <p class="lead">@Model.QuestionsReplied</p>
+                        <p>
+                            @if (Model.QuestionsReplied == 1)
+                            { @("Reply") }
+                            else { @("Replies") }
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+        @{ Html.RenderPartial("FollowButton", Model); }
     </div>
 </div>
 

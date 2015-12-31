@@ -181,11 +181,13 @@
     <Compile Include="Models\FollowersViewModel.cs" />
     <Compile Include="Models\FollowUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Initializers\KotaeteAnimeInitializer.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileQuestionViewModel.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\QuestionDetail.cs" />
     <Compile Include="Models\UserAlert.cs" />
+    <Compile Include="Models\Validation\OnlyAlphanumAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

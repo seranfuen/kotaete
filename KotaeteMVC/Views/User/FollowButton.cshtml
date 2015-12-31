@@ -5,7 +5,7 @@
     <div class="button-row">
         @using (Html.BeginForm("", "Follow", FormMethod.Post))
         {
-            @Html.Hidden("UserToFollowName", @Model.ProfileUserName)
+            @Html.Hidden("UserToFollowName", @Model.User.UserName)
             @Html.Hidden("Action", Model.Following ? "Unfollow" : "Follow")
             <button type="submit" class="btn btn-lg @if (Model.Following)
                             { @("btn-danger") }

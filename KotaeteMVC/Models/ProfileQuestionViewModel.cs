@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -38,5 +39,11 @@ namespace KotaeteMVC.Models
         public virtual int QuestionsAsked { get; set; }
 
         public virtual int QuestionsReplied { get; set; }
+
+        [DefaultValue(0)]
+        public virtual int FollowingCount { get; set; }
+
+        [DefaultValue(0)]
+        public virtual int FollowerCount { get; set; }
     }
 }

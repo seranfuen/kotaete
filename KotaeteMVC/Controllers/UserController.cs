@@ -16,10 +16,10 @@ namespace KotaeteMVC.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [Route("user/{userName}")]
-        [Route("user/{userName}/{request}")]
+        [Route("user/{userName}/{request}", Name = "userNameRequest")]
         public ActionResult Index(string userName, string request = "")
         {
-            var user = GetUserWithScreenName(userName);
+            var user = GetUserWithName(userName);
             if (user == null)
             {
                 ViewBag.UserName = userName;
@@ -42,16 +42,16 @@ namespace KotaeteMVC.Controllers
         private FollowersViewModel GetFollowersViewModel(ApplicationUser user)
         {
             var followers = new FollowersViewModel();
-            followers.OwnerProfile = GetProfileQuestionViewModel(user.ScreenName);
-            followers.Followers = user.Followers.Select(follower => GetProfileQuestionViewModel(follower.ScreenName)).ToList();
+            followers.OwnerProfile = GetProfileQuestionViewModel(user.UserName);
+            followers.Followers = user.Followers.Select(follower => GetProfileQuestionViewModel(follower.UserName)).ToList();
             return followers;
         }
 
         private FollowersViewModel GetFollowingViewModel(ApplicationUser user)
         {
             var followers = new FollowersViewModel();
-            followers.OwnerProfile = GetProfileQuestionViewModel(user.ScreenName);
-            followers.Followers = user.Following.Select(following => GetProfileQuestionViewModel(following.ScreenName)).ToList();
+            followers.OwnerProfile = GetProfileQuestionViewModel(user.UserName);
+            followers.Followers = user.Following.Select(following => GetProfileQuestionViewModel(following.UserName)).ToList();
             return followers;
         }
 
@@ -59,10 +59,10 @@ namespace KotaeteMVC.Controllers
         private ProfileQuestionViewModel GetProfileQuestionViewModel(string profileUserName)
         {
             var currentUser = GetCurrentUser();
-            var user = GetUserWithScreenName(profileUserName);
+            var user = GetUserWithName(profileUserName);
             var profile = new ProfileQuestionViewModel()
             {
-                ProfileUserName = profileUserName,
+                ProfileUserName = user.ScreenName,
                 FollowsYou = currentUser != null && user.Following.Any(usr => usr.Equals(currentUser)),
                 Following = currentUser != null && user.Followers.Any(usr => usr.Equals(currentUser)),
                 IsOwnProfile = currentUser != null && currentUser.Equals(user),
@@ -74,7 +74,9 @@ namespace KotaeteMVC.Controllers
                 Homepage = user.Homepage,
                 User = user,
                 QuestionsReplied = 0, // TODO: user should provide answers
-                QuestionsAsked = user.QuestionsAsked.Count()
+                QuestionsAsked = user.QuestionsAsked.Count(),
+                FollowerCount = user.Followers.Count(),
+                FollowingCount = user.Following.Count()
             };
             return profile;
         }
@@ -100,16 +102,16 @@ namespace KotaeteMVC.Controllers
         }
 
 
-        private ApplicationUser GetUserWithScreenName(string screenName)
+        private ApplicationUser GetUserWithName(string userName)
         {
-            if (string.IsNullOrWhiteSpace(screenName)) return null;
-            return db.Users.FirstOrDefault(usr => usr.ScreenName == screenName);
+            if (string.IsNullOrWhiteSpace(userName)) return null;
+            return db.Users.FirstOrDefault(usr => usr.UserName == userName);
         }
 
         [Authorize]
         public ActionResult AskQuestion([Bind(Include = "AskedUserName, QuestionContent")] ProfileQuestionViewModel question)
         {
-            var askedUser = GetUserWithScreenName(question.ProfileUserName);
+            var askedUser = GetUserWithName(question.ProfileUserName);
             ApplicationUser asker = GetCurrentUser();
 
             var now = DateTime.Now;
@@ -142,7 +144,7 @@ namespace KotaeteMVC.Controllers
         [Authorize]
         public ActionResult FollowUnfollowUser([Bind(Include = "UserToFollowName, Action")] FollowUserViewModel followRequest)
         {
-            var userToFollow = GetUserWithScreenName(followRequest.UserToFollowName);
+            var userToFollow = GetUserWithName(followRequest.UserToFollowName);
             if (userToFollow == null)
             {
                 return new HttpUnauthorizedResult("The user " + followRequest.UserToFollowName + " does not exist");

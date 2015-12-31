@@ -100,3 +100,20 @@ textarea {
 #alert-container {
     margin-top: 0.5em;
 }
+
+.profile-stats-container {
+    padding-top: 10px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.profile-stats-container p {
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+.profile-stats-container .row {
+    margin-top: 5px;
+}

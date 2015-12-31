@@ -7,7 +7,7 @@
 
     <div class="panel-body>">
         <div class="mini-profile-avatar">
-            <a href="@Url.Action("Index", "User", new { @userName = Model.ProfileUserName })"><img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" /></a>
+            <a href="@Url.Action("Index", "User", new { @userName = Model.User.UserName })"><img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" /></a>
         </div>
         <div class="mini-profile-username">
             <p>@Model.ProfileUserName</p>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using KotaeteMVC.Models.Validation;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace KotaeteMVC.Models
@@ -49,9 +50,9 @@ namespace KotaeteMVC.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        [OnlyAlphanum]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
