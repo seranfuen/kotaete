@@ -34,5 +34,9 @@ namespace KotaeteMVC.Models
         public virtual string Bio { get; set; }
 
         public virtual string Homepage { get; set; }
+
+        public virtual int QuestionsAsked { get; set; }
+
+        public virtual int QuestionsReplied { get; set; }
     }
 }

@@ -1,27 +1,18 @@
 ﻿@model KotaeteMVC.Models.FollowersViewModel
 
 @{
+    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
     ViewBag.Title = Model.OwnerProfile.ProfileUserName + "'s followers";
 }
 
-<div class="container" id="page-body">
+@section Profile {
+    @Html.Partial("Profile", Model.OwnerProfile)
+}
+<h2>Followers</h2>
 
-    <div class="row">
-        <div class="col-md-3">
-            @{ Html.RenderPartial("Profile", Model.OwnerProfile); }
-        </div>
-
-        <div class="col-md-9">
-            <h2>Followers</h2>
-
-            @foreach (var user in Model.Followers)
+@foreach (var user in Model.Followers)
             {
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.Partial("MiniProfile", user)
-                </div>
-            }
-
-        </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        @Html.Partial("MiniProfile", user)
     </div>
-
-</div>
+}

@@ -69,14 +69,21 @@ namespace KotaeteMVC.Models
 
         private static void SetUsersFollowing(ApplicationDbContext context)
         {
+            var admin = context.Users.First(user => user.UserName == "admin@kotaete.com");
             var user1 = context.Users.First(user => user.UserName == "user1@kotaete.com");
             var user2 = context.Users.First(user => user.UserName == "user2@kotaete.com");
             var user3 = context.Users.First(user => user.UserName == "user3@kotaete.com");
+            var maria = context.Users.First(user => user.UserName == "maria@kotaete.com");
+            var mio = context.Users.First(user => user.UserName == "mio@kotaete.com");
             user1.ScreenName = "Zakaichou";
             user1.Avatar = "mikan3b.jpg";
             user1.Location = "My harem";
             user1.Bio = "I love lolimoutos!! Give me lolimoutos!!";
             user1.Homepage = @"http://www.twitter.com/lewdhaou";
+            user1.Following.Add(maria);
+            user1.Following.Add(mio);
+
+            user3.Following.Add(admin);
 
             user1.Following.Add(user3);
             user1.Following.Add(user2);
@@ -101,9 +108,11 @@ namespace KotaeteMVC.Models
             var userAdmin = new ApplicationUser { UserName = "admin@kotaete.com", Email = "admin@kotaete.com", ScreenName = "Admin" };
 
             var user1 = new ApplicationUser { UserName = "user1@kotaete.com", Email = "user1@kotaete.com" };
-            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com", ScreenName = "Kuro von Einzbern", Avatar = "Kuro.jpg" };
-            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern", Avatar = "Illya.jpg", Header = "illyamiyu.jpg" };
+            var user2 = new ApplicationUser { UserName = "user2@kotaete.com", Email = "user2@kotaete.com", ScreenName = "Kuro von Einzbern", Avatar = "Kuro.jpg", Header = "kuro.jpg" };
+            var user3 = new ApplicationUser { UserName = "user3@kotaete.com", Email = "user3@kotaete.com", ScreenName = "Illyasviel von Einzbern", Avatar = "Illya.jpg", Header = "illya.jpg" };
             var user4 = new ApplicationUser { UserName = "duck@kotaete.com", Email = "duck@kotaete.com", ScreenName = "Mrs Duck II", Avatar = "DSCF2744.JPG", Location = "Polvoranca", Bio = "I am a duck", Homepage = "http://google.com" };
+            var maria = new ApplicationUser { UserName = "maria@kotaete.com", Email = "maria@kotaete.com", ScreenName = "Maria", Avatar = "Maria.jpg" };
+            var mio = new ApplicationUser { UserName = "mio@kotaete.com", Email = "mio@kotaete.com", ScreenName = "Mio", Avatar = "Mio.jpg", Header = "Mio.jpg" };
 
             userManager.Create(user2, "ChangeItAsap!");
             userManager.AddToRole(user2.Id, "User");
@@ -119,6 +128,12 @@ namespace KotaeteMVC.Models
 
             userManager.Create(user4, "ChangeItAsap!");
             userManager.AddToRole(user4.Id, "User");
+
+            userManager.Create(maria, "ChangeItAsap!");
+            userManager.AddToRole(maria.Id, "User");
+
+            userManager.Create(mio, "ChangeItAsap!");
+            userManager.AddToRole(mio.Id, "User");
 
             context.SaveChanges();
         }

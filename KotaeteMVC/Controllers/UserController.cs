@@ -68,11 +68,13 @@ namespace KotaeteMVC.Controllers
                 IsOwnProfile = currentUser != null && currentUser.Equals(user),
                 CurrentUserAuthenticated = currentUser != null,
                 AvatarUrl = GetAvatarUrl(user),
-                HeaderUrl = GetHeaderAvatar(user),
+                HeaderUrl = GetHeaderUrl(user),
                 Bio = user.Bio,
                 Location = user.Location,
                 Homepage = user.Homepage,
-                User = user
+                User = user,
+                QuestionsReplied = 0, // TODO: user should provide answers
+                QuestionsAsked = user.QuestionsAsked.Count()
             };
             return profile;
         }
@@ -87,10 +89,10 @@ namespace KotaeteMVC.Controllers
             return url + "anonymous.jpg";
         }
 
-        private string GetHeaderAvatar(ApplicationUser user)
+        private string GetHeaderUrl(ApplicationUser user)
         {
             var url = "/Images/Headers/";
-            if (user.Avatar != null)
+            if (user.Header != null)
             {
                 return url + user.Header;
             }
@@ -175,7 +177,7 @@ namespace KotaeteMVC.Controllers
                 db.SaveChanges();
             } catch (Exception e)
             {
-                AddAlertDangerOverride("There was an error saving the changes!", "Critical");
+                AddAlertDangerOverride("There was an error saving the changes: " + e.Message, "Critical");
             }
             return Redirect(Request.UrlReferrer.ToString());
         }

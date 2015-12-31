@@ -1,0 +1,64 @@
+﻿.mini-avatar {
+    height: 80px;
+    width: auto;
+    border: 3px solid white;
+    border-radius: 6px;
+}
+
+.mini-profile-avatar {
+    text-align: center;
+    margin-top: -40px;
+}
+
+.mini-profile-header {
+    height: 70px;
+    background-color: lightgray;
+    text-align: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.mini-profile-button {
+    margin-top: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    align-content: center;
+}
+
+.mini-profile-button .button-row {
+        margin: 0 auto !important;
+        max-width: 200px !important;
+}
+
+.mini-profile-username {
+    padding-top: 5px;
+    text-align: center;
+}
+
+.mini-profile-panel {
+    min-height: 270px;
+    height: 270px;
+    max-height: 270px;
+}
+
+.mini-profile-follow-info {
+    padding-left: 10px;
+}
+
+.mini-profile-stats-container {
+    padding-bottom: 50px;
+}
+
+.mini-profile-stats-container p {
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+.mini-profile-username p {
+    font-size: large;
+    color: blueviolet;
+    margin: 0px;
+}

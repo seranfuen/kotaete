@@ -1,21 +1,44 @@
 ﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
 
-<div class="profile-container">
-    <div class="panel profile-panel panel-default">
-        <div class="mini-profile-header" @if (Model.HeaderUrl != null) { @Html.Raw("style=\"background-image: url(" + Url.Content(Model.HeaderUrl) + "\"") }>
+
+<div class="panel panel-default mini-profile-panel">
+    <div class="mini-profile-header" @if (Model.HeaderUrl != null) { @Html.Raw("style=\"background-image: url(" + Url.Content(Model.HeaderUrl) + "\"")   }>
+    </div>
+
+    <div class="panel-body>">
+        <div class="mini-profile-avatar">
+            <a href="@Url.Action("Index", "User", new { @userName = Model.ProfileUserName })"><img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" /></a>
+        </div>
+        <div class="mini-profile-username">
+            <p>@Model.ProfileUserName</p>
+            <span class="text-info mini-profile-follow-info">
+                @if (Model.FollowsYou)
+                {
+                    <small>Follows you</small>
+                }
+            </span>
 
         </div>
-        <div class="panel-body>">
-            <div class="mini-profile-avatar">
-                <img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" />
+        <div class="mini-profile-stats-container">
+            <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                <p class="lead">@Model.QuestionsAsked</p>
+                <p>
+                    @if (Model.QuestionsAsked == 1)
+                    { @("Question") }
+                    else { @("Questions") }
+                </p>
             </div>
-            <div class="mini-profile-username">
-                @Html.ActionLink(Model.ProfileUserName, "Index", new { @userName = Model.ProfileUserName })
+            <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                <p class="lead">@Model.QuestionsReplied</p>
+                <p>
+                    @if (Model.QuestionsReplied == 1)
+                    { @("Reply") }
+                    else { @("Replies") }
+                </p>
             </div>
-            <div class="mini-profile-button">
-                @{ Html.RenderPartial("FollowButton", Model); }
-            </div>
-
+        </div>
+        <div class="mini-profile-button">
+            @{ Html.RenderPartial("FollowButton", Model); }
         </div>
     </div>
 </div>

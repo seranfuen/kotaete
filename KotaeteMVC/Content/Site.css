@@ -63,11 +63,13 @@ textarea {
     padding-top: 0.1em;
 }
 
+.profile-panel {
+    max-width: 400px;
+}
+
 .follow-button {
     padding: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
-    width:50%;
+    width: 100%;
 }
 
 .button-row {
@@ -90,44 +92,11 @@ textarea {
 }
 
 .user-alert {
-    padding: 0.5em;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-bottom: 0.8em;
 }
 
 #alert-container {
     margin-top: 0.5em;
-}
-
-
-.profile-panel {
-    width: 100%;
-    padding-bottom: 33%;
-}
-
-.mini-avatar {
-    height: 70px;
-    width: auto;
-    border: 3px solid white;
-    border-radius: 6px;
-}
-
-.mini-profile-avatar {
-    text-align: center;
-    margin-top: -15px;
-}
-
-.mini-profile-header {
-    height: 80px;
-    background-color: lightgray;
-    text-align: center;
-    background-size: auto 80px;
-}
-
-.mini-profile-button {
-    margin-top: 10px;
-}
-
-.mini-profile-username {
-    padding-top: 5px;
-    text-align: center;
 }

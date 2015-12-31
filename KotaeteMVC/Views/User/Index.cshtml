@@ -1,42 +1,38 @@
 ﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
 
 @{
+    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
     ViewBag.Title = Model.ProfileUserName;
 }
 
-<div class="container" id="page-body">
-    <div class="row">
-        <div class="col-md-3">
-            @{ Html.RenderPartial("Profile", Model); }
-        </div>
 
-        <div class="col-md-9">
-            @if (Model.IsOwnProfile == false)
+@section Profile {
+    @Html.Partial("Profile", Model)
+}
+
+@if (Model.IsOwnProfile == false)
             {
-            <div id = "ask-question" class="panel panel-default">
-                <div class="panel-heading">
-                    Ask a question!
-                </div>
-                @using (Html.BeginForm("AskQuestion", "User", FormMethod.Post, new { @class = "panel-body" }))
+    <div id="ask-question" class="panel panel-default">
+        <div class="panel-heading">
+            Ask a question!
+        </div>
+        @using (Html.BeginForm("AskQuestion", "User", FormMethod.Post, new { @class = "panel-body" }))
                 {
 
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary()
-                    <div class="form-group">
-                        <div>
-                            @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.ProfileUserName + " here" })
-                            @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    @Html.HiddenFor(model => model.ProfileUserName)
-                    <div class="form-group pull-left">
-                        <div>
-                            <input type="submit" value="Ask" class="btn btn-default" />
-                        </div>
-                    </div>
-                }
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <div class="form-group">
+                <div>
+                    @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.ProfileUserName + " here" })
+                    @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
+                </div>
             </div>
-            }
-        </div>
+            @Html.HiddenFor(model => model.ProfileUserName)
+            <div class="form-group pull-left">
+                <div>
+                    <input type="submit" value="Ask" class="btn btn-default" />
+                </div>
+            </div>
+        }
     </div>
-</div>
+}
