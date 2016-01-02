@@ -1,0 +1,18 @@
+﻿@model KotaeteMVC.Models.ProfileQuestionDetailViewModel
+
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
+}
+
+@section Profile {
+    @Html.Partial("Profile", Model.Profile)
+}
+
+<h2>Inbox</h2>
+
+@foreach (var question in Model.QuestionDetails)
+{
+    Html.RenderPartial("QuestionAsked", question);
+}
+

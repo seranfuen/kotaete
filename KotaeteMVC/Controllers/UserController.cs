@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using KotaeteMVC.Helpers;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
@@ -19,7 +20,7 @@ namespace KotaeteMVC.Controllers
         [Route("user/{userName}/{request}", Name = "userNameRequest")]
         public ActionResult Index(string userName, string request = "")
         {
-            var user = GetUserWithName(userName);
+            var user = this.GetUserWithName(userName);
             if (user == null)
             {
                 ViewBag.UserName = userName;
@@ -34,85 +35,32 @@ namespace KotaeteMVC.Controllers
             {
                 return View("Following", GetFollowingViewModel(user));
             }
-            var currentUser = GetCurrentUser();
-            ProfileQuestionViewModel userProfile = GetProfileQuestionViewModel(userName);
+            var currentUser = this.GetCurrentUser();
+            ProfileQuestionViewModel userProfile = this.GetProfileQuestionViewModel(userName);
             return View(userProfile);
         }
 
         private FollowersViewModel GetFollowersViewModel(ApplicationUser user)
         {
             var followers = new FollowersViewModel();
-            followers.OwnerProfile = GetProfileQuestionViewModel(user.UserName);
-            followers.Followers = user.Followers.Select(follower => GetProfileQuestionViewModel(follower.UserName)).ToList();
+            followers.OwnerProfile = this.GetProfileQuestionViewModel(user.UserName);
+            followers.Followers = user.Followers.Select(follower => this.GetProfileQuestionViewModel(follower.UserName)).ToList();
             return followers;
         }
 
         private FollowersViewModel GetFollowingViewModel(ApplicationUser user)
         {
             var followers = new FollowersViewModel();
-            followers.OwnerProfile = GetProfileQuestionViewModel(user.UserName);
-            followers.Followers = user.Following.Select(following => GetProfileQuestionViewModel(following.UserName)).ToList();
+            followers.OwnerProfile = this.GetProfileQuestionViewModel(user.UserName);
+            followers.Followers = user.Following.Select(following => this.GetProfileQuestionViewModel(following.UserName)).ToList();
             return followers;
-        }
-
-
-        private ProfileQuestionViewModel GetProfileQuestionViewModel(string profileUserName)
-        {
-            var currentUser = GetCurrentUser();
-            var user = GetUserWithName(profileUserName);
-            var profile = new ProfileQuestionViewModel()
-            {
-                ProfileUserName = user.ScreenName,
-                FollowsYou = currentUser != null && user.Following.Any(usr => usr.Equals(currentUser)),
-                Following = currentUser != null && user.Followers.Any(usr => usr.Equals(currentUser)),
-                IsOwnProfile = currentUser != null && currentUser.Equals(user),
-                CurrentUserAuthenticated = currentUser != null,
-                AvatarUrl = GetAvatarUrl(user),
-                HeaderUrl = GetHeaderUrl(user),
-                Bio = user.Bio,
-                Location = user.Location,
-                Homepage = user.Homepage,
-                User = user,
-                QuestionsReplied = 0, // TODO: user should provide answers
-                QuestionsAsked = user.QuestionsAsked.Count(),
-                FollowerCount = user.Followers.Count(),
-                FollowingCount = user.Following.Count()
-            };
-            return profile;
-        }
-
-        private string GetAvatarUrl(ApplicationUser user)
-        {
-            var url = "/Images/Avatars/";
-            if (user.Avatar != null)
-            {
-                return url + user.Avatar;
-            }
-            return url + "anonymous.jpg";
-        }
-
-        private string GetHeaderUrl(ApplicationUser user)
-        {
-            var url = "/Images/Headers/";
-            if (user.Header != null)
-            {
-                return url + user.Header;
-            }
-            return null;
-        }
-
-
-        private ApplicationUser GetUserWithName(string userName)
-        {
-            if (string.IsNullOrWhiteSpace(userName)) return null;
-            return db.Users.FirstOrDefault(usr => usr.UserName == userName);
         }
 
         [Authorize]
         public ActionResult AskQuestion([Bind(Include = "AskedUserName, QuestionContent")] ProfileQuestionViewModel question)
         {
-            var askedUser = GetUserWithName(question.ProfileUserName);
-            ApplicationUser asker = GetCurrentUser();
+            var askedUser = this.GetUserWithName(question.ProfileUserName);
+            ApplicationUser asker = this.GetCurrentUser();
 
             var now = DateTime.Now;
 
@@ -144,12 +92,12 @@ namespace KotaeteMVC.Controllers
         [Authorize]
         public ActionResult FollowUnfollowUser([Bind(Include = "UserToFollowName, Action")] FollowUserViewModel followRequest)
         {
-            var userToFollow = GetUserWithName(followRequest.UserToFollowName);
+            var userToFollow = this.GetUserWithName(followRequest.UserToFollowName);
             if (userToFollow == null)
             {
                 return new HttpUnauthorizedResult("The user " + followRequest.UserToFollowName + " does not exist");
             }
-            var current = GetCurrentUser();
+            var current = this.GetCurrentUser();
             if (followRequest.Action == "Follow")
             {
                 if (current.Following.Any(usr => usr.Equals(userToFollow)))
@@ -183,11 +131,5 @@ namespace KotaeteMVC.Controllers
             }
             return Redirect(Request.UrlReferrer.ToString());
         }
-
-        private ApplicationUser GetCurrentUser()
-        {
-            return db.Users.FirstOrDefault(usr => usr.UserName == HttpContext.User.Identity.Name);
-        }
-
     }
 }

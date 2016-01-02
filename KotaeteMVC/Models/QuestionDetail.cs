@@ -26,5 +26,11 @@ namespace KotaeteMVC.Models
 
         [ScaffoldColumn(false)]
         public virtual DateTime TimeStamp { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual bool Deleted { get; set; }
+
+        [ScaffoldColumn(false)]
+        public virtual bool SeenByUser { get; set; }
     }
 }

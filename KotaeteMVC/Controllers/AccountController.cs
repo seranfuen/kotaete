@@ -453,7 +453,7 @@ namespace KotaeteMVC.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Inbox");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

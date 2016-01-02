@@ -1,0 +1,44 @@
+﻿using KotaeteMVC.Helpers;
+using KotaeteMVC.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace KotaeteMVC.Controllers
+{
+    public class InboxController : Controller
+    {
+
+        [Authorize]
+        public ActionResult Index()
+        {
+            var user = this.GetProfileQuestionViewModel(this.GetCurrentUserName());
+            var viewModel = new ProfileQuestionDetailViewModel() { Profile = user, QuestionDetails = GetQuestionDetailAnswerList(user) };
+            using (var db = new ApplicationDbContext())
+            {
+                db.SaveChanges();
+            }
+            return View(viewModel);
+        }
+
+        private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(ProfileQuestionViewModel user)
+        {
+            var questions = user.User.QuestionsReceived.Select(qst => new QuestionDetailAnswerViewModel()
+            {
+                QuestionDetail = qst,
+                Answer = new Answer(),
+                AskerAvatarUrl = this.GetAvatarUrl(qst.AskedBy),
+                AskedTimeAgo = this.GetTimeAgo(qst.TimeStamp),
+                QuestionParagraphs = qst.Question.Content.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None).ToList(),
+                Seen = qst.SeenByUser
+            }).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
+            foreach (var question in user.User.QuestionsReceived)
+            {
+                question.SeenByUser = true;
+            }
+            return questions;
+        }
+    }
+}

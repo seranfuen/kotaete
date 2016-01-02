@@ -63,10 +63,6 @@ textarea {
     padding-top: 0.1em;
 }
 
-.profile-panel {
-    max-width: 400px;
-}
-
 .follow-button {
     padding: 5px;
     width: 100%;
@@ -116,4 +112,26 @@ textarea {
 
 .profile-stats-container .row {
     margin-top: 5px;
+}
+
+.question-asked-avatar {
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.question-asked-avatar img {
+    height: auto;
+    width: 40px;
+    border: 1px solid #d0d0d0;
+}
+
+.question-panel-right .row {
+    padding-left: 10px;
+    line-height: 1em;
+}
+
+.question-meta {
+    font-size: small;
+    font-variant: small-caps;
+    padding: 0px;
 }

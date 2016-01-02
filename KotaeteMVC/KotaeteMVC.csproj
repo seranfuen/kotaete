@@ -170,12 +170,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TimeHelper.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\FollowersViewModel.cs" />
@@ -183,6 +186,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Initializers\KotaeteAnimeInitializer.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProfileQuestionDetailViewModel.cs" />
     <Compile Include="Models\ProfileQuestionViewModel.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\QuestionDetail.cs" />
@@ -205,6 +209,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Compile Include="Models\QuestionDetailAnswerViewModel.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -264,10 +269,12 @@
     <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Shared\_Alert.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
-    <Content Include="Views\User\FollowButton.cshtml" />
-    <Content Include="Views\User\MiniProfile.cshtml" />
+    <Content Include="Views\Shared\Profile.cshtml" />
+    <Content Include="Views\Shared\FollowButton.cshtml" />
+    <Content Include="Views\Shared\MiniProfile.cshtml" />
     <Content Include="Views\Shared\_ProfileContentLayout.cshtml" />
+    <Content Include="Views\Inbox\Index.cshtml" />
+    <Content Include="Views\Inbox\QuestionAsked.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Follow\" />
