@@ -1,0 +1,24 @@
+﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+
+<div id="ask-question" class="panel panel-default">
+    <div class="panel-heading">
+        Ask a question!
+    </div>
+    @using (Html.BeginForm("Create", "Questions", FormMethod.Post, new { @class = "panel-body" }))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+        <div class="form-group">
+            <div>
+                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.ScreenName + " here" })
+            </div>
+        </div>
+            @Html.Hidden("ScreenName", Model.User.UserName)
+            <div class="form-group pull-left">
+                <div>
+                    <input type="submit" value="Ask" class="btn btn-default" />
+                </div>
+            </div>
+    }
+</div>

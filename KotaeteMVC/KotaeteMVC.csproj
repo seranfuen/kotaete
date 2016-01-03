@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertControllerBase.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,6 +208,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\autosize.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Compile Include="Models\QuestionDetailAnswerViewModel.cs" />
@@ -275,8 +277,10 @@
     <Content Include="Views\Shared\_ProfileContentLayout.cshtml" />
     <Content Include="Views\Inbox\Index.cshtml" />
     <Content Include="Views\Inbox\QuestionAsked.cshtml" />
+    <Content Include="Views\Shared\Question.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Follow\" />
   </ItemGroup>
   <ItemGroup>

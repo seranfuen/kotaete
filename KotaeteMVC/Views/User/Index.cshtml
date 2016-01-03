@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
-    ViewBag.Title = Model.ProfileUserName;
+    ViewBag.Title = Model.ScreenName;
 }
 
 
@@ -10,29 +10,7 @@
     @Html.Partial("Profile", Model)
 }
 
-@if (Model.IsOwnProfile == false)
-            {
-    <div id="ask-question" class="panel panel-default">
-        <div class="panel-heading">
-            Ask a question!
-        </div>
-        @using (Html.BeginForm("AskQuestion", "User", FormMethod.Post, new { @class = "panel-body" }))
-                {
-
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
-            <div class="form-group">
-                <div>
-                    @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.ProfileUserName + " here" })
-                    @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            @Html.HiddenFor(model => model.ProfileUserName)
-            <div class="form-group pull-left">
-                <div>
-                    <input type="submit" value="Ask" class="btn btn-default" />
-                </div>
-            </div>
-        }
-    </div>
+@if (HttpContext.Current.User.Identity.IsAuthenticated && Model.IsOwnProfile == false)
+{
+    Html.RenderPartial("Question", Model);
 }

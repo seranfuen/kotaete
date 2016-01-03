@@ -14,9 +14,7 @@ namespace KotaeteMVC.Controllers
     public class UserController : AlertControllerBase
     {
 
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        [Route("user/{userName}")]
+        [Route("user/{userName}", Name = "userProfile")]
         [Route("user/{userName}/{request}", Name = "userNameRequest")]
         public ActionResult Index(string userName, string request = "")
         {
@@ -56,38 +54,6 @@ namespace KotaeteMVC.Controllers
             return followers;
         }
 
-        [Authorize]
-        public ActionResult AskQuestion([Bind(Include = "AskedUserName, QuestionContent")] ProfileQuestionViewModel question)
-        {
-            var askedUser = this.GetUserWithName(question.ProfileUserName);
-            ApplicationUser asker = this.GetCurrentUser();
-
-            var now = DateTime.Now;
-
-            var qstDetail = new QuestionDetail()
-            {
-                Question = new Question()
-                {
-                    Content = question.QuestionContent,
-                    TimeStamp = now,
-                    AskedBy = asker,
-                },
-                AskedTo = askedUser,
-                AskedBy = asker,
-                TimeStamp = now
-            };
-            var result = TryValidateModel(qstDetail) && TryValidateModel(qstDetail.Question);
-            if (result)
-            {
-
-                db.QuestionDetails.Add(qstDetail);
-
-                db.SaveChanges();
-                return View("Index", question.ProfileUserName);
-            }
-            return View("Index", question);
-        }
-
         [Route("follow")]
         [Authorize]
         public ActionResult FollowUnfollowUser([Bind(Include = "UserToFollowName, Action")] FollowUserViewModel followRequest)
@@ -124,7 +90,7 @@ namespace KotaeteMVC.Controllers
             }
             try
             {
-                db.SaveChanges();
+                Context.SaveChanges();
             } catch (Exception e)
             {
                 AddAlertDangerOverride("There was an error saving the changes: " + e.Message, "Critical");

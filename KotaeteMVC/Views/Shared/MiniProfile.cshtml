@@ -6,10 +6,10 @@
 
     <div class="panel-body>">
         <div class="mini-profile-avatar">
-            <a href="@Url.Action("Index", "User", new { @userName = Model.User.UserName })"><img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ProfileUserName" /></a>
+            <a href="@Url.Action("Index", "User", new { @userName = Model.User.UserName })"><img class="mini-avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ScreenName" /></a>
         </div>
         <div class="mini-profile-username">
-            <p>@Model.ProfileUserName</p>
+            <p>@Model.ScreenName</p>
             <span class="text-info mini-profile-follow-info">
                 @if (Model.FollowsYou)
                 {

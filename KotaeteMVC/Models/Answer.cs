@@ -20,6 +20,9 @@ namespace KotaeteMVC.Models
         public virtual ApplicationUser User { get; set; }
 
         [ScaffoldColumn(false)]
+        public virtual int QuestionDetailId { get; set; }
+
+        [ScaffoldColumn(false)]
         public virtual QuestionDetail Question { get; set; }
 
         [ScaffoldColumn(false)]

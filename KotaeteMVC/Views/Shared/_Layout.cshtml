@@ -37,7 +37,7 @@
 
 
 
-    <div class="container body-content">
+    <div class="container-fuid body-content">
         @{ Html.RenderPartial("_Alert"); }
         @RenderBody()
         <hr />
@@ -48,6 +48,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/autosize.js")
     @Scripts.Render("~/Scripts/KotaeteJavascript.js")
     @RenderSection("scripts", required: false)
 </body>

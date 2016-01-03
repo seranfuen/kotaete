@@ -134,4 +134,15 @@ textarea {
     font-size: small;
     font-variant: small-caps;
     padding: 0px;
+    padding-bottom: 10px;
+}
+
+.qst-detail-answer .answer-buttons {
+    padding-top: 10px;
+}
+
+.question-delete-button {
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
 }

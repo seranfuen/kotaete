@@ -14,7 +14,7 @@ namespace KotaeteMVC.Models
 
         public virtual ApplicationUser User { get; set; }
 
-        public virtual string ProfileUserName { get; set; }
+        public virtual string ScreenName { get; set; }
 
         public virtual string QuestionContent { get; set; }
 

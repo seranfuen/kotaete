@@ -18,7 +18,7 @@ namespace KotaeteMVC.Helpers
             {
                 return diff.Hours + (diff.Hours == 1 ? " hour ago" : " hours ago");
             }
-            else if (diff.Minutes > 5)
+            else if (diff.Minutes >= 5)
             {
                 return diff.Minutes + " minutes ago";
             } else

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public class InboxController : Controller
+    public class InboxController : AlertControllerBase
     {
 
         [Authorize]
@@ -16,10 +16,7 @@ namespace KotaeteMVC.Controllers
         {
             var user = this.GetProfileQuestionViewModel(this.GetCurrentUserName());
             var viewModel = new ProfileQuestionDetailViewModel() { Profile = user, QuestionDetails = GetQuestionDetailAnswerList(user) };
-            using (var db = new ApplicationDbContext())
-            {
-                db.SaveChanges();
-            }
+            Context.SaveChanges();
             return View(viewModel);
         }
 

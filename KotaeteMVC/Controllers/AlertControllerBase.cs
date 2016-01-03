@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public class AlertControllerBase : Controller
+    public abstract class AlertControllerBase : BaseController
     {
 
         public void AddAlertSuccess(string message, string header = "", bool dismissable = false)

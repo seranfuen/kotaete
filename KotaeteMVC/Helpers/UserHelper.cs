@@ -1,19 +1,16 @@
-﻿using KotaeteMVC.Models;
-using System;
-using System.Collections.Generic;
+﻿using KotaeteMVC.Controllers;
+using KotaeteMVC.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Helpers
 {
     public static class UserHelpers
     {
-        public static ApplicationUser GetCurrentUser(this Controller controller)
+        public static ApplicationUser GetCurrentUser(this BaseController controller)
         {
-            var db = new ApplicationDbContext();
             var currentUserName = controller.GetCurrentUserName();
-            return db.Users.FirstOrDefault(usr => usr.UserName == currentUserName);
+            return controller.Context.Users.FirstOrDefault(usr => usr.UserName == currentUserName);
         }
 
         public static string GetCurrentUserName(this Controller controller)
@@ -21,41 +18,37 @@ namespace KotaeteMVC.Helpers
             return controller.HttpContext.User.Identity.Name;
         }
 
-        public static ApplicationUser GetUserWithName(this Controller controller, string userName)
+        public static ApplicationUser GetUserWithName(this BaseController controller, string userName)
         {
             if (string.IsNullOrWhiteSpace(userName)) return null;
-            var db = new ApplicationDbContext();
-            return db.Users.FirstOrDefault(usr => usr.UserName == userName);
+            return controller.Context.Users.FirstOrDefault(usr => usr.UserName == userName);
         }
 
 
-        public static ProfileQuestionViewModel GetProfileQuestionViewModel(this Controller controller, string profileUserName)
+        public static ProfileQuestionViewModel GetProfileQuestionViewModel(this BaseController controller, string userName)
         {
-            using (var db = new ApplicationDbContext())
+            var currentUserName = controller.GetCurrentUserName();
+            var currentUser = controller.Context.Users.FirstOrDefault(usr => usr.UserName.Equals(currentUserName, System.StringComparison.OrdinalIgnoreCase));
+            var user = controller.Context.Users.First(usr => usr.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase));
+            var profile = new ProfileQuestionViewModel()
             {
-                var currentUserName = controller.GetCurrentUserName();
-                var currentUser = db.Users.First(usr => usr.UserName == currentUserName);
-                var user = db.Users.First(usr => usr.UserName == profileUserName);
-                var profile = new ProfileQuestionViewModel()
-                {
-                    ProfileUserName = user.ScreenName,
-                    FollowsYou = currentUser != null && user.Following.Any(usr => usr.Equals(currentUser)),
-                    Following = currentUser != null && user.Followers.Any(usr => usr.Equals(currentUser)),
-                    IsOwnProfile = currentUser != null && currentUser.UserName == user.UserName,
-                    CurrentUserAuthenticated = currentUser != null,
-                    AvatarUrl = controller.GetAvatarUrl(user),
-                    HeaderUrl = controller.GetHeaderUrl(user),
-                    Bio = user.Bio,
-                    Location = user.Location,
-                    Homepage = user.Homepage,
-                    User = user,
-                    QuestionsReplied = 0, // TODO: user should provide answers
-                    QuestionsAsked = user.QuestionsAsked.Count(),
-                    FollowerCount = user.Followers.Count(),
-                    FollowingCount = user.Following.Count()
-                };
-                return profile;
-            }
+                ScreenName = user.ScreenName,
+                FollowsYou = currentUser != null && user.Following.Any(usr => usr.Equals(currentUser)),
+                Following = currentUser != null && user.Followers.Any(usr => usr.Equals(currentUser)),
+                IsOwnProfile = currentUser != null && currentUser.UserName == user.UserName,
+                CurrentUserAuthenticated = currentUser != null,
+                AvatarUrl = controller.GetAvatarUrl(user),
+                HeaderUrl = controller.GetHeaderUrl(user),
+                Bio = user.Bio,
+                Location = user.Location,
+                Homepage = user.Homepage,
+                User = user,
+                QuestionsReplied = 0, // TODO: user should provide answers
+                QuestionsAsked = user.QuestionsAsked.Count(),
+                FollowerCount = user.Followers.Count(),
+                FollowingCount = user.Following.Count()
+            };
+            return profile;
         }
 
         public static string GetAvatarUrl(this Controller controller, ApplicationUser user)

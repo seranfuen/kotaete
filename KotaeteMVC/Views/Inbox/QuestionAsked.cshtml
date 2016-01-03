@@ -1,6 +1,6 @@
 ﻿@model KotaeteMVC.Models.QuestionDetailAnswerViewModel
 
-<div class="panel @if (Model.Seen) { @("panel-info") } else {@("panel-default")} question-detail-panel">
+<div class="panel @if (Model.Seen) { @("panel-default") } else {@("panel-info")} question-detail-panel">
     <div class="panel-heading question-detail-panel-heading">
         <div class="row">
             <div class="question-asked-avatar col-md-2 col-sm-2 col-xs-2">
@@ -8,9 +8,10 @@
                     <img src="@Model.AskerAvatarUrl" alt="@Model.QuestionDetail.AskedBy.ScreenName" />
                 </a>
             </div>
+            <div class="question-delete-button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
             <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
                 <div class="row question-meta">
-                    <p>@Html.ActionLink(@Model.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.QuestionDetail.AskedBy.UserName }, null) asked you @Model.AskedTimeAgo</p>
+                    @Html.ActionLink(@Model.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.QuestionDetail.AskedBy.UserName }, null) asked you this question @Model.AskedTimeAgo
                 </div>
                 <div class="row question-content">
                     @foreach (var paragraph in Model.QuestionParagraphs)
@@ -24,7 +25,11 @@
     <div class="panel-body qst-detail-answer">
         @using (Html.BeginForm())
         {
-            @Html.TextAreaFor(model => model.Answer.Content);
+            @Html.Hidden("QuestionDetailId", Model.QuestionDetail.QuestionDetailId);
+            @Html.TextAreaFor(model => model.Answer.Content, new { @placeholder = "Your answer", @rows="3" } );
+            <div class="answer-buttons">
+                <button class="btn btn-success" type="submit" name="AnswerButton">Answer</button>
+            </div>
         }
     </div>
 </div>
