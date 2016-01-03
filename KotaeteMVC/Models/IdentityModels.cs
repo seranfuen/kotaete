@@ -91,5 +91,7 @@ namespace KotaeteMVC.Models
         public System.Data.Entity.DbSet<KotaeteMVC.Models.Question> Questions { get; set; }
 
         public DbSet<QuestionDetail> QuestionDetails { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
     }
 }

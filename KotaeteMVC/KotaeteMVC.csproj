@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertControllerBase.cs" />
+    <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
@@ -280,6 +281,7 @@
     <Content Include="Views\Shared\Question.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Answers\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Follow\" />
   </ItemGroup>

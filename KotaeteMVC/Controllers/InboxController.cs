@@ -25,12 +25,11 @@ namespace KotaeteMVC.Controllers
             var questions = user.User.QuestionsReceived.Select(qst => new QuestionDetailAnswerViewModel()
             {
                 QuestionDetail = qst,
-                Answer = new Answer(),
                 AskerAvatarUrl = this.GetAvatarUrl(qst.AskedBy),
                 AskedTimeAgo = this.GetTimeAgo(qst.TimeStamp),
                 QuestionParagraphs = qst.Question.Content.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None).ToList(),
                 Seen = qst.SeenByUser
-            }).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
+            }).Where(qst => qst.QuestionDetail.Answered == false).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
             foreach (var question in user.User.QuestionsReceived)
             {
                 question.SeenByUser = true;

@@ -23,10 +23,10 @@
         </div>
     </div>
     <div class="panel-body qst-detail-answer">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Create", "Answers", FormMethod.Post))
         {
             @Html.Hidden("QuestionDetailId", Model.QuestionDetail.QuestionDetailId);
-            @Html.TextAreaFor(model => model.Answer.Content, new { @placeholder = "Your answer", @rows="3" } );
+            @Html.TextAreaFor(model => model.AnswerContent, new { @placeholder = "Your answer to " + Model.QuestionDetail.AskedBy.ScreenName + "'s question", @rows="3" } );
             <div class="answer-buttons">
                 <button class="btn btn-success" type="submit" name="AnswerButton">Answer</button>
             </div>

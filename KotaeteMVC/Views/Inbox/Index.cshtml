@@ -11,8 +11,19 @@
 
 <h2>Inbox</h2>
 
-@foreach (var question in Model.QuestionDetails)
+@if (Model.QuestionDetails.Count > 0)
 {
-    Html.RenderPartial("QuestionAsked", question);
+
+    foreach (var question in Model.QuestionDetails)
+    {
+        Html.RenderPartial("QuestionAsked", question);
+    }
+}
+else
+{
+    <div class="jumbotron">
+        <h3>You have no questions!</h3>
+        <p>What a pity. You can get a random question or try making some friends <span class="glyphicon glyphicon-heart"></span></p>
+    </div>
 }
 
