@@ -14,6 +14,8 @@ namespace KotaeteMVC.Controllers
     public class UserController : AlertControllerBase
     {
 
+        public const string PreviousQuestionKey = "PreviousQuestionKey";
+
         [Route("user/{userName}", Name = "userProfile")]
         [Route("user/{userName}/{request}", Name = "userNameRequest")]
         public ActionResult Index(string userName, string request = "")
@@ -35,6 +37,12 @@ namespace KotaeteMVC.Controllers
             }
             var currentUser = this.GetCurrentUser();
             ProfileQuestionViewModel userProfile = this.GetProfileQuestionViewModel(userName);
+            if (TempData.ContainsKey(PreviousQuestionKey))
+            {
+                userProfile.QuestionDetail = TempData[PreviousQuestionKey] as ContentQuestionDetailViewModel;
+                userProfile.QuestionDetail.AskedToScreenName = user.ScreenName;
+                TryValidateModel(userProfile.QuestionDetail);
+            }
             return View(userProfile);
         }
 

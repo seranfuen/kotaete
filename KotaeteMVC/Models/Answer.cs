@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KotaeteMVC.App_GlobalResources;
+using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,8 +14,9 @@ namespace KotaeteMVC.Models
         [ScaffoldColumn(false)]
         public virtual int AnswerId { get; set; }
 
-        [Display(Name = "Your answer")]
+        [Display(ResourceType = typeof(AnswerStrings), Name = "YourAnswer")]
         [Required]
+        [MaxLength(1400)]
         public virtual string Content { get; set; }
 
         [ScaffoldColumn(false)]

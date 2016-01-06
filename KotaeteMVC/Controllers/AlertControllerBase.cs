@@ -1,4 +1,5 @@
 ﻿using KotaeteMVC.Models;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,16 @@ namespace KotaeteMVC.Controllers
                 (TempData[UserAlert.Key] as List<UserAlert>).Clear();
             }
             AddAlertDanger(message, header);
+        }
+
+        public void AddAlertDatabaseErrror(Exception e)
+        {
+#if (DEBUG)
+            AddAlertDanger(e.Message + " ##### " + e.StackTrace, "", true);
+#else
+            AddAlertDanger(MainGlobal.DatabaseError, MainGlobal.ErrorHeader, false);
+#endif
+            // TODO: log e, show e if debug
         }
 
         private void AddAlert(string message, string header, bool dismissable, UserAlert.MessageType alertType)

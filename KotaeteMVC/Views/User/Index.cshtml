@@ -12,5 +12,5 @@
 
 @if (HttpContext.Current.User.Identity.IsAuthenticated && Model.IsOwnProfile == false)
 {
-    Html.RenderPartial("Question", Model);
+    Html.RenderPartial("Question", Model.QuestionDetail);
 }

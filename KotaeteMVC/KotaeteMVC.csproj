@@ -162,6 +162,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\AnswerStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnswerStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\MainGlobal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainGlobal.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -183,6 +193,7 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\ContentQuestionDetailViewModel.cs" />
     <Compile Include="Models\FollowersViewModel.cs" />
     <Compile Include="Models\FollowUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -277,7 +288,7 @@
     <Content Include="Views\Shared\MiniProfile.cshtml" />
     <Content Include="Views\Shared\_ProfileContentLayout.cshtml" />
     <Content Include="Views\Inbox\Index.cshtml" />
-    <Content Include="Views\Inbox\QuestionAsked.cshtml" />
+    <Content Include="Views\Inbox\InboxQuestion.cshtml" />
     <Content Include="Views\Shared\Question.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +303,18 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\MainGlobal.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>MainGlobal.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\AnswerStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AnswerStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KotaeteMVC.App_GlobalResources;
+using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,10 +14,12 @@ namespace KotaeteMVC.Models
         [ScaffoldColumn(false)]
         public virtual QuestionDetail QuestionDetail { get; set; }
 
-        [ScaffoldColumn(false)]
+        [Required]
         public virtual int QuestionDetailId { get; set; }
 
+        [Display(ResourceType = typeof(AnswerStrings), Name = "AnswerFieldName")]
         [Required]
+        [MaxLength(1400, ErrorMessageResourceName = "AnswerMaxLengthError", ErrorMessageResourceType = typeof(AnswerStrings))]
         public virtual string AnswerContent { get; set; }
 
         [ScaffoldColumn(false)]
@@ -24,7 +28,7 @@ namespace KotaeteMVC.Models
         [ScaffoldColumn(false)]
         public virtual string AskedTimeAgo { get; set; }
 
-        [ScaffoldColumn(false)]
+        [ScaffoldColumn(false)] 
         public virtual List<string> QuestionParagraphs { get; set; }
 
         [ScaffoldColumn(false)]

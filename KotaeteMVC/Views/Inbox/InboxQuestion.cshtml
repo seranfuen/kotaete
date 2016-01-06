@@ -1,4 +1,5 @@
 ﻿@model KotaeteMVC.Models.QuestionDetailAnswerViewModel
+@using Resources
 
 <div class="panel @if (Model.Seen) { @("panel-default") } else {@("panel-info")} question-detail-panel">
     <div class="panel-heading question-detail-panel-heading">
@@ -25,8 +26,11 @@
     <div class="panel-body qst-detail-answer">
         @using (Html.BeginForm("Create", "Answers", FormMethod.Post))
         {
-            @Html.Hidden("QuestionDetailId", Model.QuestionDetail.QuestionDetailId);
-            @Html.TextAreaFor(model => model.AnswerContent, new { @placeholder = "Your answer to " + Model.QuestionDetail.AskedBy.ScreenName + "'s question", @rows="3" } );
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.QuestionDetailId);
+            @Html.TextAreaFor(model => model.AnswerContent, new  {@placeholder = AnswerStrings.AnswerPlaceHolderFirstHalf + Model.QuestionDetail.AskedBy.ScreenName + 
+                AnswerStrings.AnswerPlaceHolderSecondHalf, @rows="3" } );
+            @Html.ValidationMessageFor(model => model.AnswerContent, "", new { @class = "text-danger"})
             <div class="answer-buttons">
                 <button class="btn btn-success" type="submit" name="AnswerButton">Answer</button>
             </div>

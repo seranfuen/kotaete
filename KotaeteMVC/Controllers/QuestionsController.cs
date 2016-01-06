@@ -1,5 +1,6 @@
 ﻿using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,45 +12,65 @@ namespace KotaeteMVC.Controllers
     public class QuestionsController : AlertControllerBase
     {
         [Authorize]
-        public ActionResult Create([Bind(Include = "ScreenName, QuestionContent")] ProfileQuestionViewModel question)
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent")] ContentQuestionDetailViewModel contentQuestion)
         {
-            if (string.IsNullOrWhiteSpace(question.ScreenName))
+            var valid = true;
+            var askedUser = this.GetUserWithName(contentQuestion.AskedToUserName);
+            var askingUser = this.GetCurrentUser();
+            if (askingUser == null)
             {
-                AddAlertDanger("No user to ask question specified!");
-                if (Request.UrlReferrer != null)
-                {
-                    return Redirect(Request.UrlReferrer.AbsoluteUri);
-                } else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                AddAlertDanger("The current user couldn't be authenticated", "Fatal error", false);
+                valid = false;
+            } else if (askedUser == null)
+            {
+                AddAlertDanger("There was an error retrieving the details about the user " + contentQuestion.AskedToUserName, "Fatal error", false);
             }
-            var askedUser = this.GetUserWithName(question.ScreenName);
-            ApplicationUser asker = this.GetCurrentUser();
-            var now = DateTime.Now;
-            var askedUserProfile = this.GetProfileQuestionViewModel(question.ScreenName);
-            askedUserProfile.QuestionContent = question.QuestionContent;
-            var qstDetail = new QuestionDetail()
+            if (ModelState.IsValid && valid)
             {
-                Question = new Question()
+                Question question = InitializeQuestion(contentQuestion, askedUser);
+                QuestionDetail questionDetail = NewMethod(askedUser, askingUser, question);
+                try
                 {
-                    Content = question.QuestionContent,
-                    TimeStamp = now,
-                    AskedBy = asker,
-                },
+                    Context.QuestionDetails.Add(questionDetail);
+                    Context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    AddAlertDatabaseErrror(e);
+                }
+                AddAlertSuccess(MainGlobal.QuestionAskedSuccessfullyFirstHalf + askedUser.ScreenName + MainGlobal.QuestionAskedSuccessfullySecondHalf, "", true);
+            }
+            else
+            {
+                TempData[UserController.PreviousQuestionKey] = contentQuestion;
+            }
+            return RedirectToRoute("userProfile", new { @userName = contentQuestion.AskedToUserName });
+        }
+
+        private static QuestionDetail NewMethod(ApplicationUser askedUser, ApplicationUser askingUser, Question question)
+        {
+            return new QuestionDetail()
+            {
+                Answered = false,
+                TimeStamp = question.TimeStamp,
+                AskedBy = askingUser,
                 AskedTo = askedUser,
-                AskedBy = asker,
-                TimeStamp = now,
+                Question = question,
+                Deleted = false,
                 SeenByUser = false
             };
-            var result = TryValidateModel(qstDetail.Question);
-            if (result)
+        }
+
+        private static Question InitializeQuestion(ContentQuestionDetailViewModel contentQuestion, ApplicationUser askedUser)
+        {
+            return new Question()
             {
-                Context.QuestionDetails.Add(qstDetail);
-                Context.SaveChanges();
-                AddAlertSuccess("Question asked", "", true);
-            }
-            return RedirectToRoute("userProfile", new { @userName = question.ScreenName });
+                AskedBy = askedUser,
+                Content = contentQuestion.QuestionContent,
+                TimeStamp = DateTime.Now
+            };
         }
     }
 }

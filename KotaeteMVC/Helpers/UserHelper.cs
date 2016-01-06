@@ -46,7 +46,12 @@ namespace KotaeteMVC.Helpers
                 QuestionsReplied = 0, // TODO: user should provide answers
                 QuestionsAsked = user.QuestionsAsked.Count(),
                 FollowerCount = user.Followers.Count(),
-                FollowingCount = user.Following.Count()
+                FollowingCount = user.Following.Count(),
+                QuestionDetail = new ContentQuestionDetailViewModel()
+                {
+                    AskedToScreenName = user.ScreenName,
+                    AskedToUserName = user.UserName
+                }
             };
             return profile;
         }

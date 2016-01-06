@@ -16,7 +16,7 @@ namespace KotaeteMVC.Models
 
         public virtual string ScreenName { get; set; }
 
-        public virtual string QuestionContent { get; set; }
+        public ContentQuestionDetailViewModel QuestionDetail { get; set; }
 
         public virtual bool FollowsYou { get; set; }
 

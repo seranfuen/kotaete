@@ -1,4 +1,4 @@
-﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+﻿@model KotaeteMVC.Models.ContentQuestionDetailViewModel
 
 <div id="ask-question" class="panel panel-default">
     <div class="panel-heading">
@@ -8,13 +8,13 @@
     {
 
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+        @Html.ValidationSummary(false,"", new { @class = "text-danger" })
         <div class="form-group">
             <div>
-                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.ScreenName + " here" })
+                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.AskedToScreenName + " here" })
             </div>
         </div>
-            @Html.Hidden("ScreenName", Model.User.UserName)
+            @Html.HiddenFor(model => model.AskedToUserName)
             <div class="form-group pull-left">
                 <div>
                     <input type="submit" value="Ask" class="btn btn-default" />
