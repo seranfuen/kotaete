@@ -13,6 +13,28 @@ namespace KotaeteMVC.Controllers
     public class AnswersController : AlertControllerBase
     {
 
+        [Route("user/{userName}/answers")]
+        [Route("answers/list/{userName}")]
+        public ActionResult List(string userName)
+        {
+            if (this.ExistsUserName(userName))
+            {
+                var answersByDate = from answer in Context.Answers
+                                    where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
+                                    orderby answer.TimeStamp descending
+                                    select answer;
+                return View("AnswerList", answersByDate); // create viewmodel
+            } else
+            {
+                var errorModel = new ErrorViewModel()
+                {
+                    ErrorTitle = AnswerStrings.UserNotFoundErrorHeader,
+                    ErrorMessage = AnswerStrings.UserNotFoundErrorMessage
+                };
+                return View("Error", errorModel);
+            }
+        }
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]

@@ -147,6 +147,12 @@
   <data name="SuccessAnswer" xml:space="preserve">
     <value>Your answer was posted</value>
   </data>
+  <data name="UserNotFoundErrorHeader" xml:space="preserve">
+    <value>User not found</value>
+  </data>
+  <data name="UserNotFoundErrorMessage" xml:space="preserve">
+    <value>The user whose answers you are trying to see does not exist</value>
+  </data>
   <data name="YourAnswer" xml:space="preserve">
     <value>Type your answer</value>
   </data>

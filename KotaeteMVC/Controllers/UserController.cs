@@ -8,6 +8,7 @@ using KotaeteMVC.Helpers;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using Resources;
 
 namespace KotaeteMVC.Controllers
 {
@@ -17,23 +18,12 @@ namespace KotaeteMVC.Controllers
         public const string PreviousQuestionKey = "PreviousQuestionKey";
 
         [Route("user/{userName}", Name = "userProfile")]
-        [Route("user/{userName}/{request}", Name = "userNameRequest")]
-        public ActionResult Index(string userName, string request = "")
+        public ActionResult Index(string userName)
         {
             var user = this.GetUserWithName(userName);
             if (user == null)
             {
-                ViewBag.UserName = userName;
-                return View("UserNotFound");
-            }
-
-            if (request == "Followers")
-            {
-                return View("Followers", GetFollowersViewModel(user));
-            }
-            else if (request == "Following")
-            {
-                return View("Following", GetFollowingViewModel(user));
+                return GetUserNotFoundView(userName);
             }
             var currentUser = this.GetCurrentUser();
             ProfileQuestionViewModel userProfile = this.GetProfileQuestionViewModel(userName);
@@ -46,10 +36,42 @@ namespace KotaeteMVC.Controllers
             return View(userProfile);
         }
 
+        [Route("user/{userName}/following", Name = "userFollowing")]
+        public ActionResult Following(string userName)
+        {
+            var user = this.GetUserWithName(userName);
+            if (user == null)
+            {
+                return GetUserNotFoundView(userName);
+            }
+            return View("Following", GetFollowingViewModel(user));
+        }
+
+        [Route("user/{userName}/followers", Name = "userFollowers")]
+        public ActionResult Followers(string userName)
+        {
+            var user = this.GetUserWithName(userName);
+            if (user == null)
+            {
+                return GetUserNotFoundView(userName);
+            }
+            return View("Followers", GetFollowersViewModel(user));
+        }
+
+        private ActionResult GetUserNotFoundView(string user)
+        {
+            var errorModel = new ErrorViewModel()
+            {
+                ErrorTitle = user + MainGlobal.UserNotFoundErrorHeading,
+                ErrorMessage = MainGlobal.UserNotFoundErrorMessage
+            };
+            return View("Error", errorModel);
+        }
+
         private FollowersViewModel GetFollowersViewModel(ApplicationUser user)
         {
             var followers = new FollowersViewModel();
-            followers.OwnerProfile = this.GetProfileQuestionViewModel(user.UserName);
+            followers.OwnerProfile = this.GetProfile(user.UserName);
             followers.Followers = user.Followers.Select(follower => this.GetProfileQuestionViewModel(follower.UserName)).ToList();
             return followers;
         }
@@ -57,7 +79,7 @@ namespace KotaeteMVC.Controllers
         private FollowersViewModel GetFollowingViewModel(ApplicationUser user)
         {
             var followers = new FollowersViewModel();
-            followers.OwnerProfile = this.GetProfileQuestionViewModel(user.UserName);
+            followers.OwnerProfile = this.GetProfile(user.UserName);
             followers.Followers = user.Following.Select(following => this.GetProfileQuestionViewModel(following.UserName)).ToList();
             return followers;
         }

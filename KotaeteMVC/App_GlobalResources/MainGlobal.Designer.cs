@@ -61,6 +61,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to here.
+        /// </summary>
+        internal static string ClickToGoBackLink {
+            get {
+                return ResourceManager.GetString("ClickToGoBackLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click.
+        /// </summary>
+        internal static string ClickToGoBackMessageFirst {
+            get {
+                return ResourceManager.GetString("ClickToGoBackMessageFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to go back..
+        /// </summary>
+        internal static string ClickToGoBackMessageSecond {
+            get {
+                return ResourceManager.GetString("ClickToGoBackMessageSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error contacting the database.
         /// </summary>
         internal static string DatabaseError {
@@ -102,6 +129,24 @@ namespace Resources {
         internal static string QuestionContentMissing {
             get {
                 return ResourceManager.GetString("QuestionContentMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  was not found!.
+        /// </summary>
+        internal static string UserNotFoundErrorHeading {
+            get {
+                return ResourceManager.GetString("UserNotFoundErrorHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user you are trying to see does not exist.
+        /// </summary>
+        internal static string UserNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("UserNotFoundErrorMessage", resourceCulture);
             }
         }
     }

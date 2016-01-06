@@ -2,6 +2,7 @@
 using KotaeteMVC.Models;
 using System.Linq;
 using System.Web.Mvc;
+using System;
 
 namespace KotaeteMVC.Helpers
 {
@@ -24,36 +25,71 @@ namespace KotaeteMVC.Helpers
             return controller.Context.Users.FirstOrDefault(usr => usr.UserName == userName);
         }
 
+        public static bool ExistsUserName(this BaseController controller, string userName)
+        {
+            return controller.Context.Users.Any(user => user.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase));
+        }
+
 
         public static ProfileQuestionViewModel GetProfileQuestionViewModel(this BaseController controller, string userName)
         {
             var currentUserName = controller.GetCurrentUserName();
             var currentUser = controller.Context.Users.FirstOrDefault(usr => usr.UserName.Equals(currentUserName, System.StringComparison.OrdinalIgnoreCase));
             var user = controller.Context.Users.First(usr => usr.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase));
-            var profile = new ProfileQuestionViewModel()
+            var profileQuestion = new ProfileQuestionViewModel()
             {
-                ScreenName = user.ScreenName,
-                FollowsYou = currentUser != null && user.Following.Any(usr => usr.Equals(currentUser)),
-                Following = currentUser != null && user.Followers.Any(usr => usr.Equals(currentUser)),
-                IsOwnProfile = currentUser != null && currentUser.UserName == user.UserName,
-                CurrentUserAuthenticated = currentUser != null,
-                AvatarUrl = controller.GetAvatarUrl(user),
-                HeaderUrl = controller.GetHeaderUrl(user),
-                Bio = user.Bio,
-                Location = user.Location,
-                Homepage = user.Homepage,
-                User = user,
-                QuestionsReplied = 0, // TODO: user should provide answers
-                QuestionsAsked = user.QuestionsAsked.Count(),
-                FollowerCount = user.Followers.Count(),
-                FollowingCount = user.Following.Count(),
-                QuestionDetail = new ContentQuestionDetailViewModel()
-                {
-                    AskedToScreenName = user.ScreenName,
-                    AskedToUserName = user.UserName
-                }
+                Profile = InitializeProfile(controller, currentUser, user),
+                QuestionDetail = InitializeQuestionDetail(user)
             };
-            return profile;
+            return profileQuestion;
+        }
+
+        private static ContentQuestionDetailViewModel InitializeQuestionDetail(ApplicationUser user)
+        {
+            return new ContentQuestionDetailViewModel()
+            {
+                AskedToScreenName = user.ScreenName,
+                AskedToUserName = user.UserName
+            };
+        }
+
+        public static ProfileViewModel GetProfile(this BaseController controller, string userName)
+        {
+            var profileUser = controller.GetUserWithName(userName);
+            if (profileUser == null) return null;
+            var currentUser = controller.GetCurrentUser();
+            return controller.InitializeProfile(currentUser, profileUser);
+        }
+
+        public static ProfileViewModel InitializeProfile(this BaseController controller, ApplicationUser currentUser, ApplicationUser profileUser)
+        {
+            return new ProfileViewModel()
+            {
+                ScreenName = profileUser.ScreenName,
+                FollowsYou = currentUser != null && profileUser.Following.Any(usr => usr.Equals(currentUser)),
+                Following = currentUser != null && profileUser.Followers.Any(usr => usr.Equals(currentUser)),
+                IsOwnProfile = currentUser != null && currentUser.UserName == profileUser.UserName,
+                AvatarUrl = controller.GetAvatarUrl(profileUser),
+                HeaderUrl = controller.GetHeaderUrl(profileUser),
+                Bio = profileUser.Bio,
+                Location = profileUser.Location,
+                Homepage = profileUser.Homepage,
+                User = profileUser,
+                QuestionsReplied = GetQuestionsAnsweredByUser(controller, profileUser), // TODO: user should provide answers
+                QuestionsAsked = GetQuestionsAnsweredToUser(controller, profileUser),
+                FollowerCount = profileUser.Followers.Count(),
+                FollowingCount = profileUser.Following.Count()
+            };
+        }
+
+        private static int GetQuestionsAnsweredByUser(BaseController controller, ApplicationUser profileUser)
+        {
+            return controller.Context.Answers.Count(answer => answer.Deleted == false && answer.User.Id == profileUser.Id);
+        }
+
+        private static int GetQuestionsAnsweredToUser(BaseController controller, ApplicationUser profileUser)
+        {
+            return profileUser.QuestionsAsked.Count(qst => controller.Context.Answers.Any(answer => qst.QuestionDetailId == answer.QuestionDetailId && answer.Deleted == false));
         }
 
         public static string GetAvatarUrl(this Controller controller, ApplicationUser user)

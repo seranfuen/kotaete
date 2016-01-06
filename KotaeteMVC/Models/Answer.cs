@@ -2,6 +2,7 @@
 using Resources;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,10 @@ namespace KotaeteMVC.Models
 
         [ScaffoldColumn(false)]
         public virtual DateTime TimeStamp { get; set; }
+
+        [ScaffoldColumn(false)]
+        [DefaultValue(false)]
+        public virtual bool Deleted { get; set; }
 
     }
 }

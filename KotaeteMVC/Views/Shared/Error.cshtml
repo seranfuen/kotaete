@@ -1,9 +1,15 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@using Resources;
+@model KotaeteMVC.Models.ErrorViewModel
 
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = Model.ErrorTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
+<div class="error-container container">
+    <div class="jumbotron">
+        <h2>@MainGlobal.ErrorHeader: @Model.ErrorTitle</h2>
+        <p>@Model.ErrorMessage</p>
+        <p>@MainGlobal.ClickToGoBackMessageFirst <a href="javascript:history.back()">@MainGlobal.ClickToGoBackLink</a> @MainGlobal.ClickToGoBackMessageSecond</p>
+    </div>
+</div>

@@ -151,6 +151,24 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User not found.
+        /// </summary>
+        public static string UserNotFoundErrorHeader {
+            get {
+                return ResourceManager.GetString("UserNotFoundErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user whose answers you are trying to see does not exist.
+        /// </summary>
+        public static string UserNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("UserNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type your answer.
         /// </summary>
         public static string YourAnswer {

@@ -14,15 +14,16 @@ namespace KotaeteMVC.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var user = this.GetProfileQuestionViewModel(this.GetCurrentUserName());
+            var user = this.GetProfile(this.GetCurrentUserName());
             var viewModel = new ProfileQuestionDetailViewModel() { Profile = user, QuestionDetails = GetQuestionDetailAnswerList(user) };
             Context.SaveChanges();
             return View(viewModel);
         }
 
-        private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(ProfileQuestionViewModel user)
+        private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(ProfileViewModel profileModel)
         {
-            var questions = user.User.QuestionsReceived.Select(qst => new QuestionDetailAnswerViewModel()
+            var user = profileModel.User;
+            var questions = user.QuestionsReceived.Select(qst => new QuestionDetailAnswerViewModel()
             {
                 QuestionDetail = qst,
                 QuestionDetailId = qst.QuestionDetailId,
@@ -31,7 +32,7 @@ namespace KotaeteMVC.Controllers
                 QuestionParagraphs = qst.Question.Content.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None).ToList(),
                 Seen = qst.SeenByUser
             }).Where(qst => qst.QuestionDetail.Answered == false).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
-            foreach (var question in user.User.QuestionsReceived)
+            foreach (var question in user.QuestionsReceived)
             {
                 question.SeenByUser = true;
             }

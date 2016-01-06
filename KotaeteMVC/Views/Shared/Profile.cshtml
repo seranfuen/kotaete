@@ -1,4 +1,4 @@
-﻿@model KotaeteMVC.Models.ProfileQuestionViewModel
+﻿@model KotaeteMVC.Models.ProfileViewModel
 
 <div class="panel panel-default profile-panel">
     <div class="panel-heading" id="profile-header">
@@ -16,7 +16,7 @@
             }
         </div>
         <div class="row follow-indication">
-            @if (Model.CurrentUserAuthenticated)
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 if (Model.IsOwnProfile)
                 {
@@ -58,13 +58,13 @@
             <div class="profile-stats-container">
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
-                        <p class="lead">@Html.RouteLink(Model.FollowingCount.ToString(), "userNameRequest", new { userName = Model.User.UserName, request = "Following" }, null)</p>
+                        <p class="lead">@Html.RouteLink(Model.FollowingCount.ToString(), "userFollowing", new { userName = Model.User.UserName }, null)</p>
                         <p>
                             Following
                         </p>
                     </div>
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
-                        <p class="lead">@Html.RouteLink(Model.FollowerCount.ToString(), "userNameRequest", new { userName = Model.User.UserName, request = "Followers" }, null)</p>
+                        <p class="lead">@Html.RouteLink(Model.FollowerCount.ToString(), "userFollowers", new { userName = Model.User.UserName }, null)</p>
                         <p>
                             @if (Model.FollowerCount == 1)
                             { @("Follower") }
