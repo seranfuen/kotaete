@@ -13,17 +13,32 @@ namespace KotaeteMVC.Controllers
     public class AnswersController : AlertControllerBase
     {
 
-        [Route("user/{userName}/answers")]
+        [Route("user/{userName}/answers", Name ="AnswersProfile")]
         [Route("answers/list/{userName}")]
         public ActionResult List(string userName)
         {
             if (this.ExistsUserName(userName))
             {
-                var answersByDate = from answer in Context.Answers
+                var answersByDate = (from answer in Context.Answers
                                     where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
                                     orderby answer.TimeStamp descending
-                                    select answer;
-                return View("AnswerList", answersByDate); // create viewmodel
+                                    select answer).ToList();
+                var answerViewModel = answersByDate.Select(answer => new AnswerProfileViewModel()
+                {
+                    Answer = answer,
+                    AnswerParagraphs = answer.Content.SplitLines(),
+                    AskerAvatarUrl = this.GetAvatarUrl(answer.Question.AskedBy),
+                    ReplierAvatarUrl = this.GetAvatarUrl(answer.Question.AskedTo),
+                    AskedTimeAgo = this.GetTimeAgo(answer.Question.TimeStamp),
+                    QuestionParagraphs = answer.Question.Question.Content.SplitLines(),
+                    RepliedTimeAgo = this.GetTimeAgo(answer.TimeStamp)
+                });
+                var answerProfileViewModel = new AnswerListProfileViewModel()
+                {
+                    Answers = answerViewModel.ToList(),
+                    Profile = this.GetProfile(userName)
+                };
+                return View("AnswerList", answerProfileViewModel); // create viewmodel
             } else
             {
                 var errorModel = new ErrorViewModel()

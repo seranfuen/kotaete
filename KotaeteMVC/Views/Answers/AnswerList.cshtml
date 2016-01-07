@@ -1,8 +1,24 @@
-﻿@model KotaeteMVC.Models.AnswerListProfileViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.AnswerListProfileViewModel
 
 @{
-    ViewBag.Title = "AnswerList";
+    ViewBag.Title = Model.Profile.ScreenName + AnswerStrings.Answers;
     Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
 }
 
-<h2>AnswerList</h2>
+<h2>@Model.Profile.User.ScreenName@AnswerStrings.Answers</h2>
+
+@if (Model.Answers.Any() == false)
+{
+    Html.RenderPartial("NoAnswers");
+} else
+{
+    foreach (var answer in Model.Answers)
+    {
+        Html.RenderPartial("AnswerDetail", answer);
+    }
+}
+
+@section Profile {
+    @Html.Partial("Profile", Model.Profile)
+}

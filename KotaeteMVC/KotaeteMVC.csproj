@@ -189,11 +189,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerListProfileViewModel.cs" />
+    <Compile Include="Models\AnswerProfileViewModel.cs" />
     <Compile Include="Models\ContentQuestionDetailViewModel.cs" />
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\FollowersViewModel.cs" />
@@ -294,6 +296,8 @@
     <Content Include="Views\Inbox\InboxQuestion.cshtml" />
     <Content Include="Views\Shared\Question.cshtml" />
     <Content Include="Views\Answers\AnswerList.cshtml" />
+    <Content Include="Views\Answers\NoAnswers.cshtml" />
+    <Content Include="Views\Answers\AnswerDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />

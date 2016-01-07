@@ -29,7 +29,7 @@ namespace KotaeteMVC.Controllers
                 QuestionDetailId = qst.QuestionDetailId,
                 AskerAvatarUrl = this.GetAvatarUrl(qst.AskedBy),
                 AskedTimeAgo = this.GetTimeAgo(qst.TimeStamp),
-                QuestionParagraphs = qst.Question.Content.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None).ToList(),
+                QuestionParagraphs = qst.Question.Content.SplitLines(),
                 Seen = qst.SeenByUser
             }).Where(qst => qst.QuestionDetail.Answered == false).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
             foreach (var question in user.QuestionsReceived)

@@ -106,6 +106,24 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;s answers.
+        /// </summary>
+        public static string Answers {
+            get {
+                return ResourceManager.GetString("Answers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to asked.
+        /// </summary>
+        public static string AskedHeader {
+            get {
+                return ResourceManager.GetString("AskedHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The question you are trying to reply to was deleted.
         /// </summary>
         public static string DeletedQuestionDetailWarning {
@@ -124,6 +142,15 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This user hasn&apos;t replied to any question yet.
+        /// </summary>
+        public static string NoAnswers {
+            get {
+                return ResourceManager.GetString("NoAnswers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The question you are trying to reply to cannot be found.
         /// </summary>
         public static string QuestionDetailNotFound {
@@ -138,6 +165,15 @@ namespace KotaeteMVC.App_GlobalResources {
         public static string QuestionDetailNotToCurrentUser {
             get {
                 return ResourceManager.GetString("QuestionDetailNotToCurrentUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to replied.
+        /// </summary>
+        public static string RepliedHeader {
+            get {
+                return ResourceManager.GetString("RepliedHeader", resourceCulture);
             }
         }
         

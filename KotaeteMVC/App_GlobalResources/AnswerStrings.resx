@@ -132,17 +132,30 @@
   <data name="AnswerPlaceHolderSecondHalf" xml:space="preserve">
     <value> 's question</value>
   </data>
+  <data name="Answers" xml:space="preserve">
+    <value>'s answers</value>
+    <comment>Before answers goes the user name</comment>
+  </data>
+  <data name="AskedHeader" xml:space="preserve">
+    <value>asked</value>
+  </data>
   <data name="DeletedQuestionDetailWarning" xml:space="preserve">
     <value>The question you are trying to reply to was deleted</value>
   </data>
   <data name="EmptyAnswerError" xml:space="preserve">
     <value>Your answer cannot be empty</value>
   </data>
+  <data name="NoAnswers" xml:space="preserve">
+    <value>This user hasn't replied to any question yet</value>
+  </data>
   <data name="QuestionDetailNotFound" xml:space="preserve">
     <value>The question you are trying to reply to cannot be found</value>
   </data>
   <data name="QuestionDetailNotToCurrentUser" xml:space="preserve">
     <value>This question was not asked to you!</value>
+  </data>
+  <data name="RepliedHeader" xml:space="preserve">
+    <value>replied</value>
   </data>
   <data name="SuccessAnswer" xml:space="preserve">
     <value>Your answer was posted</value>
