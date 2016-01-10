@@ -3,6 +3,7 @@ using KotaeteMVC.Models;
 using System.Linq;
 using System.Web.Mvc;
 using System;
+using KotaeteMVC.Models.Entities;
 
 namespace KotaeteMVC.Helpers
 {

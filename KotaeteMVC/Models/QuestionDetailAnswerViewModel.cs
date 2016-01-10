@@ -1,4 +1,5 @@
 ﻿using KotaeteMVC.App_GlobalResources;
+using KotaeteMVC.Models.Entities;
 using Resources;
 using System;
 using System.Collections.Generic;

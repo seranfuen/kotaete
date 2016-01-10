@@ -1,12 +1,10 @@
-﻿@using Resources
-@model KotaeteMVC.Models.AnswerListProfileViewModel
+﻿@model KotaeteMVC.Models.ViewModels.AnswerListProfileViewModel
 
 @{
-    ViewBag.Title = Model.Profile.ScreenName + AnswerStrings.Answers;
     Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
 }
 
-<h2>@Model.Profile.User.ScreenName@AnswerStrings.Answers</h2>
+<h2>@ViewBag.Title</h2>
 
 @if (Model.Answers.Any() == false)
 {
@@ -18,6 +16,8 @@
         Html.RenderPartial("AnswerDetail", answer);
     }
 }
+
+@Html.Partial("ItemListPagination", Model)
 
 @section Profile {
     @Html.Partial("Profile", Model.Profile)

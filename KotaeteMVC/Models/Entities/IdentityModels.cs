@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KotaeteMVC.Models.Initializers;
 
-namespace KotaeteMVC.Models
+namespace KotaeteMVC.Models.Entities
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -88,7 +88,7 @@ namespace KotaeteMVC.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<KotaeteMVC.Models.Question> Questions { get; set; }
+        public DbSet<Question> Questions { get; set; }
 
         public DbSet<QuestionDetail> QuestionDetails { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
+using KotaeteMVC.Models.Entities;
 using Resources;
 using System;
 using System.Collections.Generic;

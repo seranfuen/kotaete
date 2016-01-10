@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace KotaeteMVC.Models
+namespace KotaeteMVC.Models.Entities
 {
     public class Question
     {

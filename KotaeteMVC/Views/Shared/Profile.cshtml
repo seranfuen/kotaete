@@ -74,7 +74,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
-                        <p class="lead">@Model.QuestionsAsked</p>
+                        <p class="lead">@Html.RouteLink(Model.QuestionsAsked.ToString(), "QuestionsProfile", new { @userName = Model.User.UserName })</p>
                         <p>
                             @if (Model.QuestionsAsked == 1)
                             { @("Question") }

@@ -9,6 +9,7 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Resources;
+using KotaeteMVC.Models.Entities;
 
 namespace KotaeteMVC.Controllers
 {
