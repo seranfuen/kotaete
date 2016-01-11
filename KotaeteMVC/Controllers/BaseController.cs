@@ -6,11 +6,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using KotaeteMVC.Helpers;
 
 namespace KotaeteMVC.Controllers
 {
     public abstract class BaseController : Controller
     {
+
+        public BaseController() : base()
+        {
+            Context = new ApplicationDbContext();
+        }
+
+        protected int GetInboxCount()
+        {
+            var user = this.GetCurrentUser();
+            if (user == null) return 0;
+            return Context.QuestionDetails.Count(entity => entity.AskedTo.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase) &&
+                entity.SeenByUser == false);
+        }
+
 
         public virtual int GetPageSize()
         {
@@ -29,11 +44,6 @@ namespace KotaeteMVC.Controllers
 
 
         public ApplicationDbContext Context { get; private set; }
-
-        public BaseController()
-        {
-            Context = new ApplicationDbContext();
-        }
 
         public int GetPageCount(int itemCount)
         {
