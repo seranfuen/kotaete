@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using KotaeteMVC.Helpers;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
@@ -12,12 +12,20 @@ namespace KotaeteMVC.Controllers
         // GET: Navbar
         public ActionResult Index()
         {
-            var model = new NavbarViewModel()
+            if (Request.IsAuthenticated)
             {
-                IsAuthenticated = User.Identity.IsAuthenticated,
-                InboxCount = GetInboxCount()
-            };
-            return PartialView("Index", model);
+                var model = new NavbarViewModel()
+                {
+                    IsAuthenticated = User.Identity.IsAuthenticated,
+                    InboxCount = GetInboxCount(),
+                    AvatarUrl = this.GetAvatarUrl(this.GetCurrentUser()),
+                    UserName = this.GetCurrentUser().ScreenName
+                };
+                return PartialView("Index", model);
+            } else
+            {
+                return PartialView("Index", new NavbarViewModel());
+            }
         }
     }
 }

@@ -150,3 +150,53 @@ textarea {
 .error-container {
     margin-top: 50px;
 }
+
+.navbar-inverse {
+    background-color: #051E59;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #B8BECB;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: #FFFFFF;
+  background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > li > a 
+{
+    color: #B8BECB;
+}
+
+.navbar {
+    border: 0px !important;
+}
+
+.navbar-avatar-img {
+    height: 50px;
+    width: auto;
+
+}
+
+.navbar-avatar {
+    padding: 0px !important;
+}
+
+.navbar .container {
+    max-width: 1000px;
+}
+
+.login input
+{
+ min-width: 0% !important;
+}
+
+.login {
+    max-width: 800px;
+}
+
+body {
+    background-color: #B8BECB;
+}

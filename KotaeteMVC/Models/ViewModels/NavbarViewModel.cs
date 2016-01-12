@@ -11,5 +11,9 @@ namespace KotaeteMVC.Models.ViewModels
 
         public int InboxCount { get; set; }
 
+        public string AvatarUrl { get; set; }
+
+        public string UserName { get; set; }
+
     }
 }
