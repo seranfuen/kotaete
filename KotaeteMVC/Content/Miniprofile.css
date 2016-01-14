@@ -1,9 +1,15 @@
 ﻿.mini-avatar {
     height: 80px;
     width: auto;
-    border: 3px solid white;
+    border: 2px solid #BDBBFF;
     border-radius: 6px;
 }
+
+.mini-avatar:hover,
+.mini-avatar:active {
+    border-color: #1713FF;
+}
+
 
 .mini-profile-avatar {
     text-align: center;
@@ -59,6 +65,6 @@
 
 .mini-profile-username p {
     font-size: large;
-    color: blueviolet;
+    color: #013B6C;
     margin: 0px;
 }

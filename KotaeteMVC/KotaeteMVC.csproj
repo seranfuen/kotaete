@@ -172,6 +172,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainGlobal.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\QuestionStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestionStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -324,6 +329,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AnswerStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="App_GlobalResources\QuestionStrings.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>QuestionStrings.Designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

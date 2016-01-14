@@ -15,42 +15,75 @@ namespace KotaeteMVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent")] ContentQuestionDetailViewModel contentQuestion)
+        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent, AskToAllFollowers")] ContentQuestionDetailViewModel contentQuestion)
         {
-            var valid = true;
-            var askedUser = this.GetUserWithName(contentQuestion.AskedToUserName);
             var askingUser = this.GetCurrentUser();
-            if (askingUser == null)
+            Question question = InitializeQuestion(contentQuestion, askingUser);
+            List<QuestionDetail> questionDetails = null;
+            if (contentQuestion.AskToAllFollowers == false)
             {
-                AddAlertDanger("The current user couldn't be authenticated", "Fatal error", false);
-                valid = false;
-            } else if (askedUser == null)
-            {
-                AddAlertDanger("There was an error retrieving the details about the user " + contentQuestion.AskedToUserName, "Fatal error", false);
-            }
-            if (ModelState.IsValid && valid)
-            {
-                Question question = InitializeQuestion(contentQuestion, askedUser);
-                QuestionDetail questionDetail = NewMethod(askedUser, askingUser, question);
-                try
+                if (ModelState.IsValid)
                 {
-                    Context.QuestionDetails.Add(questionDetail);
-                    Context.SaveChanges();
+                    var askedUser = this.GetUserWithName(contentQuestion.AskedToUserName);
+                    if (askedUser == null)
+                    {
+                        return this.GetErrorView(QuestionStrings.UserNotFoundHeader, QuestionStrings.UserNotFoundMessage);
+                    }
+
+                    questionDetails = CreateQuestionDetails(question, askedUser);
+                    AddAlertSuccess(MainGlobal.QuestionAskedSuccessfullyFirstHalf + askedUser.ScreenName + MainGlobal.QuestionAskedSuccessfullySecondHalf, "", true);
                 }
-                catch (Exception e)
+                else
                 {
-                    AddAlertDatabaseErrror(e);
+                    TempData[UserController.PreviousQuestionKey] = contentQuestion;
                 }
-                AddAlertSuccess(MainGlobal.QuestionAskedSuccessfullyFirstHalf + askedUser.ScreenName + MainGlobal.QuestionAskedSuccessfullySecondHalf, "", true);
+                return RedirectToRoute("userProfile", new { @userName = contentQuestion.AskedToUserName });
             }
             else
             {
-                TempData[UserController.PreviousQuestionKey] = contentQuestion;
+                if (ModelState.IsValid)
+                {
+                    if (askingUser.Followers.Any() == false)
+                    {
+                        return GetErrorView(QuestionStrings.NoFollowersHeader, QuestionStrings.NoFollowersMessage);
+                    }
+                    questionDetails = CreateQuestionDetails(question, askingUser.Followers.ToArray());
+                    Context.QuestionDetails.AddRange(questionDetails);
+                    Context.SaveChanges();
+                    return RedirectToRoute("userProfile", new { @userName = askingUser.UserName });
+                }
+                else
+                {
+                    TempData[UserController.PreviousQuestionKey] = contentQuestion;
+                    return RedirectToRoute("askFollowers");
+                }
             }
-            return RedirectToRoute("userProfile", new { @userName = contentQuestion.AskedToUserName });
         }
 
-        private static QuestionDetail NewMethod(ApplicationUser askedUser, ApplicationUser askingUser, Question question)
+        private Question InitializeQuestion(ContentQuestionDetailViewModel contentQuestion, ApplicationUser askingUser)
+        {
+            return new Question()
+            {
+                AskedBy = askingUser,
+                Content = contentQuestion.QuestionContent,
+                TimeStamp = DateTime.Now
+            };
+        }
+
+        private List<QuestionDetail> CreateQuestionDetails(Question question, params ApplicationUser[] askedUsers)
+        {
+            return askedUsers.Select(user => new QuestionDetail()
+            {
+                Deleted = false,
+                Answered = false,
+                AskedBy = question.AskedBy,
+                AskedTo = user,
+                Question = question,
+                SeenByUser = false,
+                TimeStamp = DateTime.Now
+            }).ToList();
+        }
+        private static QuestionDetail InitializeQuestionDetail(ApplicationUser askedUser, ApplicationUser askingUser, Question question)
         {
             return new QuestionDetail()
             {
@@ -64,14 +97,17 @@ namespace KotaeteMVC.Controllers
             };
         }
 
-        private static Question InitializeQuestion(ContentQuestionDetailViewModel contentQuestion, ApplicationUser askedUser)
+        [Authorize]
+        [Route("AskFollowers", Name = "askFollowers")]
+        public ActionResult  AskFollowers()
         {
-            return new Question()
+            var model = new ContentQuestionDetailViewModel()
             {
-                AskedBy = askedUser,
-                Content = contentQuestion.QuestionContent,
-                TimeStamp = DateTime.Now
+                AskToAllFollowers = true,
+                AskedToScreenName = QuestionStrings.AllYourFollowers
             };
+            return PartialView("Question", model);
         }
+
     }
 }

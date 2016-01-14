@@ -9,8 +9,9 @@ namespace KotaeteMVC.Models
 {
     public class ContentQuestionDetailViewModel
     {
-        [Required]
         public string AskedToUserName { get; set; }
+
+        public bool AskToAllFollowers { get; set; }
 
         [Required(ErrorMessageResourceName = "QuestionContentMissing", ErrorMessageResourceType =typeof(MainGlobal))]
         public string QuestionContent { get; set; }
