@@ -7,11 +7,17 @@ using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels
 {
-    public class AnswerListProfileViewModel : ItemListViewModel
+    public class AnswerListProfileViewModel
     {
+
+        public AnswerListProfileViewModel(List<AnswerProfileViewModel> answers)
+        {
+            AnswerList = new AnswerListViewModel(answers);
+        }
+
         public ProfileViewModel Profile { get; set; }
 
-        public List<AnswerProfileViewModel> Answers { get; set; }
+        public AnswerListViewModel AnswerList { get; private set; }
 
     }
 }

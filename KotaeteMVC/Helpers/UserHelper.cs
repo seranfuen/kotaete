@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System;
 using KotaeteMVC.Models.Entities;
+using KotaeteMVC.Models.ViewModels;
 
 namespace KotaeteMVC.Helpers
 {
@@ -45,9 +46,9 @@ namespace KotaeteMVC.Helpers
             return profileQuestion;
         }
 
-        private static ContentQuestionDetailViewModel InitializeQuestionDetail(ApplicationUser user)
+        private static QuestionDetailViewModel InitializeQuestionDetail(ApplicationUser user)
         {
-            return new ContentQuestionDetailViewModel()
+            return new QuestionDetailViewModel()
             {
                 AskedToScreenName = user.ScreenName,
                 AskedToUserName = user.UserName

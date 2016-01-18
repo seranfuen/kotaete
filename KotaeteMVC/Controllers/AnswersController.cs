@@ -3,10 +3,12 @@ using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Models.ViewModels.Base;
 using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,6 +16,11 @@ namespace KotaeteMVC.Controllers
 {
     public class AnswersController : AlertControllerBase
     {
+
+        public const string AnswerListId = "answers-list";
+        private const string AjaxAnswersRoute = "answersxhr";
+        private const string AjaxQuestionsRoute = "questionsxhr";
+
 
         [Route("user/{userName}/questions", Name = "QuestionsProfile")]
         [Route("user/{userName}/questions/{page}", Name ="QuestionsProfilePage")]
@@ -25,21 +32,16 @@ namespace KotaeteMVC.Controllers
             }
             if (this.ExistsUserName(userName))
             {
-                var query = (from answer in Context.Answers
-                             where answer.Question.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
-                             orderby answer.TimeStamp descending
-                             select answer);
-                List<Answer> questionsAnsweredByDate = GetAnswersForPage(page, query);
-                AnswerListProfileViewModel answerProfileViewModel = GetAnswerListProfileViewModel(userName, questionsAnsweredByDate);
-                var count = query.Count();
-                InitializePagination(userName, page, answerProfileViewModel, count);
-                if (answerProfileViewModel.TotalPages < page)
+
+
+                AnswerListProfileViewModel answerProfileViewModel = GetQuestionListProfileViewModelFor(userName, page);
+                if (page > answerProfileViewModel.AnswerList.TotalPages)
                 {
                     return GetPageNotFoundError();
                 }
-                answerProfileViewModel.RouteName = "QuestionsProfilePage";
+                answerProfileViewModel.AnswerList.Route = "QuestionListAjax";
                 ViewBag.Title = answerProfileViewModel.Profile.ScreenName + AnswerStrings.Questions;
-                return View("AnswerList", answerProfileViewModel);
+                return View("ProfileAnswerList", answerProfileViewModel);
             }
             else
             {
@@ -47,6 +49,20 @@ namespace KotaeteMVC.Controllers
             }
         }
 
+        private AnswerListProfileViewModel GetQuestionListProfileViewModelFor(string userName, int page)
+        {
+            IOrderedQueryable<Answer> query = GetQuestionsQuery(userName);
+            List<Answer> questionsAnsweredByDate = GetAnswerListForPage(page, query);
+            return GetAnswerListProfileViewModel(userName, page, query.Count(), questionsAnsweredByDate, "AjaxListQuestions");
+        }
+
+        private IOrderedQueryable<Answer> GetQuestionsQuery(string userName)
+        {
+            return (from answer in Context.Answers
+                    where answer.Question.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
+                    orderby answer.TimeStamp descending
+                    select answer);
+        }
 
         [Route("user/{userName}/answers/{page}", Name = "AnswersProfilePage")]
         [Route("user/{userName}/answers", Name ="AnswersProfile")]
@@ -58,21 +74,14 @@ namespace KotaeteMVC.Controllers
             }
             if (this.ExistsUserName(userName))
             {
-                var query = (from answer in Context.Answers
-                             where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
-                             orderby answer.TimeStamp descending
-                             select answer);
-                var answersByDate = GetAnswersForPage(page, query);
-                AnswerListProfileViewModel answerProfileViewModel = GetAnswerListProfileViewModel(userName, answersByDate);
-                var count = query.Count();
-                InitializePagination(userName, page, answerProfileViewModel, count);
-                if (answerProfileViewModel.TotalPages < page)
+                AnswerListProfileViewModel answerProfileViewModel = GetAnswerListProfileViewModelFor(userName, page);
+                if (answerProfileViewModel.AnswerList.TotalPages < page)
                 {
                     return GetPageNotFoundError();
                 }
-                answerProfileViewModel.RouteName = "AnswersProfilePage";
+                answerProfileViewModel.AnswerList.Route = "AnswerListAjax";
                 ViewBag.Title = answerProfileViewModel.Profile.ScreenName + AnswerStrings.Answers;
-                return View("AnswerList", answerProfileViewModel);
+                return View("ProfileAnswerList", answerProfileViewModel);
             }
             else
             {
@@ -80,7 +89,88 @@ namespace KotaeteMVC.Controllers
             }
         }
 
-        private List<Answer> GetAnswersForPage(int page, IOrderedQueryable<Answer> query)
+        private AnswerListProfileViewModel GetAnswerListProfileViewModelFor(string userName, int page)
+        {
+            IOrderedQueryable<Answer> query = GetAnswersQuery(userName);
+            List<Answer> questionsAnsweredByDate = GetAnswerListForPage(page, query);
+            return GetAnswerListProfileViewModel(userName, page, query.Count(), questionsAnsweredByDate, "AjaxListAnswers");
+        }
+
+        private IOrderedQueryable<Answer> GetAnswersQuery(string userName)
+        {
+            return (from answer in Context.Answers
+                    where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
+                    orderby answer.TimeStamp descending
+                    select answer);
+        }
+
+        [Route("user/{userName}/" + AjaxAnswersRoute + "/{page}", Name = "AnswerListAjax")]
+        public ActionResult AjaxListAnswers(string userName, int page)
+        {
+            if (Request.IsAjaxRequest() == false)
+            {
+                return RedirectToRoute("AnswersProfilePage", new { @userName = userName, @page = page });
+            }
+            Thread.Sleep(2500);
+            if (page < 1)
+            {
+                return GetPageNotFoundError();
+            }
+            if (this.ExistsUserName(userName))
+            {
+                IOrderedQueryable<Answer> query = GetAnswersQuery(userName);
+                List<Answer> questionsAnsweredByDate = GetAnswerListForPage(page, query);
+                var answerList = GetAnswerListViewModel(questionsAnsweredByDate, page, query.Count(), userName);
+                if (page > answerList.TotalPages)
+                {
+                    return GetPageNotFoundError();
+                }
+                answerList.Route = "AnswerListAjax";
+                return PartialView("AnswerList", answerList);
+            }
+            else
+            {
+                return GetUserNotFoundError();
+            }
+        }
+
+        private AnswerListViewModel GetAnswerListViewModel(List<Answer> answers, int page, int count, string userName)
+        {
+            var answerList = new AnswerListViewModel(GetAnswerProfileViewModels(answers));
+            InitializePaginator(userName, page, count, "AjaxListAnswers", answerList);
+            return answerList;
+        }
+
+        [Route("user/{userName}/" + AjaxQuestionsRoute + "/{page}", Name = "QuestionListAjax")]
+        public ActionResult AjaxListQuestions(string userName, int page)
+        {
+            if (Request.IsAjaxRequest() == false)
+            {
+                return RedirectToRoute("QuestionsProfilePage", new { @userName = userName, @page = page });
+            }
+            if (page < 1)
+            {
+                return GetPageNotFoundError();
+            }
+            if (this.ExistsUserName(userName))
+            {
+                IOrderedQueryable<Answer> query = GetQuestionsQuery(userName);
+                List<Answer> questionsAnsweredByDate = GetAnswerListForPage(page, query);
+                var answerModels = GetAnswerListViewModel(questionsAnsweredByDate, page, query.Count(), userName);
+                if (page > answerModels.TotalPages)
+                {
+                    return GetPageNotFoundError();
+                }
+                answerModels.Route = "QuestionListAjax";
+                return PartialView("AnswerList", answerModels);
+            }
+            else
+            {
+                return GetUserNotFoundError();
+            }
+        }
+
+        private List<Answer> GetAnswerListForPage(int page, IOrderedQueryable<Answer> query)
         {
             return query.Skip((page - 1) * GetPageSize()).Take(GetPageSize()).ToList();
         }
@@ -95,24 +185,38 @@ namespace KotaeteMVC.Controllers
             return GetErrorView(AnswerStrings.PageNotFoundErrorHeader, AnswerStrings.PageNotFoundErrorMessage);
         }
 
-        private void InitializePagination(string userName, int page, AnswerListProfileViewModel answerProfileViewModel, int count)
+        private void InitializePagination(PaginationViewModel paginationModel, string userName, int page, int count, string action)
         {
-            answerProfileViewModel.TotalPages = GetPageCount(count);
-            answerProfileViewModel.CurrentPage = page;
-            answerProfileViewModel.PageRouteValuesDictionary = new Dictionary<int, RouteValueDictionary>();
-            for (int i = 1; i <= answerProfileViewModel.TotalPages; i++)
-            {
-                answerProfileViewModel.PageRouteValuesDictionary[i] = new RouteValueDictionary()
-                    {
-                        { "userName", userName },
-                        { "page", i.ToString() }
-                    };
-            }
+            paginationModel.Action = action;
+            paginationModel.Controller = "Answers";
+            paginationModel.CurrentPage = page;
+            paginationModel.UpdateTargetId = "answers-list";
         }
 
-        private AnswerListProfileViewModel GetAnswerListProfileViewModel(string userName, List<Answer> answersByDate)
+        private AnswerListProfileViewModel GetAnswerListProfileViewModel(string userName, int page, int totalCount, List<Answer> answersByDate, string action)
         {
-            var answerViewModel = answersByDate.Select(answer => new AnswerProfileViewModel()
+            IEnumerable<AnswerProfileViewModel> answerViewModel = GetAnswerProfileViewModels(answersByDate);
+            var answerProfileViewModel = new AnswerListProfileViewModel(answerViewModel.ToList())
+            {
+                Profile = this.GetProfile(userName)
+            };
+            InitializePaginator(userName, page, totalCount, action, answerProfileViewModel.AnswerList);
+            return answerProfileViewModel;
+        }
+
+        private void InitializePaginator(string userName, int page, int totalCount, string action, PaginationViewModel model)
+        {
+            var initializer = new PaginationInitializer("controllers", action);
+            initializer.CurrentPage = page;
+            initializer.TotalPages = PaginationViewModel.GetPageCount(totalCount, GetPageSize());
+            initializer.UpdateTargetId = AnswerListId;
+            initializer.FixedRouteData["userName"] = userName;
+            initializer.InitializeItemList(model);
+        }
+
+        private List<AnswerProfileViewModel> GetAnswerProfileViewModels(List<Answer> answersByDate)
+        {
+            return answersByDate.Select(answer => new AnswerProfileViewModel()
             {
                 Answer = answer,
                 AnswerParagraphs = answer.Content.SplitLines(),
@@ -121,13 +225,7 @@ namespace KotaeteMVC.Controllers
                 AskedTimeAgo = this.GetTimeAgo(answer.Question.TimeStamp),
                 QuestionParagraphs = answer.Question.Question.Content.SplitLines(),
                 RepliedTimeAgo = this.GetTimeAgo(answer.TimeStamp)
-            });
-            var answerProfileViewModel = new AnswerListProfileViewModel()
-            {
-                Answers = answerViewModel.ToList(),
-                Profile = this.GetProfile(userName)
-            };
-            return answerProfileViewModel;
+            }).ToList();
         }
 
         [ValidateAntiForgeryToken]

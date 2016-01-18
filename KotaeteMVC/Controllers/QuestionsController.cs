@@ -1,11 +1,10 @@
 ﻿using KotaeteMVC.Helpers;
-using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
+using KotaeteMVC.Models.ViewModels;
 using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
@@ -15,7 +14,7 @@ namespace KotaeteMVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent, AskToAllFollowers")] ContentQuestionDetailViewModel contentQuestion)
+        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent, AskToAllFollowers")] QuestionDetailViewModel contentQuestion)
         {
             var askingUser = this.GetCurrentUser();
             Question question = InitializeQuestion(contentQuestion, askingUser);
@@ -60,7 +59,7 @@ namespace KotaeteMVC.Controllers
             }
         }
 
-        private Question InitializeQuestion(ContentQuestionDetailViewModel contentQuestion, ApplicationUser askingUser)
+        private Question InitializeQuestion(QuestionDetailViewModel contentQuestion, ApplicationUser askingUser)
         {
             return new Question()
             {
@@ -101,12 +100,12 @@ namespace KotaeteMVC.Controllers
         [Route("AskFollowers", Name = "askFollowers")]
         public ActionResult  AskFollowers()
         {
-            var model = new ContentQuestionDetailViewModel()
+            var model = new QuestionDetailViewModel()
             {
                 AskToAllFollowers = true,
                 AskedToScreenName = QuestionStrings.AllYourFollowers
             };
-            return PartialView("Question", model);
+            return PartialView("QuestionModal", model);
         }
 
     }

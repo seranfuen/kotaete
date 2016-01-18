@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Resources;
 using KotaeteMVC.Models.Entities;
+using KotaeteMVC.Models.ViewModels;
 
 namespace KotaeteMVC.Controllers
 {
@@ -30,7 +31,7 @@ namespace KotaeteMVC.Controllers
             ProfileQuestionViewModel userProfile = this.GetProfileQuestionViewModel(userName);
             if (TempData.ContainsKey(PreviousQuestionKey))
             {
-                userProfile.QuestionDetail = TempData[PreviousQuestionKey] as ContentQuestionDetailViewModel;
+                userProfile.QuestionDetail = TempData[PreviousQuestionKey] as QuestionDetailViewModel;
                 userProfile.QuestionDetail.AskedToScreenName = user.ScreenName;
                 TryValidateModel(userProfile.QuestionDetail);
             }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllFollowersModalHeader" xml:space="preserve">
+    <value>Ask a question to all your followers</value>
+  </data>
   <data name="AllYourFollowers" xml:space="preserve">
     <value>all your followers</value>
     <comment>Shown as if it was the screen name</comment>

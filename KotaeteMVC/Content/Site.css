@@ -182,3 +182,19 @@ textarea {
 .login {
     max-width: 800px;
 }
+
+#pagination-ajax-loader {
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+.fadeout {
+    opacity: 0.4;
+}
+
+#paginator-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}

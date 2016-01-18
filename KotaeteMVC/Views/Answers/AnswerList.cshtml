@@ -1,24 +1,8 @@
-﻿@model KotaeteMVC.Models.ViewModels.AnswerListProfileViewModel
+﻿@model KotaeteMVC.Models.ViewModels.AnswerListViewModel
 
-@{
-    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
-}
-
-<h2>@ViewBag.Title</h2>
-
-@if (Model.Answers.Any() == false)
+@foreach (var answer in Model.Answers)
 {
-    Html.RenderPartial("NoAnswers");
-} else
-{
-    foreach (var answer in Model.Answers)
-    {
-        Html.RenderPartial("AnswerDetail", answer);
-    }
+    @Html.Partial("AnswerDetail", answer)
 }
 
-@Html.Partial("ItemListPagination", Model)
-
-@section Profile {
-    @Html.Partial("Profile", Model.Profile)
-}
+@Html.Partial("Pagination", Model)

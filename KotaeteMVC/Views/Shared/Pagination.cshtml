@@ -1,0 +1,75 @@
+﻿@using KotaeteMVC.Helpers.RazorHelper
+@model KotaeteMVC.Models.ViewModels.Base.PaginationViewModel
+
+
+@if (Model.TotalPages > 0)
+{
+    <div class="text-center">
+        <div id="paginator-loading" style="display:none"><img src="@Url.Content("~/Images/ajax-loader.gif")" alt="Loading" /></div>
+        <nav>
+            <ul id="pagination-list" class="pagination">
+
+                <li @if (Model.CurrentPage == 1) { @Html.Raw("class='disabled'")   }>
+                    @if (Model.CurrentPage == 1)
+                    {
+                        <span aria-hidden="true">&laquo;</span>
+                    }
+                    else
+                    {
+                        @Ajax.RawRouteLink(@"<span aria-hidden=""true"">&laquo;</span>", Model.Route, Model.PageRouteValuesDictionary[1],
+                                new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = Model.UpdateTargetId,
+                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "', '" + Url.Content("~/Images/ajax-loader.gif") + "')"
+                                })
+                    }
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (Model.CurrentPage != i)
+                    {
+                        <li>
+                            @Ajax.RouteLink(i.ToString(), Model.Route, Model.PageRouteValuesDictionary[i],
+                                new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = Model.UpdateTargetId,
+                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
+                                }, null)
+                    </li>
+                    }
+                    else
+                    {
+                        <li class="active"><span aria-hidden="true">@i.ToString()</span></li>
+                    }
+                }
+
+
+                <li @if (Model.CurrentPage == Model.TotalPages) { @Html.Raw("class='disabled'")    }>
+                    @if (Model.CurrentPage == Model.TotalPages)
+                    {
+                        <span aria-hidden="true">&raquo;</span>
+                    }
+                    else
+                    {
+                        @Ajax.RawRouteLink(@"<span aria-hidden=""true"">&raquo;</span>", Model.Route, Model.PageRouteValuesDictionary[Model.CurrentPage + 1],
+                                new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = Model.UpdateTargetId,
+                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "', '" + Url.Content("~/Images/ajax-loader.gif") + "')"
+                                })
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+}

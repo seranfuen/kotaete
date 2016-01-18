@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class QuestionStrings {
+    internal class NavbarStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal QuestionStrings() {
+        internal NavbarStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.QuestionStrings", global::System.Reflection.Assembly.Load("App_GlobalResources"));
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.NavbarStrings", global::System.Reflection.Assembly.Load("App_GlobalResources"));
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ask a question to all your followers.
+        ///   Looks up a localized string similar to Ask .
         /// </summary>
-        internal static string AllFollowersModalHeader {
+        internal static string AskItem {
             get {
-                return ResourceManager.GetString("AllFollowersModalHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to all your followers.
-        /// </summary>
-        internal static string AllYourFollowers {
-            get {
-                return ResourceManager.GetString("AllYourFollowers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have no followers!.
-        /// </summary>
-        internal static string NoFollowersHeader {
-            get {
-                return ResourceManager.GetString("NoFollowersHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You cannot ask a question to your followers because you don&apos;t have any yet!.
-        /// </summary>
-        internal static string NoFollowersMessage {
-            get {
-                return ResourceManager.GetString("NoFollowersMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User not found.
-        /// </summary>
-        internal static string UserNotFoundHeader {
-            get {
-                return ResourceManager.GetString("UserNotFoundHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The user you are trying to ask a question to could not be found.
-        /// </summary>
-        internal static string UserNotFoundMessage {
-            get {
-                return ResourceManager.GetString("UserNotFoundMessage", resourceCulture);
+                return ResourceManager.GetString("AskItem", resourceCulture);
             }
         }
     }

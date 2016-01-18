@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KotaeteMVC.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace KotaeteMVC.Models
     /// </summary>
     public class ProfileQuestionViewModel
     {
-        public ContentQuestionDetailViewModel QuestionDetail { get; set; }
+        public QuestionDetailViewModel QuestionDetail { get; set; }
         public ProfileViewModel Profile { get; set; }
     }
 }

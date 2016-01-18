@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace KotaeteMVC.Models
+namespace KotaeteMVC.Models.ViewModels
 {
-    public class ContentQuestionDetailViewModel
+    public class QuestionDetailViewModel
     {
+
         public string AskedToUserName { get; set; }
 
         public bool AskToAllFollowers { get; set; }

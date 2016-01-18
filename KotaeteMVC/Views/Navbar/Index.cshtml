@@ -1,4 +1,5 @@
-﻿@model KotaeteMVC.Models.ViewModels.NavbarViewModel
+﻿@using Resources;
+@model KotaeteMVC.Models.ViewModels.NavbarViewModel
 
 @if (Model.IsAuthenticated)
 {<div class="navbar navbar-inverse navbar-fixed-top">
@@ -14,9 +15,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="navbar-item">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>
-                            <a href="@Url.Action("Index", "Inbox", null)">Inbox @if (Model.InboxCount > 0) { <span class="badge">@Model.InboxCount</span> }</a>
-                        </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Inbox", null)">Inbox @if (Model.InboxCount > 0)
+                        { <span class="badge">@Model.InboxCount</span> }</a>
+                    </li>
+                    <li>
+                        <a href="#" class="navbar-item" data-toggle="modal" data-target="#question-modal">@NavbarStrings.AskItem</a>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -26,22 +31,22 @@
 }
 else {
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Kotaete", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Kotaete", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
     </div>
-</div>
 }

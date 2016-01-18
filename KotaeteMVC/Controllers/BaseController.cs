@@ -45,15 +45,7 @@ namespace KotaeteMVC.Controllers
 
         public ApplicationDbContext Context { get; private set; }
 
-        public int GetPageCount(int itemCount)
-        {
-            var pages = itemCount / GetPageSize();
-            if (itemCount % GetPageSize() > 0)
-            {
-                return pages + 1;
-            }
-            return pages;
-        }
+
 
         protected override void Dispose(bool disposing)
         {
