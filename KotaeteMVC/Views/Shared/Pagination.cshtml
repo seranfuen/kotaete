@@ -1,6 +1,18 @@
 ﻿@using KotaeteMVC.Helpers.RazorHelper
 @model KotaeteMVC.Models.ViewModels.Base.PaginationViewModel
 
+@{ const int MaxPages = 14; }
+
+@{
+    int windowStart = 1;
+    int windowEnd = Model.TotalPages;
+    if (Model.TotalPages > MaxPages)
+    {
+        windowStart = Math.Max(1, Model.CurrentPage - 5);
+        windowEnd = Math.Min(Model.TotalPages, windowStart + (MaxPages - 5));
+    }
+
+}
 
 @if (Model.TotalPages > 0)
 {
@@ -9,14 +21,14 @@
         <nav>
             <ul id="pagination-list" class="pagination">
 
-                <li @if (Model.CurrentPage == 1) { @Html.Raw("class='disabled'")   }>
+                <li @if (Model.CurrentPage == 1) { @Html.Raw("class='disabled'")    }>
                     @if (Model.CurrentPage == 1)
                     {
                         <span aria-hidden="true">&laquo;</span>
                     }
                     else
                     {
-                        @Ajax.RawRouteLink(@"<span aria-hidden=""true"">&laquo;</span>", Model.Route, Model.PageRouteValuesDictionary[1],
+                        @Ajax.RawRouteLink(@"<span aria-hidden=""true"">&laquo;</span>", Model.Route, Model.PageRouteValuesDictionary[Model.CurrentPage - 1],
                                 new AjaxOptions()
                                 {
                                     InsertionMode = InsertionMode.Replace,
@@ -28,7 +40,26 @@
                     }
                 </li>
 
-                @for (int i = 1; i <= Model.TotalPages; i++)
+                @if (windowStart > 1)
+                {
+                    <li>
+                        @Ajax.RouteLink("1", Model.Route, Model.PageRouteValuesDictionary[1],
+                                new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = Model.UpdateTargetId,
+                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
+                                }, null)
+                    </li>
+                        if (windowStart > 2)
+                    {
+                        <li><span aria-hidden="true">&#133;</span></li>
+                    }
+                }
+
+                @for (int i = windowStart; i <= windowEnd; i++)
                 {
                     if (Model.CurrentPage != i)
                     {
@@ -42,7 +73,7 @@
                                     OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
                                     OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
                                 }, null)
-                    </li>
+                        </li>
                     }
                     else
                     {
@@ -50,8 +81,27 @@
                     }
                 }
 
+                @if (windowEnd < Model.TotalPages)
+                {
+                    if (windowEnd + 1 < Model.TotalPages)
+                    {
+                        <li><span aria-hidden="true">&#133;</span></li>
+                    }
+                    <li>
+                        @Ajax.RouteLink(Model.TotalPages.ToString(), Model.Route, Model.PageRouteValuesDictionary[Model.TotalPages],
+                                new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = Model.UpdateTargetId,
+                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
+                                }, null)
+                    </li>
+                }
 
-                <li @if (Model.CurrentPage == Model.TotalPages) { @Html.Raw("class='disabled'")    }>
+
+                <li @if (Model.CurrentPage == Model.TotalPages) { @Html.Raw("class='disabled'")     }>
                     @if (Model.CurrentPage == Model.TotalPages)
                     {
                         <span aria-hidden="true">&raquo;</span>

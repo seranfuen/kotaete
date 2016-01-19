@@ -5,7 +5,6 @@ namespace KotaeteMVC.Models.ViewModels.Base
 {
     public abstract class PaginationViewModel
     {
-
         public static int GetPageCount(int itemCount, int pageSize)
         {
             var pages = itemCount / pageSize;
@@ -29,6 +28,5 @@ namespace KotaeteMVC.Models.ViewModels.Base
         public Dictionary<int, RouteValueDictionary> PageRouteValuesDictionary { get; set; }
 
         public int CurrentPage { get; set; }
-
     }
 }
