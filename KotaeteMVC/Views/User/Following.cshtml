@@ -12,7 +12,9 @@
 
 @foreach (var user in Model.Followers)
 {
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div id="following-list" class="col-md-4 col-sm-6 col-xs-12">
         @Html.Partial("MiniProfile", user.Profile)
     </div>
 }
+
+@Html.Partial("Pagination", Model)

@@ -10,13 +10,11 @@ namespace KotaeteMVC.Models.ViewModels.Base
     {
         public const string PageKey = "page";
 
-        private string _action;
-        private string _controller;
+        private string _route;
 
-        public PaginationInitializer(string action, string controller)
+        public PaginationInitializer(string route)
         {
-            _action = action;
-            _controller = controller;
+            _route = route;
             FixedRouteData = new Dictionary<string, string>();
         }
 
@@ -30,8 +28,7 @@ namespace KotaeteMVC.Models.ViewModels.Base
 
         public void InitializeItemList(PaginationViewModel model)
         {
-            model.Action = _action;
-            model.Controller = _controller;
+            model.Route = _route;
             model.CurrentPage = CurrentPage;
             model.TotalPages = TotalPages;
             model.UpdateTargetId = UpdateTargetId;

@@ -26,11 +26,16 @@ namespace KotaeteMVC.Controllers
                 entity.SeenByUser == false);
         }
 
-
         public virtual int GetPageSize()
         {
             return 5;
         }
+
+        protected ActionResult GetPageNotFoundError()
+        {
+            return GetErrorView(MainGlobal.PageNotFoundErrorHeader, MainGlobal.PageNotFoundErrorMessage);
+        }
+
 
         public ActionResult GetErrorView(string header, string message)
         {

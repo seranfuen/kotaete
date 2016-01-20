@@ -1,15 +1,15 @@
 ﻿function PaginationOnBegin(entityName) {
     toReplaceId = "#" + entityName;
-    $(toReplaceId).addClass('fadeout');
     $("#paginator-loading").clone().appendTo(toReplaceId).show();
+    $(toReplaceId).wrap('<div id="ajax-overlay" class="fadeout noselect"></div>');
 }
 
 function PaginationOnSuccess(entityName) {
-    $(toReplaceId).removeClass('fadeout');
+    $(toReplaceId).removeClass('fadeout').unwrap();
 }
 
 function PaginationOnFailure(entityName) {
-    $("#" + entityName).html("Error loading page");
+    $("#" + entityName).unwrap().html("Error loading page");
 }
 
 function RemoveHref() {

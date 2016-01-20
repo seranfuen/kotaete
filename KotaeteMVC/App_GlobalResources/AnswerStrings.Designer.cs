@@ -151,24 +151,6 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page not found.
-        /// </summary>
-        public static string PageNotFoundErrorHeader {
-            get {
-                return ResourceManager.GetString("PageNotFoundErrorHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The page number you are trying to see does not exist.
-        /// </summary>
-        public static string PageNotFoundErrorMessage {
-            get {
-                return ResourceManager.GetString("PageNotFoundErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The question you are trying to reply to cannot be found.
         /// </summary>
         public static string QuestionDetailNotFound {

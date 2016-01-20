@@ -148,12 +148,6 @@
   <data name="NoAnswers" xml:space="preserve">
     <value>This user hasn't replied to any question yet</value>
   </data>
-  <data name="PageNotFoundErrorHeader" xml:space="preserve">
-    <value>Page not found</value>
-  </data>
-  <data name="PageNotFoundErrorMessage" xml:space="preserve">
-    <value>The page number you are trying to see does not exist</value>
-  </data>
   <data name="QuestionDetailNotFound" xml:space="preserve">
     <value>The question you are trying to reply to cannot be found</value>
   </data>

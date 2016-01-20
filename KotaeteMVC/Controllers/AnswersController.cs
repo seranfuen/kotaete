@@ -20,6 +20,8 @@ namespace KotaeteMVC.Controllers
         private const string AjaxAnswersRoute = "answersxhr";
         private const string AjaxQuestionsRoute = "questionsxhr";
 
+        private PaginationCreator<Answer> _paginationCreator = new PaginationCreator<Answer>();
+
         [Route("user/{userName}/" + AjaxAnswersRoute + "/{page}", Name = "AnswerListAjax")]
         [HttpGet]
         public ActionResult AjaxListAnswers(string userName, int page)
@@ -194,7 +196,7 @@ namespace KotaeteMVC.Controllers
 
         private List<Answer> GetAnswerListForPage(int page, IOrderedQueryable<Answer> query)
         {
-            return query.Skip((page - 1) * GetPageSize()).Take(GetPageSize()).ToList();
+            return _paginationCreator.GetPage(query, page, this.GetPageSize());
         }
 
         private AnswerListProfileViewModel GetAnswerListProfileViewModel(string userName, int page, int totalCount, List<Answer> answersByDate, string action)
@@ -243,11 +245,6 @@ namespace KotaeteMVC.Controllers
                     select answer);
         }
 
-        private ActionResult GetPageNotFoundError()
-        {
-            return GetErrorView(AnswerStrings.PageNotFoundErrorHeader, AnswerStrings.PageNotFoundErrorMessage);
-        }
-
         private AnswerListProfileViewModel GetQuestionListProfileViewModelFor(string userName, int page)
         {
             IOrderedQueryable<Answer> query = GetQuestionsQuery(userName);
@@ -274,9 +271,9 @@ namespace KotaeteMVC.Controllers
             paginationModel.UpdateTargetId = "answers-list";
         }
 
-        private void InitializePaginator(string userName, int page, int totalCount, string action, PaginationViewModel model)
+        private void InitializePaginator(string userName, int page, int totalCount, string route, PaginationViewModel model)
         {
-            var initializer = new PaginationInitializer("controllers", action);
+            var initializer = new PaginationInitializer(route);
             initializer.CurrentPage = page;
             initializer.TotalPages = PaginationViewModel.GetPageCount(totalCount, GetPageSize());
             initializer.UpdateTargetId = AnswerListId;

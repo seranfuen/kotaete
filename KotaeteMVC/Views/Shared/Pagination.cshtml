@@ -14,8 +14,9 @@
 
 }
 
-@if (Model.TotalPages > 0)
+@if (Model.TotalPages > 1)
 {
+    <div class="clearfix"></div>
     <div class="text-center">
         <div id="paginator-loading" style="display:none"><img src="@Url.Content("~/Images/ajax-loader.gif")" alt="Loading" /></div>
         <nav>
@@ -53,7 +54,7 @@
                                     OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
                                 }, null)
                     </li>
-                        if (windowStart > 2)
+                    if (windowStart > 2)
                     {
                         <li><span aria-hidden="true">&#133;</span></li>
                     }

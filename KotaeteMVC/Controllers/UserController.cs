@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Resources;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Models.ViewModels.Base;
 
 namespace KotaeteMVC.Controllers
 {
@@ -18,6 +19,8 @@ namespace KotaeteMVC.Controllers
     {
 
         public const string PreviousQuestionKey = "PreviousQuestionKey";
+        private PaginationCreator<ProfileQuestionViewModel> _paginationCreator = new PaginationCreator<ProfileQuestionViewModel>();
+
 
         [Route("user/{userName}", Name = "userProfile")]
         public ActionResult Index(string userName)
@@ -39,7 +42,8 @@ namespace KotaeteMVC.Controllers
         }
 
         [Route("user/{userName}/following", Name = "userFollowing")]
-        public ActionResult Following(string userName)
+        [Route("user/{userName}/following/{page}", Name = "userPageFollowing")]
+        public ActionResult Following(string userName, int page = 1)
         {
             var user = this.GetUserWithName(userName);
             if (user == null)
@@ -50,14 +54,37 @@ namespace KotaeteMVC.Controllers
         }
 
         [Route("user/{userName}/followers", Name = "userFollowers")]
-        public ActionResult Followers(string userName)
+        [Route("user/{userName}/followers/{page}", Name = "userPageFollowers")]
+        public ActionResult Followers(string userName, int page = 1)
         {
+            if (page < 1)
+            {
+                return GetPageNotFoundError();
+            }
             var user = this.GetUserWithName(userName);
             if (user == null)
             {
                 return GetUserNotFoundView(userName);
             }
-            return View("Followers", GetFollowersViewModel(user));
+            var followerModel = GetFollowersViewModel(user);
+            followerModel.CurrentPage = page;
+            var initializer = new PaginationInitializer("UserAjaxFollowers");
+            initializer.TotalPages = PaginationViewModel.GetPageCount(followerModel.Followers.Count, GetPageSize());
+            initializer.CurrentPage = page;
+            if (page > initializer.TotalPages)
+            {
+                return GetPageNotFoundError();
+            }
+            initializer.UpdateTargetId = "follower-list";
+            initializer.InitializeItemList(followerModel);
+            followerModel.Followers = _paginationCreator.GetPage(followerModel.Followers, page, GetPageSize());
+            return View("Followers", followerModel);
+        }
+
+        [Route("user/{userName}/xhj-followers/{page}", Name = "UserAjaxFollowers")]
+        public Action AjaxFollowers(string userName, int page = 1)
+        {
+            return null;
         }
 
         private ActionResult GetUserNotFoundView(string user)
@@ -68,6 +95,11 @@ namespace KotaeteMVC.Controllers
                 ErrorMessage = MainGlobal.UserNotFoundErrorMessage
             };
             return View("Error", errorModel);
+        }
+
+        public override int GetPageSize()
+        {
+            return 9;
         }
 
         private FollowersViewModel GetFollowersViewModel(ApplicationUser user)

@@ -115,6 +115,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page not found.
+        /// </summary>
+        internal static string PageNotFoundErrorHeader {
+            get {
+                return ResourceManager.GetString("PageNotFoundErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The page number you are trying to see does not exist.
+        /// </summary>
+        internal static string PageNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("PageNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your question to .
         /// </summary>
         internal static string QuestionAskedSuccessfullyFirstHalf {

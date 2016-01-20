@@ -1,11 +1,12 @@
-﻿using System;
+﻿using KotaeteMVC.Models.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace KotaeteMVC.Models
 {
-    public class FollowersViewModel
+    public class FollowersViewModel : PaginationViewModel
     {
         public ProfileViewModel OwnerProfile { get; set; }
 
