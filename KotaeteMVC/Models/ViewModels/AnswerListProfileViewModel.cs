@@ -9,15 +9,8 @@ namespace KotaeteMVC.Models.ViewModels
 {
     public class AnswerListProfileViewModel
     {
-
-        public AnswerListProfileViewModel(List<AnswerProfileViewModel> answers)
-        {
-            AnswerList = new AnswerListViewModel(answers);
-        }
-
         public ProfileViewModel Profile { get; set; }
 
-        public AnswerListViewModel AnswerList { get; private set; }
-
+        public AnswerListViewModel AnswerList { get; set; }
     }
 }

@@ -10,11 +10,11 @@
 }
 <h2>Following</h2>
 
-@foreach (var user in Model.Followers)
-{
-    <div id="following-list" class="col-md-4 col-sm-6 col-xs-12">
-        @Html.Partial("MiniProfile", user.Profile)
-    </div>
-}
+<div id="follower-grid">
+    @Html.Partial("MiniProfileGrid", Model)
+</div>
 
-@Html.Partial("Pagination", Model)
+@section scripts {
+    @Scripts.Render("~/Scripts/App/paginator.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

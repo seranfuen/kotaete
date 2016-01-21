@@ -6,11 +6,8 @@ using System.Web;
 
 namespace KotaeteMVC.Models
 {
-    public class FollowersViewModel : PaginationViewModel
+    public class FollowersViewModel : PaginationViewModel<ProfileViewModel>
     {
         public ProfileViewModel OwnerProfile { get; set; }
-
-        public List<ProfileQuestionViewModel> Followers { get; set; }
-
     }
 }

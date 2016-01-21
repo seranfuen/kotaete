@@ -330,6 +330,7 @@
     <Content Include="Views\Answers\AnswerList.cshtml" />
     <Content Include="Views\Shared\ErrorDetail.cshtml" />
     <Content Include="Views\Shared\Pagination.cshtml" />
+    <Content Include="Views\User\MiniProfileGrid.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

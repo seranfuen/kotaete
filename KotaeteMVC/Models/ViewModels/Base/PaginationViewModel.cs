@@ -3,7 +3,7 @@ using System.Web.Routing;
 
 namespace KotaeteMVC.Models.ViewModels.Base
 {
-    public abstract class PaginationViewModel
+    public static class PaginationExtension
     {
         public static int GetPageCount(int itemCount, int pageSize)
         {
@@ -14,6 +14,11 @@ namespace KotaeteMVC.Models.ViewModels.Base
             }
             return pages;
         }
+    }
+
+    public abstract class PaginationViewModel<TEntity>
+    {
+
 
         public string Route { get; set; }
 
@@ -28,5 +33,7 @@ namespace KotaeteMVC.Models.ViewModels.Base
         public Dictionary<int, RouteValueDictionary> PageRouteValuesDictionary { get; set; }
 
         public int CurrentPage { get; set; }
+
+        public List<TEntity> Entities { get; set; }
     }
 }
