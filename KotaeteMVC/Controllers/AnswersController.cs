@@ -6,6 +6,7 @@ using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Models.ViewModels.Base;
 using Resources;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -36,8 +37,10 @@ namespace KotaeteMVC.Controllers
             if (this.ExistsUserName(userName))
             {
                 var query = GetAnswersQuery(userName);
-                var initializer = new PaginationInitializer<AnswerProfileViewModel, AnswerListViewModel>(AjaxAnswersRouteName, AnswerListId);
-                var model = initializer.InitializeItemList(query, page, GetPageSize(), userName);
+                var initializer = new PaginationInitializer<AnswerProfileViewModel>(AjaxAnswersRouteName, AnswerListId, userName, GetPageSize());
+                var model = new AnswerListViewModel();
+                initializer.InitializePaginationModel(model, page, query.Count());
+                model.Answers = initializer.GetPage(query, page);
                 if (page > model.TotalPages)
                 {
                     return GetPageNotFoundError();
@@ -65,8 +68,10 @@ namespace KotaeteMVC.Controllers
             if (this.ExistsUserName(userName))
             {
                 var query = GetQuestionsQuery(userName);
-                var initializer = new PaginationInitializer<AnswerProfileViewModel, AnswerListViewModel>(AjaxQuestionsRouteName, AnswerListId);
-                var model = initializer.InitializeItemList(query, page, GetPageSize(), userName);
+                var initializer = new PaginationInitializer<AnswerProfileViewModel>(AjaxQuestionsRouteName, AnswerListId, userName, GetPageSize());
+                var model = new AnswerListViewModel();
+                initializer.InitializePaginationModel(model, page, query.Count());
+                model.Answers = initializer.GetPage(query, page);
                 if (page > model.TotalPages)
                 {
                     return GetPageNotFoundError();
@@ -138,17 +143,24 @@ namespace KotaeteMVC.Controllers
             }
             if (this.ExistsUserName(userName))
             {
+                var profile = this.GetProfile(userName);
                 var query = GetAnswersQuery(userName);
-                var initializer = new PaginationInitializer<AnswerProfileViewModel, AnswerListViewModel>(AjaxAnswersRouteName, AnswerListId);
-                var listAnswersModel = initializer.InitializeItemList(query, page, GetPageSize(), userName);
-                if (listAnswersModel.TotalPages < page)
+                if (query.Count() == 0)
+                {
+                    return View("NoAnswers", new NoAnswersProfileViewModel() { Profile = profile, IsAnswers = true });
+                }
+                var initializer = new PaginationInitializer<AnswerProfileViewModel>(AjaxAnswersRouteName, AnswerListId, userName, GetPageSize());
+                var answerListModel = new AnswerListViewModel();
+                initializer.InitializePaginationModel(answerListModel, page, query.Count());
+                answerListModel.Answers = initializer.GetPage(query, page);
+                if (answerListModel.TotalPages < page)
                 {
                     return GetPageNotFoundError();
                 }
                 var model = new AnswerListProfileViewModel()
                 {
-                    Profile = this.GetProfile(userName),
-                    AnswerList = listAnswersModel
+                    Profile = profile,
+                    AnswerList = answerListModel
                 };
                 return View("ProfileAnswerList", model);
             }
@@ -168,17 +180,24 @@ namespace KotaeteMVC.Controllers
             }
             if (this.ExistsUserName(userName))
             {
+                var profile = this.GetProfile(userName);
                 var query = GetQuestionsQuery(userName);
-                var initializer = new PaginationInitializer<AnswerProfileViewModel, AnswerListViewModel>(AjaxQuestionsRouteName, AnswerListId);
-                var listAnswersModel = initializer.InitializeItemList(query, page, GetPageSize(), userName);
-                if (listAnswersModel.TotalPages < page)
+                if (query.Count() == 0)
+                {
+                    return View("NoAnswers", new NoAnswersProfileViewModel() { Profile = profile });
+                }
+                var initializer = new PaginationInitializer<AnswerProfileViewModel>(AjaxQuestionsRouteName, AnswerListId, userName, GetPageSize());
+                var answerListModel = new AnswerListViewModel();
+                initializer.InitializePaginationModel(answerListModel, page, query.Count());
+                answerListModel.Answers = initializer.GetPage(query, page);
+                if (answerListModel.TotalPages < page)
                 {
                     return GetPageNotFoundError();
                 }
                 var model = new AnswerListProfileViewModel()
                 {
-                    Profile = this.GetProfile(userName),
-                    AnswerList = listAnswersModel
+                    Profile = profile,
+                    AnswerList = answerListModel
                 };
                 return View("ProfileAnswerList", model);
             }
@@ -200,7 +219,7 @@ namespace KotaeteMVC.Controllers
             };
         }
 
-        private IQueryable<AnswerProfileViewModel> GetAnswerProfileViewModels(IOrderedQueryable<Answer> answersByDate)
+        private IEnumerable<AnswerProfileViewModel> GetAnswerProfileViewModels(List<Answer> answersByDate)
         {
             var query = from answer in answersByDate
                         orderby answer.TimeStamp descending
@@ -217,22 +236,22 @@ namespace KotaeteMVC.Controllers
             return query;
         }
 
-        private IQueryable<AnswerProfileViewModel> GetAnswersQuery(string userName)
+        private IEnumerable<AnswerProfileViewModel> GetAnswersQuery(string userName)
         {
             var subQuery = from answer in Context.Answers
                            where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
                            orderby answer.TimeStamp descending
                            select answer;
-            return GetAnswerProfileViewModels(subQuery);
+            return GetAnswerProfileViewModels(subQuery.ToList());
         }
 
-        private IQueryable<AnswerProfileViewModel> GetQuestionsQuery(string userName)
+        private IEnumerable<AnswerProfileViewModel> GetQuestionsQuery(string userName)
         {
             var subQuery = from answer in Context.Answers
                            where answer.Question.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
                            orderby answer.TimeStamp descending
                            select answer;
-            return GetAnswerProfileViewModels(subQuery);
+            return GetAnswerProfileViewModels(subQuery.ToList());
         }
 
         private ActionResult GetUserNotFoundError()

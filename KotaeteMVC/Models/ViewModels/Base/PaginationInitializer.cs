@@ -1,70 +1,73 @@
 ﻿using KotaeteMVC.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Routing;
 
 namespace KotaeteMVC.Models.ViewModels.Base
 {
-    public class PaginationInitializer<TEntity, TViewModel> where TViewModel : PaginationViewModel<TEntity>, new()
+    public class PaginationInitializer
     {
         public const string PageKey = "page";
+        public const string UserNameKey = "userName";
 
+        protected int _pageSize;
         private string _route;
-        private PaginationCreator<TEntity> _paginationCreator = new PaginationCreator<TEntity>();
+        private string _updateTargetId;
+        private string _userName;
 
-        public PaginationInitializer(string route, string updateTargetId)
+
+        public PaginationInitializer(string route, string updateTargetId, string userName, int pageSize)
         {
             _route = route;
-            UpdateTargetId = updateTargetId;
-            FixedRouteData = new Dictionary<string, string>();
+            _updateTargetId = updateTargetId;
+            _userName = userName;
+            _pageSize = pageSize;
         }
 
-        public string UpdateTargetId { get; set; }
-
-        public int TotalPages { get; private set; }
-
-        public int CurrentPage { get; private set; }
-
-        public Dictionary<string, string> FixedRouteData { get; private set; }
-
-        public TViewModel InitializeItemList(IQueryable<TEntity> entitiesQuery, int page, int pageSize, string userName)
-        {
-            TViewModel model = new TViewModel();
-            CurrentPage = page;
-            TotalPages = PaginationExtension.GetPageCount(entitiesQuery.Count(), pageSize);
-            InitializeItemList(model);
-            model.Entities = _paginationCreator.GetPage(entitiesQuery, page, pageSize).ToList();
-            return model;
-        }
-
-        public void InitializeItemList(PaginationViewModel<TEntity> model)
+        public void InitializePaginationModel(PaginationViewModel model, int currentPage, int count)
         {
             model.Route = _route;
-            model.CurrentPage = CurrentPage;
-            model.TotalPages = TotalPages;
-            model.UpdateTargetId = UpdateTargetId;
+            model.CurrentPage = currentPage;
+            model.TotalPages = model.GetPageCount(count, _pageSize);
+            model.UpdateTargetId = _updateTargetId;
             InitializeRouteValueDictionary(model);
         }
 
-        private void InitializeRouteValueDictionary(PaginationViewModel<TEntity> model)
+        private void InitializeDictionaryForPage(PaginationViewModel model, int page)
+        {
+            model.PageRouteValuesDictionary[page] = new RouteValueDictionary();
+            model.PageRouteValuesDictionary[page][UserNameKey] = _userName;
+            model.PageRouteValuesDictionary[page][PageKey] = page.ToString();
+        }
+
+        private void InitializeRouteValueDictionary(PaginationViewModel model)
         {
             model.PageRouteValuesDictionary = new Dictionary<int, RouteValueDictionary>();
-            for (int i = 1; i <= TotalPages; i++)
+            for (int i = 1; i <= model.TotalPages; i++)
             {
                 InitializeDictionaryForPage(model, i);
             }
         }
+    }
 
-        private void InitializeDictionaryForPage(PaginationViewModel<TEntity> model, int page)
+
+    public class PaginationInitializer<TEntity> : PaginationInitializer
+    {
+        private PaginationCreator<TEntity> _pageCreator;
+
+        public PaginationInitializer(string route, string updateTargetId, string userName, int pageSize) : base(route, updateTargetId, userName, pageSize)
         {
-            model.PageRouteValuesDictionary[page] = new RouteValueDictionary();
-            foreach (var pair in FixedRouteData)
-            {
-                model.PageRouteValuesDictionary[page][pair.Key] = pair.Value;
-            }
-            model.PageRouteValuesDictionary[page][PageKey] = page.ToString();
+            _pageCreator = new PaginationCreator<TEntity>();
+        }
+
+        public List<TEntity> GetPage(IQueryable<TEntity> query, int page)
+        {
+            return _pageCreator.GetPage(query, page, _pageSize);
+        }
+
+        public List<TEntity> GetPage(IEnumerable<TEntity> query, int page)
+        {
+            return _pageCreator.GetPage(query, page, _pageSize);
         }
     }
 }

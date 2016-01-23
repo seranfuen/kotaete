@@ -67,7 +67,7 @@ namespace KotaeteMVC.Models.Entities
         public ApplicationDbContext()
             : base("TestConnection", throwIfV1Schema: false)
         {
-            Database.SetInitializer(new KotaeteTestInitializer());
+            Database.SetInitializer(new KotaeteInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,0 +1,24 @@
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.NoFollowersViewModel
+
+@{
+    ViewBag.Title = Model.Profile.User.UserName + " - " + (Model.IsFollowers ? UsersStrings.NoFollowersTitle : UsersStrings.NoFollowingTitle);
+    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@section Profile {
+    @Html.Partial("Profile", Model.Profile)
+}
+
+<div class="jumbotron">
+    @if (Model.IsFollowers)
+    {
+        <p>@UsersStrings.NoFollowers</p>
+    }
+    else
+    {
+        <p>@UsersStrings.NoFollowing</p>
+    }
+</div>

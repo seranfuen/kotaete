@@ -117,68 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlreadyAnswered" xml:space="preserve">
-    <value>You already answered this question!</value>
+  <data name="NoFollowers" xml:space="preserve">
+    <value>This user has no followers yet. You could try following them!</value>
   </data>
-  <data name="AnswerFieldName" xml:space="preserve">
-    <value>Answer</value>
+  <data name="NoFollowersTitle" xml:space="preserve">
+    <value>No followers</value>
   </data>
-  <data name="AnswerMaxLengthError" xml:space="preserve">
-    <value>The max length for an answer is 1400 characters</value>
+  <data name="NoFollowing" xml:space="preserve">
+    <value>This user is not following anyone yet</value>
   </data>
-  <data name="AnswerPlaceHolderFirstHalf" xml:space="preserve">
-    <value>Your answer to </value>
-  </data>
-  <data name="AnswerPlaceHolderSecondHalf" xml:space="preserve">
-    <value> 's question</value>
-  </data>
-  <data name="Answers" xml:space="preserve">
-    <value>'s answers</value>
-    <comment>Before answers goes the user name</comment>
-  </data>
-  <data name="AskedHeader" xml:space="preserve">
-    <value>asked</value>
-  </data>
-  <data name="DeletedQuestionDetailWarning" xml:space="preserve">
-    <value>The question you are trying to reply to was deleted</value>
-  </data>
-  <data name="EmptyAnswerError" xml:space="preserve">
-    <value>Your answer cannot be empty</value>
-  </data>
-  <data name="NoAnswers" xml:space="preserve">
-    <value>This user hasn't replied to any question yet</value>
-  </data>
-  <data name="NoAnswersTitle" xml:space="preserve">
-    <value>No answers</value>
-  </data>
-  <data name="NoQuestions" xml:space="preserve">
-    <value>This user has not asked any questions yet</value>
-  </data>
-  <data name="NoQuestionsTitle" xml:space="preserve">
-    <value>No questions</value>
-  </data>
-  <data name="QuestionDetailNotFound" xml:space="preserve">
-    <value>The question you are trying to reply to cannot be found</value>
-  </data>
-  <data name="QuestionDetailNotToCurrentUser" xml:space="preserve">
-    <value>This question was not asked to you!</value>
-  </data>
-  <data name="Questions" xml:space="preserve">
-    <value>'s questions</value>
-  </data>
-  <data name="RepliedHeader" xml:space="preserve">
-    <value>replied</value>
-  </data>
-  <data name="SuccessAnswer" xml:space="preserve">
-    <value>Your answer was posted</value>
-  </data>
-  <data name="UserNotFoundErrorHeader" xml:space="preserve">
-    <value>User not found</value>
-  </data>
-  <data name="UserNotFoundErrorMessage" xml:space="preserve">
-    <value>This user does not exist</value>
-  </data>
-  <data name="YourAnswer" xml:space="preserve">
-    <value>Type your answer</value>
+  <data name="NoFollowingTitle" xml:space="preserve">
+    <value>Not following anyone</value>
   </data>
 </root>

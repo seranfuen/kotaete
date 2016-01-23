@@ -151,6 +151,33 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No answers.
+        /// </summary>
+        public static string NoAnswersTitle {
+            get {
+                return ResourceManager.GetString("NoAnswersTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user has not asked any questions yet.
+        /// </summary>
+        public static string NoQuestions {
+            get {
+                return ResourceManager.GetString("NoQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No questions.
+        /// </summary>
+        public static string NoQuestionsTitle {
+            get {
+                return ResourceManager.GetString("NoQuestionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The question you are trying to reply to cannot be found.
         /// </summary>
         public static string QuestionDetailNotFound {

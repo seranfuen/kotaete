@@ -17,8 +17,9 @@ namespace KotaeteMVC.Controllers
 {
     public class UserController : AlertControllerBase
     {
-
         public const string PreviousQuestionKey = "PreviousQuestionKey";
+        public const string AjaxFollowersRoute = "UserAjaxFollowers";
+        public const string AjaxFollowingRoute = "UserAjaxFollowing";
         private PaginationCreator<ProfileViewModel> _paginationCreator = new PaginationCreator<ProfileViewModel>();
 
 
@@ -55,6 +56,10 @@ namespace KotaeteMVC.Controllers
                 return GetUserNotFoundView(userName);
             }
             var followerModel = GetFollowingViewModel(user, page);
+            if (followerModel.Followers.Count() == 0)
+            {
+                return View("NoFollowers", new NoFollowersViewModel() { Profile = followerModel.OwnerProfile, IsFollowers = false });
+            }
             if (page > followerModel.TotalPages)
             {
                 return GetPageNotFoundError();
@@ -76,6 +81,10 @@ namespace KotaeteMVC.Controllers
                 return GetUserNotFoundView(userName);
             }
             var followerModel = GetFollowersViewModel(user, page);
+            if (followerModel.Followers.Count() == 0)
+            {
+                return View("NoFollowers", new NoFollowersViewModel() { Profile = followerModel.OwnerProfile, IsFollowers = true });
+            }
             if (page > followerModel.TotalPages)
             {
                 return GetPageNotFoundError();
@@ -83,7 +92,7 @@ namespace KotaeteMVC.Controllers
             return View("Followers", followerModel);
         }
 
-        [Route("user/{userName}/xhj-followers/{page}", Name = "UserAjaxFollowers")]
+        [Route("user/{userName}/xhj-followers/{page}", Name = AjaxFollowersRoute)]
         public ActionResult AjaxFollowers(string userName, int page = 1)
         {
             if (Request.IsAjaxRequest() == false)
@@ -107,16 +116,6 @@ namespace KotaeteMVC.Controllers
             return PartialView("MiniProfileGrid", followerModel);
         }
 
-        private void InitializePagination(int cou)
-        {
-            var initializer = new PaginationInitializer("UserAjaxFollowers");
-            initializer.TotalPages = PaginationViewModel.GetPageCount(followers.Followers.Count, GetPageSize());
-            initializer.CurrentPage = page;
-            initializer.UpdateTargetId = "follower-grid";
-            initializer.InitializeItemList(followers);
-        }
-
-
         private ActionResult GetUserNotFoundView(string user)
         {
             var errorModel = new ErrorViewModel()
@@ -135,23 +134,24 @@ namespace KotaeteMVC.Controllers
         private FollowersViewModel GetFollowersViewModel(ApplicationUser user, int page)
         {
             var followers = new FollowersViewModel();
-            followers.Followers = user.Followers.Select(follower => this.GetProfile(follower.UserName)).ToList();
-            InitializeModel(user, page, followers);
-            return followers;
-        }
-
-        private void InitializeModel(ApplicationUser user, int page, FollowersViewModel followers)
-        {
             followers.OwnerProfile = this.GetProfile(user.UserName);
-            followers.CurrentPage = page;
-            followers.Followers = _paginationCreator.GetPage(followers.Followers, page, GetPageSize());
+            var followersQuery = user.Followers.Select(follower => this.GetProfile(follower.UserName));
+            var modelInitializer = new PaginationInitializer(AjaxFollowersRoute, "follower-grid", user.UserName, GetPageSize());
+            modelInitializer.InitializePaginationModel(followers, page, followersQuery.Count());
+            var pageCreator = new PaginationCreator<ProfileViewModel>();
+            followers.Followers = pageCreator.GetPage(followersQuery, page, GetPageSize());
+            return followers;
         }
 
         private FollowersViewModel GetFollowingViewModel(ApplicationUser user, int page)
         {
             var followers = new FollowersViewModel();
-            followers.Followers = user.Following.Select(following => this.GetProfile(following.UserName)).ToList();
-            InitializeModel(user, page, followers);
+            followers.OwnerProfile = this.GetProfile(user.UserName);
+            var followersQuery = user.Following.Select(follower => this.GetProfile(follower.UserName));
+            var modelInitializer = new PaginationInitializer(AjaxFollowingRoute, "follower-grid", user.UserName, GetPageSize());
+            modelInitializer.InitializePaginationModel(followers, page, followersQuery.Count());
+            var pageCreator = new PaginationCreator<ProfileViewModel>();
+            followers.Followers = pageCreator.GetPage(followersQuery, page, GetPageSize());
             return followers;
         }
 

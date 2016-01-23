@@ -6,8 +6,8 @@ using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels
 {
-    public class AnswerListViewModel : PaginationViewModel<AnswerProfileViewModel>
+    public class AnswerListViewModel : PaginationViewModel
     {
-        
+        public List<AnswerProfileViewModel> Answers;
     }
 }
