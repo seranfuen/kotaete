@@ -217,7 +217,7 @@
     <Compile Include="Models\FollowersViewModel.cs" />
     <Compile Include="Models\FollowUserViewModel.cs" />
     <Compile Include="Models\Entities\IdentityModels.cs" />
-    <Compile Include="Models\Initializers\KotaeteAnimeInitializer.cs" />
+    <Compile Include="Models\Initializers\KotaeteInitializer.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileQuestionDetailViewModel.cs" />
     <Compile Include="Models\ProfileQuestionViewModel.cs" />
