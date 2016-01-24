@@ -1,4 +1,5 @@
 ﻿using KotaeteMVC.Models.Entities;
+using KotaeteMVC.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,8 @@ namespace KotaeteMVC.Models
         public int QuestionsAsked { get; set; }
 
         public int QuestionsReplied { get; set; }
+
+        public FollowButtonViewModel FollowButton { get; set; }
 
         [DefaultValue(0)]
         public int FollowingCount { get; set; }

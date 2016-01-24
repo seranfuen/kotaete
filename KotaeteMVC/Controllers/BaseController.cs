@@ -19,14 +19,6 @@ namespace KotaeteMVC.Controllers
             Context = new KotaeteDbContext();
         }
 
-        protected int GetInboxCount()
-        {
-            var user = this.GetCurrentUser();
-            if (user == null) return 0;
-            return Context.QuestionDetails.Count(entity => entity.AskedTo.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase) &&
-                entity.SeenByUser == false);
-        }
-
         public virtual int GetPageSize()
         {
             return 5;

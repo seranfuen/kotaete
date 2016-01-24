@@ -92,7 +92,9 @@
                 </div>
             </div>
         </div>
-        @{ Html.RenderPartial("FollowButton", Model); }
+        @if (Model.IsOwnProfile)
+        {
+            @Html.Partial("FollowButton", Model.FollowButton)
+        }
     </div>
 </div>
-

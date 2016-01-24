@@ -72,6 +72,12 @@ namespace KotaeteMVC.Service
             return viewModel;
         }
 
+        public List<ApplicationUser> GetFollowers(string userName)
+        {
+            var query = GetFollowersQuery(userName);
+            return query.ToList();
+        }
+
         public FollowersViewModel GetFollowersViewModel(string userName, int page)
         {
             var followersForPage = GetPageFor(GetFollowersQuery(userName), page);
@@ -224,7 +230,7 @@ namespace KotaeteMVC.Service
 
         private ProfileViewModel InitializeProfile(ApplicationUser currentUser, ApplicationUser profileUser)
         {
-            var questionService = new QuestionsService(_context);
+            var questionService = new QuestionsService(_context, _pageSize);
             return new ProfileViewModel()
             {
                 ScreenName = profileUser.ScreenName,
@@ -240,7 +246,12 @@ namespace KotaeteMVC.Service
                 QuestionsReplied = questionService.GetQuestionsAnsweredByUser(profileUser),
                 QuestionsAsked = questionService.GetQuestionsAskedByUser(profileUser),
                 FollowerCount = GetFollowerCount(profileUser),
-                FollowingCount = GetFollowingCount(profileUser)
+                FollowingCount = GetFollowingCount(profileUser),
+                FollowButton = new FollowButtonViewModel()
+                {
+                    UserName = profileUser.UserName,
+                    IsFollowing = IsFollowing(profileUser, currentUser)
+                }
             };
         }
     }

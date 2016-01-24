@@ -1,24 +1,18 @@
-﻿@model KotaeteMVC.Models.ProfileViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.FollowButtonViewModel
 
-@if (Model.IsOwnProfile == false)
-            {
-    <div class="button-row">
-        @using (Html.BeginForm("", "Follow", FormMethod.Post))
-        {
-            @Html.Hidden("UserToFollowName", @Model.User.UserName)
-            @Html.Hidden("Action", Model.Following ? "Unfollow" : "Follow")
-            <button type="submit" class="btn btn-lg @if (Model.Following)
-                            { @("btn-danger") }
-                            else { @("btn-primary") } follow-button">
-                @if (Model.Following)
-                {
-                    @("Unfollow")
-                }
-                else
-                {
-                    @("Follow")
-                }
-            </button>
-        }
-    </div>
-}
+<div class="button-row">
+    @{ string action = Model.IsFollowing ? "UnfollowUser" : "FollowUser";
+        string buttonClass = Model.IsFollowing ? "btn-danger" : "btn-primary";
+        string buttonText = Model.IsFollowing ? UsersStrings.FollowButton : UsersStrings.UnfollowButton;
+    }
+    @using (Ajax.BeginForm(action, "User", new { @userName = Model.UserName }, new AjaxOptions
+    {
+        OnSuccess = "FollowOnSuccess(" + Model.IsFollowing.ToString() + ')'
+    }))
+    {
+        <button type="submit" class="btn btn-lg @buttonClass follow-button">
+            @buttonText
+        </button>
+    }
+</div>

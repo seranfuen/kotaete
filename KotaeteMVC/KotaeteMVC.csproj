@@ -219,6 +219,8 @@
     <Compile Include="Models\ViewModels\AnswerProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\Base\PaginationInitializer.cs" />
     <Compile Include="Models\ViewModels\Base\PaginationViewModel.cs" />
+    <Compile Include="Models\ViewModels\FollowButtonViewModel.cs" />
+    <Compile Include="Models\ViewModels\InboxViewModel.cs" />
     <Compile Include="Models\ViewModels\NoAnswersProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\NoFollowersViewModel.cs" />
     <Compile Include="Models\ViewModels\QuestionDetailViewModel.cs" />
@@ -242,6 +244,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\InboxService.cs" />
+    <Compile Include="Service\NavbarService.cs" />
     <Compile Include="Service\QuestionsService.cs" />
     <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="Service\UserService.cs" />
@@ -271,6 +275,7 @@
     <Content Include="Images\Headers\Kuro.jpg" />
     <Content Include="Images\Headers\mio.jpg" />
     <Content Include="Scripts\App\paginator.js" />
+    <Content Include="Scripts\App\users.js" />
     <Content Include="Scripts\autosize.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -4,28 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using KotaeteMVC.Helpers;
 using System.Web.Mvc;
+using KotaeteMVC.Service;
 
 namespace KotaeteMVC.Controllers
 {
     public class NavbarController : BaseController
     {
-        // GET: Navbar
+        private NavbarService _navbarService;
+
+        public NavbarController()
+        {
+            _navbarService = new NavbarService(Context);
+        }
+
         public ActionResult Index()
         {
-            if (Request.IsAuthenticated)
-            {
-                var model = new NavbarViewModel()
-                {
-                    IsAuthenticated = User.Identity.IsAuthenticated,
-                    InboxCount = GetInboxCount(),
-                    AvatarUrl = this.GetAvatarUrl(this.GetCurrentUser()),
-                    UserName = this.GetCurrentUser().ScreenName
-                };
-                return PartialView("Index", model);
-            } else
-            {
-                return PartialView("Index", new NavbarViewModel());
-            }
+            var model = _navbarService.GetNavbarViewModel(Request.IsAuthenticated);
+            return PartialView("Index", model);
         }
     }
 }

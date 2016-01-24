@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FollowButton" xml:space="preserve">
+    <value>Follow</value>
+  </data>
   <data name="FollowingSuccess" xml:space="preserve">
     <value>You are now following </value>
     <comment>At the end of the string goes the user's screen name that was followed</comment>
@@ -132,6 +135,9 @@
   </data>
   <data name="NoFollowingTitle" xml:space="preserve">
     <value>Not following anyone</value>
+  </data>
+  <data name="UnfollowButton" xml:space="preserve">
+    <value>Unfollow</value>
   </data>
   <data name="UnfollowingSuccessFst" xml:space="preserve">
     <value>You are not following </value>

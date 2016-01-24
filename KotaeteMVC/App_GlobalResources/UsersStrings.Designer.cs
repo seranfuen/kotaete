@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Follow.
+        /// </summary>
+        internal static string FollowButton {
+            get {
+                return ResourceManager.GetString("FollowButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are now following .
         /// </summary>
         internal static string FollowingSuccess {
@@ -102,6 +111,15 @@ namespace Resources {
         internal static string NoFollowingTitle {
             get {
                 return ResourceManager.GetString("NoFollowingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unfollow.
+        /// </summary>
+        internal static string UnfollowButton {
+            get {
+                return ResourceManager.GetString("UnfollowButton", resourceCulture);
             }
         }
         

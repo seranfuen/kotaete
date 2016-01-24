@@ -7,7 +7,7 @@ namespace KotaeteMVC.Service
     public abstract class ServiceBase
     {
         protected KotaeteDbContext _context;
-        private int _pageSize;
+        protected int _pageSize;
 
         public ServiceBase(KotaeteDbContext context, int pageSize)
         {

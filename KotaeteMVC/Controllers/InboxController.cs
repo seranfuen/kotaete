@@ -1,6 +1,7 @@
 ﻿using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,18 @@ namespace KotaeteMVC.Controllers
 {
     public class InboxController : AlertControllerBase
     {
+        InboxService _inboxService;
+
+        public InboxController()
+        {
+            _inboxService = new InboxService(Context, GetPageSize());
+        }
 
         [Authorize]
         public ActionResult Index()
         {
             var user = this.GetProfile(this.GetCurrentUserName());
-            var viewModel = new ProfileQuestionDetailViewModel() { Profile = user, QuestionDetails = GetQuestionDetailAnswerList(user) };
+            
             Context.SaveChanges();
             return View(viewModel);
         }
