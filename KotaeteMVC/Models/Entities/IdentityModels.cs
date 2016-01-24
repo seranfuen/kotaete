@@ -7,26 +7,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System.Linq;
-using KotaeteMVC.Models.Initializers;
 
 namespace KotaeteMVC.Models.Entities
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-
-        public ApplicationUser()
-        {
-            Followers = new List<ApplicationUser>();
-            Following = new List<ApplicationUser>();
-        }
-
-        [ScaffoldColumn(false)]
-        public virtual List<ApplicationUser> Followers { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual List<ApplicationUser> Following { get; set; }
-
         [ScaffoldColumn(false)]
         public virtual List<QuestionDetail> QuestionsAsked { get; set; }
 
@@ -58,40 +44,5 @@ namespace KotaeteMVC.Models.Entities
             // Add custom user claims here
             return userIdentity;
         }
-    }
-
-    
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("TestConnection", throwIfV1Schema: false)
-        {
-            Database.SetInitializer(new KotaeteInitializer());
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<ApplicationUser>().HasMany(x => x.Followers).WithMany(x => x.Following).
-                Map(x =>
-                {
-                    x.ToTable("FollowingFollowerApplicationUsers");
-                    x.MapLeftKey("BeingFollowed");
-                    x.MapRightKey("Following");
-                });
-
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-
-        public DbSet<Question> Questions { get; set; }
-
-        public DbSet<QuestionDetail> QuestionDetails { get; set; }
-
-        public DbSet<Answer> Answers { get; set; }
     }
 }

@@ -192,6 +192,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Context\KotaeteDbContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertControllerBase.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
@@ -210,7 +211,8 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Entities\Relationship.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Answer.cs" />
     <Compile Include="Models\ViewModels\AnswerListProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerListViewModel.cs" />
@@ -220,18 +222,17 @@
     <Compile Include="Models\ViewModels\NoAnswersProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\NoFollowersViewModel.cs" />
     <Compile Include="Models\ViewModels\QuestionDetailViewModel.cs" />
-    <Compile Include="Models\ErrorViewModel.cs" />
-    <Compile Include="Models\FollowersViewModel.cs" />
-    <Compile Include="Models\FollowUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\ErrorViewModel.cs" />
+    <Compile Include="Models\ViewModels\FollowersViewModel.cs" />
+    <Compile Include="Models\ViewModels\FollowUserViewModel.cs" />
     <Compile Include="Models\Entities\IdentityModels.cs" />
-    <Compile Include="Models\Initializers\KotaeteInitializer.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ProfileQuestionDetailViewModel.cs" />
-    <Compile Include="Models\ProfileQuestionViewModel.cs" />
-    <Compile Include="Models\ProfileViewModel.cs" />
+    <Compile Include="Context\Initializers\KotaeteInitializer.cs" />
+    <Compile Include="Models\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModels\ProfileQuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Models\Entities\Question.cs" />
     <Compile Include="Models\Entities\QuestionDetail.cs" />
-    <Compile Include="Models\UserAlert.cs" />
+    <Compile Include="Models\ViewModels\UserAlert.cs" />
     <Compile Include="Models\Validation\OnlyAlphanumAttribute.cs" />
     <Compile Include="Models\ViewModels\NavbarViewModel.cs" />
     <Compile Include="Models\ViewModels\ProfileQuestionDetailViewModel.cs" />
@@ -241,6 +242,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\QuestionsService.cs" />
+    <Compile Include="Service\ServiceBase.cs" />
+    <Compile Include="Service\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +274,7 @@
     <Content Include="Scripts\autosize.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Compile Include="Models\QuestionDetailAnswerViewModel.cs" />
+    <Compile Include="Models\ViewModels\QuestionDetailAnswerViewModel.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

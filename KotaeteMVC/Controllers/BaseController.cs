@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using KotaeteMVC.Helpers;
+using KotaeteMVC.Context;
 
 namespace KotaeteMVC.Controllers
 {
@@ -15,7 +16,7 @@ namespace KotaeteMVC.Controllers
 
         public BaseController() : base()
         {
-            Context = new ApplicationDbContext();
+            Context = new KotaeteDbContext();
         }
 
         protected int GetInboxCount()
@@ -48,7 +49,7 @@ namespace KotaeteMVC.Controllers
         }
 
 
-        public ApplicationDbContext Context { get; private set; }
+        public KotaeteDbContext Context { get; private set; }
 
 
 

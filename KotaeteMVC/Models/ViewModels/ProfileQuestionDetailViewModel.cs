@@ -5,8 +5,10 @@ using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels
 {
-    public class ProfileQuestionDetailViewModel : QuestionDetailViewModel
+    public class ProfileQuestionDetailViewModel
     {
-        public ProfileViewModel Profile { get; set; }
+        public virtual ProfileViewModel Profile { get; set; }
+
+        public virtual List<QuestionDetailAnswerViewModel> QuestionDetails { get; set; }
     }
 }

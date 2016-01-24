@@ -212,7 +212,7 @@ namespace KotaeteMVC.Controllers
             return new Answer()
             {
                 Content = answerViewModel.AnswerContent,
-                Question = questionDetail,
+                QuestionDetail = questionDetail,
                 TimeStamp = DateTime.Now,
                 User = currentUser,
                 QuestionDetailId = questionDetail.QuestionDetailId
@@ -227,10 +227,10 @@ namespace KotaeteMVC.Controllers
                         {
                             Answer = answer,
                             AnswerParagraphs = answer.Content.SplitLines(),
-                            AskerAvatarUrl = this.GetAvatarUrl(answer.Question.AskedBy),
-                            ReplierAvatarUrl = this.GetAvatarUrl(answer.Question.AskedTo),
-                            AskedTimeAgo = this.GetTimeAgo(answer.Question.TimeStamp),
-                            QuestionParagraphs = answer.Question.Question.Content.SplitLines(),
+                            AskerAvatarUrl = this.GetAvatarUrl(answer.QuestionDetail.AskedBy),
+                            ReplierAvatarUrl = this.GetAvatarUrl(answer.QuestionDetail.AskedTo),
+                            AskedTimeAgo = this.GetTimeAgo(answer.QuestionDetail.TimeStamp),
+                            QuestionParagraphs = answer.QuestionDetail.Question.Content.SplitLines(),
                             RepliedTimeAgo = this.GetTimeAgo(answer.TimeStamp)
                         };
             return query;
@@ -248,7 +248,7 @@ namespace KotaeteMVC.Controllers
         private IEnumerable<AnswerProfileViewModel> GetQuestionsQuery(string userName)
         {
             var subQuery = from answer in Context.Answers
-                           where answer.Question.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
+                           where answer.QuestionDetail.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && answer.Deleted == false
                            orderby answer.TimeStamp descending
                            select answer;
             return GetAnswerProfileViewModels(subQuery.ToList());

@@ -27,7 +27,7 @@ namespace KotaeteMVC.Models.Entities
         public virtual int QuestionDetailId { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual QuestionDetail Question { get; set; }
+        public virtual QuestionDetail QuestionDetail { get; set; }
 
         [ScaffoldColumn(false)]
         public virtual DateTime TimeStamp { get; set; }

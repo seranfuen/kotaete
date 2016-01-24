@@ -1,70 +1,21 @@
-﻿using KotaeteMVC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using KotaeteMVC.Helpers;
-using System.Data.Entity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity;
-using Resources;
-using KotaeteMVC.Models.Entities;
-using KotaeteMVC.Models.ViewModels;
+﻿using KotaeteMVC.Helpers;
+using KotaeteMVC.Models;
 using KotaeteMVC.Models.ViewModels.Base;
+using KotaeteMVC.Service;
+using Resources;
+using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
     public class UserController : AlertControllerBase
     {
         public const string PreviousQuestionKey = "PreviousQuestionKey";
-        public const string AjaxFollowersRoute = "UserAjaxFollowers";
-        public const string AjaxFollowingRoute = "UserAjaxFollowing";
         private PaginationCreator<ProfileViewModel> _paginationCreator = new PaginationCreator<ProfileViewModel>();
+        private UsersService _usersService;
 
-
-        [Route("user/{userName}", Name = "userProfile")]
-        public ActionResult Index(string userName)
+        public UserController()
         {
-            var user = this.GetUserWithName(userName);
-            if (user == null)
-            {
-                return GetUserNotFoundView(userName);
-            }
-            var currentUser = this.GetCurrentUser();
-            ProfileQuestionViewModel userProfile = this.GetProfileQuestionViewModel(userName);
-            if (TempData.ContainsKey(PreviousQuestionKey))
-            {
-                userProfile.QuestionDetail = TempData[PreviousQuestionKey] as QuestionDetailViewModel;
-                userProfile.QuestionDetail.AskedToScreenName = user.ScreenName;
-                TryValidateModel(userProfile.QuestionDetail);
-            }
-            return View(userProfile);
-        }
-
-        [Route("user/{userName}/following", Name = "userFollowing")]
-        [Route("user/{userName}/following/{page}", Name = "userPageFollowing")]
-        public ActionResult Following(string userName, int page = 1)
-        {
-            if (page < 1)
-            {
-                return GetPageNotFoundError();
-            }
-            var user = this.GetUserWithName(userName);
-            if (user == null)
-            {
-                return GetUserNotFoundView(userName);
-            }
-            var followerModel = GetFollowingViewModel(user, page);
-            if (followerModel.Followers.Count() == 0)
-            {
-                return View("NoFollowers", new NoFollowersViewModel() { Profile = followerModel.OwnerProfile, IsFollowers = false });
-            }
-            if (page > followerModel.TotalPages)
-            {
-                return GetPageNotFoundError();
-            }
-            return View("Followers", followerModel);
+            _usersService = new UsersService(Context, GetPageSize());
         }
 
         [Route("user/{userName}/followers", Name = "userFollowers")]
@@ -73,47 +24,106 @@ namespace KotaeteMVC.Controllers
         {
             if (page < 1)
             {
-                return GetPageNotFoundError();
+                page = 1;
             }
-            var user = this.GetUserWithName(userName);
-            if (user == null)
+            if (_usersService.ExistsUser(userName) == false)
             {
                 return GetUserNotFoundView(userName);
             }
-            var followerModel = GetFollowersViewModel(user, page);
-            if (followerModel.Followers.Count() == 0)
+            else if (_usersService.GetFollowingCount(userName) == 0)
             {
-                return View("NoFollowers", new NoFollowersViewModel() { Profile = followerModel.OwnerProfile, IsFollowers = true });
+                return View("NoFollowers", _usersService.GetNoFollowersViewModel(userName));
             }
-            if (page > followerModel.TotalPages)
+            var followerModel = _usersService.GetFollowersViewModel(userName, page);
+            InitializePagination(followerModel, "userPageFollowers", userName, page);
+            if (Request.IsAjaxRequest())
             {
-                return GetPageNotFoundError();
+                return PartialView("MiniProfileGrid", followerModel);
             }
-            return View("Followers", followerModel);
+            else
+            {
+                return View("Followers", followerModel);
+            }
         }
 
-        [Route("user/{userName}/xhj-followers/{page}", Name = AjaxFollowersRoute)]
-        public ActionResult AjaxFollowers(string userName, int page = 1)
+        [Route("user/{userName}/following", Name = "userFollowing")]
+        [Route("user/{userName}/following/{page}", Name = "userPageFollowing")]
+        public ActionResult Following(string userName, int page = 1)
         {
-            if (Request.IsAjaxRequest() == false)
-            {
-                return Followers(userName, page);
-            }
             if (page < 1)
             {
-                return GetPageNotFoundError();
+                page = 1;
             }
-            var user = this.GetUserWithName(userName);
-            if (user == null)
+            if (_usersService.ExistsUser(userName) == false)
             {
                 return GetUserNotFoundView(userName);
             }
-            var followerModel = GetFollowersViewModel(user, page);
-            if (page > followerModel.TotalPages)
+            else if (_usersService.GetFollowingCount(userName) == 0)
             {
-                return GetPageNotFoundError();
+                return View("NoFollowers", _usersService.GetNotFollowingViewModel(userName));
             }
-            return PartialView("MiniProfileGrid", followerModel);
+            var followerModel = _usersService.GetFollowingUsersViewModel(userName, page);
+            InitializePagination(followerModel, "userPageFollowing", userName, page);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("MiniProfileGrid", followerModel);
+            }
+            else
+            {
+                return View("Followers", followerModel);
+            }
+        }
+
+        [Authorize]
+        [Route("user/{userName}/follow")]
+        public ActionResult FollowUser(string userName)
+        {
+            var result = _usersService.FollowUser(userName);
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+            }
+            else {
+                if (result)
+                {
+                    AddAlertSuccess(UsersStrings.FollowingSuccess + _usersService.GetUserScreenName(userName), "", true);
+                }
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
+        public override int GetPageSize()
+        {
+            return 9;
+        }
+
+        [Route("user/{userName}", Name = "userProfile")]
+        public ActionResult Index(string userName)
+        {
+            if (_usersService.ExistsUser(userName) == false)
+            {
+                return GetUserNotFoundView(userName);
+            }
+            var userProfileModel = _usersService.GetProfileQuestionViewModel(userName);
+            return View(userProfileModel);
+        }
+        [Authorize]
+        [Route("user/{userName}/unfollow")]
+        public ActionResult UnfollowUser(string userName)
+        {
+            var result = _usersService.UnfollowUser(userName);
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                if (result)
+                {
+                    AddAlertSuccess(UsersStrings.UnfollowingSuccessFst + _usersService.GetUserScreenName(userName) + UsersStrings.UnfollowingSuccessLst, "", true);
+                }
+                return Redirect(Request.UrlReferrer.ToString());
+            }
         }
 
         private ActionResult GetUserNotFoundView(string user)
@@ -126,77 +136,10 @@ namespace KotaeteMVC.Controllers
             return View("Error", errorModel);
         }
 
-        public override int GetPageSize()
+        private void InitializePagination(FollowersViewModel followerModel, string route, string userName, int page)
         {
-            return 9;
-        }
-
-        private FollowersViewModel GetFollowersViewModel(ApplicationUser user, int page)
-        {
-            var followers = new FollowersViewModel();
-            followers.OwnerProfile = this.GetProfile(user.UserName);
-            var followersQuery = user.Followers.Select(follower => this.GetProfile(follower.UserName));
-            var modelInitializer = new PaginationInitializer(AjaxFollowersRoute, "follower-grid", user.UserName, GetPageSize());
-            modelInitializer.InitializePaginationModel(followers, page, followersQuery.Count());
-            var pageCreator = new PaginationCreator<ProfileViewModel>();
-            followers.Followers = pageCreator.GetPage(followersQuery, page, GetPageSize());
-            return followers;
-        }
-
-        private FollowersViewModel GetFollowingViewModel(ApplicationUser user, int page)
-        {
-            var followers = new FollowersViewModel();
-            followers.OwnerProfile = this.GetProfile(user.UserName);
-            var followersQuery = user.Following.Select(follower => this.GetProfile(follower.UserName));
-            var modelInitializer = new PaginationInitializer(AjaxFollowingRoute, "follower-grid", user.UserName, GetPageSize());
-            modelInitializer.InitializePaginationModel(followers, page, followersQuery.Count());
-            var pageCreator = new PaginationCreator<ProfileViewModel>();
-            followers.Followers = pageCreator.GetPage(followersQuery, page, GetPageSize());
-            return followers;
-        }
-
-        [Route("follow")]
-        [Authorize]
-        public ActionResult FollowUnfollowUser([Bind(Include = "UserToFollowName, Action")] FollowUserViewModel followRequest)
-        {
-            var userToFollow = this.GetUserWithName(followRequest.UserToFollowName);
-            if (userToFollow == null)
-            {
-                return new HttpUnauthorizedResult("The user " + followRequest.UserToFollowName + " does not exist");
-            }
-            var current = this.GetCurrentUser();
-            if (followRequest.Action == "Follow")
-            {
-                if (current.Following.Any(usr => usr.Equals(userToFollow)))
-                {
-                    AddAlertDanger("You are already following this user", "Cannot follow", true);
-                } else
-                {
-                    current.Following.Add(userToFollow);
-                    AddAlertSuccess("You are now following " + userToFollow.ScreenName, "Success", true);
-                }
-            } else if (followRequest.Action == "Unfollow")
-            {
-                if (current.Following.Any(usr => usr.Equals(userToFollow)) == false)
-                {
-                    AddAlertDanger("You were not following this user", "Cannot unfollow", true);
-                } else
-                {
-                    current.Following.Remove(userToFollow);
-                    AddAlertSuccess(userToFollow.ScreenName + " was successfully unfollowed", "Success", true);
-                }
-            } else
-            {
-                return new HttpUnauthorizedResult("Invalid action");
-            }
-            try
-            {
-                Context.SaveChanges();
-            } catch (Exception e)
-            {
-                AddAlertDangerOverride("There was an error saving the changes: " + e.Message, "Critical");
-            }
-            return Redirect(Request.UrlReferrer.ToString());
+            var paginator = new PaginationInitializer("userPageFollowers", "follower-grid", userName, GetPageSize());
+            paginator.InitializePaginationModel(followerModel, page, _usersService.GetFollowingCount(userName));
         }
     }
 }

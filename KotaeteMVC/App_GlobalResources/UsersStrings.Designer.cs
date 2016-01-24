@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are now following .
+        /// </summary>
+        internal static string FollowingSuccess {
+            get {
+                return ResourceManager.GetString("FollowingSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user has no followers yet. You could try following them!.
         /// </summary>
         internal static string NoFollowers {
@@ -93,6 +102,24 @@ namespace Resources {
         internal static string NoFollowingTitle {
             get {
                 return ResourceManager.GetString("NoFollowingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not following .
+        /// </summary>
+        internal static string UnfollowingSuccessFst {
+            get {
+                return ResourceManager.GetString("UnfollowingSuccessFst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  anymore.
+        /// </summary>
+        internal static string UnfollowingSuccessLst {
+            get {
+                return ResourceManager.GetString("UnfollowingSuccessLst", resourceCulture);
             }
         }
     }

@@ -29,6 +29,10 @@ namespace KotaeteMVC.Models.ViewModels.Base
             model.Route = _route;
             model.CurrentPage = currentPage;
             model.TotalPages = model.GetPageCount(count, _pageSize);
+            if (model.CurrentPage > model.TotalPages)
+            {
+                model.CurrentPage = model.TotalPages;
+            }
             model.UpdateTargetId = _updateTargetId;
             InitializeRouteValueDictionary(model);
         }
