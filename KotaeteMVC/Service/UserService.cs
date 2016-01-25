@@ -181,7 +181,7 @@ namespace KotaeteMVC.Service
             return true;
         }
 
-        private string GetAvatarUrl(ApplicationUser user)
+        public string GetAvatarUrl(ApplicationUser user)
         {
             var url = "/Images/Avatars/";
             if (user.Avatar != null)

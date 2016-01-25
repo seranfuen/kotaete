@@ -4,6 +4,7 @@ using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Models.ViewModels.Base;
+using KotaeteMVC.Service;
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,13 @@ namespace KotaeteMVC.Controllers
         private const string AjaxQuestionsRoute = "questionsxhr";
         private const string AjaxQuestionsRouteName = "QuestionListAjax";
         private PaginationCreator<Answer> _paginationCreator = new PaginationCreator<Answer>();
+
+        private AnswersService _answersService;
+
+        public AnswersController()
+        {
+            _answersService = new AnswersService(Context, GetPageSize());
+        }
 
         [Route("user/{userName}/" + AjaxAnswersRoute + "/{page}", Name = AjaxAnswersRouteName)]
         [HttpGet]
@@ -139,8 +147,26 @@ namespace KotaeteMVC.Controllers
         {
             if (page < 1)
             {
-                return GetPageNotFoundError();
+                page = 1;
             }
+            if (_answersService.ExistsUser(userName))
+            {
+                var answerListProfileViewModel = _answersService.GetAnswersListProfileViewModel(userName, page);
+
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("AnswerList", answerListProfileViewModel.AnswerList);
+                }
+                else
+                {
+                    return View("ProfileAnswerList", answerListProfileViewModel);
+                }
+            }
+            else
+            {
+                return GetUserNotFoundError();
+            }
+
             if (this.ExistsUserName(userName))
             {
                 var profile = this.GetProfile(userName);
@@ -162,7 +188,7 @@ namespace KotaeteMVC.Controllers
                     Profile = profile,
                     AnswerList = answerListModel
                 };
-                return View("ProfileAnswerList", model);
+                
             }
             else
             {

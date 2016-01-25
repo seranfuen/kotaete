@@ -14,7 +14,17 @@ namespace KotaeteMVC.Models.ViewModels.Base
         private string _route;
         private string _updateTargetId;
         private string _userName;
+        private string _action;
+        private string _controller;
 
+        public PaginationInitializer(string action, string controller, string updateTargetId, string userName, int pageSize)
+        {
+            _action = action;
+            _controller = controller;
+            _updateTargetId = updateTargetId;
+            _userName = userName;
+            _pageSize = pageSize;
+        }
 
         public PaginationInitializer(string route, string updateTargetId, string userName, int pageSize)
         {
@@ -26,7 +36,14 @@ namespace KotaeteMVC.Models.ViewModels.Base
 
         public void InitializePaginationModel(PaginationViewModel model, int currentPage, int count)
         {
-            model.Route = _route;
+            if (model.Route != null)
+            {
+                model.Route = _route;
+            } else
+            {
+                model.Controller = _controller;
+                model.Action = _action;
+            }
             model.CurrentPage = currentPage;
             model.TotalPages = model.GetPageCount(count, _pageSize);
             if (model.CurrentPage > model.TotalPages)

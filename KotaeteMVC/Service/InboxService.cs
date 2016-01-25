@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using KotaeteMVC.Models;
+using KotaeteMVC.Helpers;
+using KotaeteMVC.Models.ViewModels.Base;
 
 namespace KotaeteMVC.Service
 {
@@ -13,23 +15,48 @@ namespace KotaeteMVC.Service
     {
         public InboxService(KotaeteDbContext context, int pageSize) : base(context, pageSize) { }
 
-        public InboxViewModel GetInboxViewModelCurrentUser()
+        public InboxViewModel GetInboxViewModelCurrentUser(int page)
         {
-            
+            return GetInboxViewModel(GetCurrentUserName(), page);
         }
 
-        public InboxViewModel GetInboxViewModel(string userName)
+        public InboxViewModel GetInboxViewModel(string userName, int page)
         {
             var profile = GetUserProfile(userName);
-            var viewModel = new InboxViewModel() { Profile = profile, QuestionDetails = GetQuestionDetailAnswerList(user) };
+            var viewModel = new InboxViewModel() { Profile = profile, QuestionDetails = GetQuestionDetailAnswerList(userName, page) };
+            var paginationInitializer = new PaginationInitializer("InboxPage", "inbox-questions", userName, _pageSize);
+            paginationInitializer.InitializePaginationModel(viewModel, page, GetIncomingQuestionsCount(userName));
+            return viewModel;
         }
 
-        private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(string userName)
+        private int GetIncomingQuestionsCount(string userName)
         {
-            var query = from questionDetail in _context.QuestionDetails
-            where questionDetail.AskedTo.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)
-              && _context.Answers.Any(answer => answer.QuestionDetail == questionDetail) == false
-            select questionDetail;
+            return GetIncomingQuestionsQuery(userName).Count();
+        }
+
+        private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(string userName, int page)
+        {
+            IQueryable<QuestionDetail> query = GetIncomingQuestionsQuery(userName);
+            var questionsPage = GetPageFor(query, page);
+
+            var questions = questionsPage.Select(qst => new QuestionDetailAnswerViewModel()
+            {
+                QuestionDetail = qst,
+                QuestionDetailId = qst.QuestionDetailId,
+                AskerAvatarUrl = GetAvatarUrl(qst.AskedBy),
+                AskedTimeAgo = TimeHelper.GetTimeAgo(qst.TimeStamp),
+                QuestionParagraphs = qst.Question.Content.SplitLines(),
+                Seen = qst.SeenByUser
+            }).Where(qst => qst.QuestionDetail.Answered == false).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
+            return questions.ToList();
+        }
+
+        private IQueryable<QuestionDetail> GetIncomingQuestionsQuery(string userName)
+        {
+            return from questionDetail in _context.QuestionDetails
+                   where questionDetail.Answered == false && questionDetail.Deleted == false
+                   && questionDetail.AskedTo.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                   select questionDetail;
         }
 
         public void UpdateQuestionsSeenByCurrentUser()

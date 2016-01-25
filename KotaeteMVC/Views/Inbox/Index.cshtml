@@ -1,4 +1,4 @@
-﻿@model KotaeteMVC.Models.ProfileQuestionDetailViewModel
+﻿@model KotaeteMVC.Models.ViewModels.InboxViewModel
 
 @{
     ViewBag.Title = "Inbox";
@@ -11,19 +11,6 @@
 
 <h2>Inbox</h2>
 
-@if (Model.QuestionDetails.Count > 0)
-{
-
-    foreach (var question in Model.QuestionDetails)
-    {
-        Html.RenderPartial("InboxQuestion", question);
-    }
-}
-else
-{
-    <div class="jumbotron">
-        <h3>You have no questions!</h3>
-        <p>What a pity. You can get a random question or try making some friends <span class="glyphicon glyphicon-heart"></span></p>
-    </div>
-}
-
+<div id="inbox-questions">
+@Html.Partial("InboxQuestionList", Model.QuestionDetails)
+</div>

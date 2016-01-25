@@ -244,6 +244,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\AnswersService.cs" />
     <Compile Include="Service\InboxService.cs" />
     <Compile Include="Service\NavbarService.cs" />
     <Compile Include="Service\QuestionsService.cs" />
@@ -353,6 +354,7 @@
     <Content Include="Views\Shared\Pagination.cshtml" />
     <Content Include="Views\User\MiniProfileGrid.cshtml" />
     <Content Include="Views\User\NoFollowers.cshtml" />
+    <Content Include="Views\Inbox\InboxQuestionList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

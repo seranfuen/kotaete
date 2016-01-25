@@ -8,7 +8,7 @@ namespace KotaeteMVC.Helpers
 {
     public static class TimeHelper
     {
-        public static string GetTimeAgo(this Controller controller, DateTime dateTime)
+        public static string GetTimeAgo(DateTime dateTime)
         {
             var diff = DateTime.Now - dateTime;
             if (diff.Days > 0)

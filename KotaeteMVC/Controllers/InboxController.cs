@@ -1,6 +1,7 @@
 ﻿using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Models.ViewModels.Base;
 using KotaeteMVC.Service;
 using System;
 using System.Collections.Generic;
@@ -19,32 +20,28 @@ namespace KotaeteMVC.Controllers
             _inboxService = new InboxService(Context, GetPageSize());
         }
 
+        [Route("Inbox", Name = "Inbox")]
+        [Route("Inbox/{page}", Name = "InboxPage")]
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var user = this.GetProfile(this.GetCurrentUserName());
-            
-            Context.SaveChanges();
-            return View(viewModel);
-        }
-
-        private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(ProfileViewModel profileModel)
-        {
-            var user = profileModel.User;
-            var questions = user.QuestionsReceived.Select(qst => new QuestionDetailAnswerViewModel()
+            if (page < 1)
             {
-                QuestionDetail = qst,
-                QuestionDetailId = qst.QuestionDetailId,
-                AskerAvatarUrl = this.GetAvatarUrl(qst.AskedBy),
-                AskedTimeAgo = this.GetTimeAgo(qst.TimeStamp),
-                QuestionParagraphs = qst.Question.Content.SplitLines(),
-                Seen = qst.SeenByUser
-            }).Where(qst => qst.QuestionDetail.Answered == false).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
-            foreach (var question in user.QuestionsReceived)
-            {
-                question.SeenByUser = true;
+                page = 1;
             }
-            return questions;
+            var inboxViewModel = _inboxService.GetInboxViewModelCurrentUser(page);
+            if (page > inboxViewModel.TotalPages)
+            {
+                page = inboxViewModel.TotalPages;
+            }
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(inboxViewModel.QuestionDetails);
+            }
+            else
+            {
+                return View(inboxViewModel);
+            }
         }
     }
 }
