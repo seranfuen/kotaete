@@ -22,6 +22,15 @@ namespace KotaeteMVC.Context
             return new KotaeteDbContext();
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Relationship>()
+            .HasRequired(c => c.DestinationUser)
+            .WithMany()
+            .WillCascadeOnDelete(false);
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Question> Questions { get; set; }
 
         public DbSet<QuestionDetail> QuestionDetails { get; set; }

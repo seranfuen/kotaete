@@ -18,8 +18,8 @@ namespace KotaeteMVC.Service
             {
                 IsAuthenticated = isAuthenticated,
                 InboxCount = GetInboxCount(),
-                AvatarUrl = currentUser.AvatarUrl,
-                UserName = currentUser.ScreenName
+                AvatarUrl = currentUser != null ? currentUser.AvatarUrl : null,
+                UserName = currentUser != null ? currentUser.ScreenName : null
             };
             return model;
         }
@@ -28,7 +28,7 @@ namespace KotaeteMVC.Service
         {
             var user = GetCurrentUser();
             if (user == null) return 0;
-            return _context.QuestionDetails.Count(entity => entity.AskedTo == user && entity.SeenByUser == false);
+            return _context.QuestionDetails.Count(entity => entity.AskedTo.Id == user.Id && entity.SeenByUser == false);
         }
     }
 }

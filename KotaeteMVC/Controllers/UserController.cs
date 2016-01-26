@@ -30,12 +30,11 @@ namespace KotaeteMVC.Controllers
             {
                 return GetUserNotFoundView(userName);
             }
-            else if (_usersService.GetFollowingCount(userName) == 0)
+            else if (_usersService.GetFollowerCount(userName) == 0)
             {
                 return View("NoFollowers", _usersService.GetNoFollowersViewModel(userName));
             }
             var followerModel = _usersService.GetFollowersViewModel(userName, page);
-            InitializePagination(followerModel, "userPageFollowers", userName, page);
             if (Request.IsAjaxRequest())
             {
                 return PartialView("MiniProfileGrid", followerModel);
@@ -63,7 +62,6 @@ namespace KotaeteMVC.Controllers
                 return View("NoFollowers", _usersService.GetNotFollowingViewModel(userName));
             }
             var followerModel = _usersService.GetFollowingUsersViewModel(userName, page);
-            InitializePagination(followerModel, "userPageFollowing", userName, page);
             if (Request.IsAjaxRequest())
             {
                 return PartialView("MiniProfileGrid", followerModel);

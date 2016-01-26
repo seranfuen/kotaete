@@ -17,6 +17,7 @@ namespace KotaeteMVC.Context.Initializers
             AddTestUsers();
             AddFollowingTestUsers();
             AddQuestionsAnswers();
+            _context.SaveChanges();
         }
 
         private void AddFollowingTestUsers()
@@ -30,7 +31,8 @@ namespace KotaeteMVC.Context.Initializers
                 {
                     DestinationUser = followed,
                     SourceUser = nUser,
-                    RelationshipType = RelationshipType.Friendship
+                    RelationshipType = RelationshipType.Friendship,
+                    Timestamp = DateTime.Now
                 });
                 AddUser(nUser);
             }
@@ -64,7 +66,6 @@ namespace KotaeteMVC.Context.Initializers
                 };
                 _context.Answers.Add(answer);
             }
-            _context.SaveChanges();
         }
 
         private ApplicationUser CreateApplicationUser(string userName, string screenName, string avatar = null, string header = null)
@@ -103,8 +104,6 @@ namespace KotaeteMVC.Context.Initializers
 
             AskQuestion(turtle, admin, "Do you like Turtles?", DateTime.Now.AddDays(-1).AddHours(-5), true);
             AskQuestion(duck, admin, "Do you like ducks?", DateTime.Now.AddMinutes(-5), false);
-       
-            _context.SaveChanges();
         }
 
         private void AskQuestion(ApplicationUser askingUser, ApplicationUser askedUser, string question, DateTime time, bool seen = false)
@@ -134,7 +133,8 @@ namespace KotaeteMVC.Context.Initializers
             {
                 DestinationUser = followed,
                 SourceUser = followingUser,
-                RelationshipType = RelationshipType.Friendship
+                RelationshipType = RelationshipType.Friendship,
+                Timestamp = DateTime.Now
             });
             _context.Relationships.AddRange(relationships);
         }

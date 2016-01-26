@@ -145,6 +145,9 @@
   <data name="EmptyAnswerError" xml:space="preserve">
     <value>Your answer cannot be empty</value>
   </data>
+  <data name="ErrorAnswer" xml:space="preserve">
+    <value>There was an error posting your answer</value>
+  </data>
   <data name="NoAnswers" xml:space="preserve">
     <value>This user hasn't replied to any question yet</value>
   </data>

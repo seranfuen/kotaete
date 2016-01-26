@@ -13,12 +13,12 @@ namespace KotaeteMVC.Service
 
         public int GetQuestionsAnsweredByUser(ApplicationUser user)
         {
-            return _context.Answers.Count(answer => answer.Deleted == false && answer.User == user);
+            return _context.Answers.Count(answer => answer.Deleted == false && answer.User.Id == user.Id);
         }
 
         public int GetQuestionsAskedByUser(ApplicationUser user)
         {
-            return _context.Answers.Count(answer => answer.Deleted == false && answer.QuestionDetail.AskedBy == user);
+            return _context.Answers.Count(answer => answer.Deleted == false && answer.QuestionDetail.AskedBy.Id == user.Id);
         }
 
         public bool SaveQuestionDetail(string askedToUserName, string questionContent)

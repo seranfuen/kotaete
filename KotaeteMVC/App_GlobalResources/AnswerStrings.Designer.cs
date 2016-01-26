@@ -142,6 +142,15 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error posting your answer.
+        /// </summary>
+        public static string ErrorAnswer {
+            get {
+                return ResourceManager.GetString("ErrorAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user hasn&apos;t replied to any question yet.
         /// </summary>
         public static string NoAnswers {

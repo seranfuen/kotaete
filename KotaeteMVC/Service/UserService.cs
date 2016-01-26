@@ -2,6 +2,7 @@
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Models.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,6 +83,8 @@ namespace KotaeteMVC.Service
         {
             var followersForPage = GetPageFor(GetFollowersQuery(userName), page);
             var followersModel = InitializeFollowersViewModel(userName, followersForPage);
+            var paginator = new PaginationInitializer("userPageFollowers", "follower-grid", userName, _pageSize);
+            paginator.InitializePaginationModel(followersModel, page, GetFollowerCount(userName));
             return followersModel;
         }
 
@@ -107,6 +110,8 @@ namespace KotaeteMVC.Service
         {
             var followersForPage = GetPageFor(GetFollowingUsersQuery(userName), page);
             var followersModel = InitializeFollowersViewModel(userName, followersForPage);
+            var paginator = new PaginationInitializer("userPageFollowing", "follower-grid", userName, _pageSize);
+            paginator.InitializePaginationModel(followersModel, page, GetFollowerCount(userName));
             return followersModel;
         }
 
@@ -150,7 +155,7 @@ namespace KotaeteMVC.Service
         }
 
         public ApplicationUser GetUserWithName(string userName)
-        {
+       { 
             return _context.Users.FirstOrDefault(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -177,12 +182,13 @@ namespace KotaeteMVC.Service
                 return false;
             }
             _context.Relationships.Remove(_context.Relationships.First(rel => rel.RelationshipType == RelationshipType.Friendship &&
-              rel.SourceUser == currentUser && rel.DestinationUser == userToUnfollow));
+              rel.SourceUser.Id == currentUser.Id && rel.DestinationUser.Id == userToUnfollow.Id));
             return true;
         }
 
         public string GetAvatarUrl(ApplicationUser user)
         {
+            if (user == null) return null;
             var url = "/Images/Avatars/";
             if (user.Avatar != null)
             {
@@ -194,7 +200,7 @@ namespace KotaeteMVC.Service
         private IQueryable<ApplicationUser> GetFollowersQuery(string sourceUserName)
         {
             var query = from relationship in _context.Relationships
-                        where relationship.SourceUser.UserName.Equals(sourceUserName, StringComparison.OrdinalIgnoreCase)
+                        where relationship.DestinationUser.UserName.Equals(sourceUserName, StringComparison.OrdinalIgnoreCase)
                         orderby relationship.Timestamp descending
                         select relationship.SourceUser;
             return query;
@@ -203,7 +209,7 @@ namespace KotaeteMVC.Service
         private IQueryable<ApplicationUser> GetFollowingUsersQuery(string userName)
         {
             var query = from relationship in _context.Relationships
-                        where relationship.DestinationUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                        where relationship.SourceUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
                         orderby relationship.Timestamp descending
                         select relationship.SourceUser;
             return query;
@@ -223,7 +229,7 @@ namespace KotaeteMVC.Service
         {
             return new FollowersViewModel()
             {
-                Followers = query.Select(user => GetUserProfile(user.UserName)).ToList(),
+                Followers = query.ToList().Select(user => GetUserProfile(user.UserName)).ToList(),
                 OwnerProfile = GetUserProfile(destinationUserName)
             };
         }

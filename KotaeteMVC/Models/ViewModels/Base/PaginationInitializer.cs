@@ -36,7 +36,7 @@ namespace KotaeteMVC.Models.ViewModels.Base
 
         public void InitializePaginationModel(PaginationViewModel model, int currentPage, int count)
         {
-            if (model.Route != null)
+            if (_route != null)
             {
                 model.Route = _route;
             } else
