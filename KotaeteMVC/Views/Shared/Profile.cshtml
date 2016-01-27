@@ -16,7 +16,7 @@
             }
         </div>
         <div class="row follow-indication">
-            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            @if (Model.FollowButton.IsUserAuthenticated)
             {
                 if (Model.IsOwnProfile)
                 {
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        @if (Model.IsOwnProfile)
+        @if (Model.FollowButton.IsUserAuthenticated)
         {
             @Html.Partial("FollowButton", Model.FollowButton)
         }

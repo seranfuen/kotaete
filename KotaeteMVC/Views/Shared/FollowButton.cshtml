@@ -1,14 +1,16 @@
 ﻿@using Resources
 @model KotaeteMVC.Models.ViewModels.FollowButtonViewModel
 
-<div class="button-row">
+<div id= "@Model.UserName-follow-button" class="button-row">
     @{ string action = Model.IsFollowing ? "UnfollowUser" : "FollowUser";
         string buttonClass = Model.IsFollowing ? "btn-danger" : "btn-primary";
-        string buttonText = Model.IsFollowing ? UsersStrings.FollowButton : UsersStrings.UnfollowButton;
+        string buttonText = Model.IsFollowing ? UsersStrings.UnfollowButton : UsersStrings.FollowButton;
     }
     @using (Ajax.BeginForm(action, "User", new { @userName = Model.UserName }, new AjaxOptions
-    {
-        OnSuccess = "FollowOnSuccess(" + Model.IsFollowing.ToString() + ')'
+        {
+            UpdateTargetId = Model.UserName + "-follow-button",
+            InsertionMode = InsertionMode.ReplaceWith,
+            OnFailure = "FollowError()"
     }))
     {
         <button type="submit" class="btn btn-lg @buttonClass follow-button">

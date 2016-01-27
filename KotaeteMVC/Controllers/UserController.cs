@@ -68,7 +68,7 @@ namespace KotaeteMVC.Controllers
             }
             else
             {
-                return View("Followers", followerModel);
+                return View("Following", followerModel);
             }
         }
 
@@ -79,7 +79,7 @@ namespace KotaeteMVC.Controllers
             var result = _usersService.FollowUser(userName);
             if (Request.IsAjaxRequest())
             {
-                return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                return PartialView("FollowButton", _usersService.GetFollowButtonViewModel(userName));
             }
             else {
                 if (result)
@@ -105,6 +105,7 @@ namespace KotaeteMVC.Controllers
             var userProfileModel = _usersService.GetProfileQuestionViewModel(userName);
             return View(userProfileModel);
         }
+
         [Authorize]
         [Route("user/{userName}/unfollow")]
         public ActionResult UnfollowUser(string userName)
@@ -112,7 +113,7 @@ namespace KotaeteMVC.Controllers
             var result = _usersService.UnfollowUser(userName);
             if (Request.IsAjaxRequest())
             {
-                return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                return PartialView("FollowButton", _usersService.GetFollowButtonViewModel(userName));
             }
             else
             {

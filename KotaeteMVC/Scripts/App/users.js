@@ -1,4 +1,3 @@
-﻿function FollowOnSuccess(wasFollowing)
-{
-    alert('NOT IMPLEMENTED');
+﻿function FollowError() {
+    Alert("Error following");
 }

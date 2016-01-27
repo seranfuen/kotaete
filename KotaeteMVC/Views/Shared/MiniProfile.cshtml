@@ -36,8 +36,11 @@
                 </p>
             </div>
         </div>
+        @if (Model.FollowButton.IsUserAuthenticated)
+        {
         <div class="mini-profile-button">
-            @{ Html.RenderPartial("FollowButton", Model.FollowButton); }
+            @Html.Partial("FollowButton", Model.FollowButton)
         </div>
+        }
     </div>
 </div>

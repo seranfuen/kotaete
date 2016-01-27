@@ -41,6 +41,7 @@ namespace KotaeteMVC.Service
                 Timestamp = DateTime.Now
             };
             _context.Relationships.Add(friendship);
+            _context.SaveChanges();
             return true;
         }
 
@@ -166,7 +167,7 @@ namespace KotaeteMVC.Service
                 return false;
             }
             return _context.Relationships.Where(rel => rel.RelationshipType == RelationshipType.Friendship).Any(rel =>
-                rel.SourceUser == followingUser && rel.DestinationUser == followedUser);
+                rel.SourceUser.Id == followingUser.Id && rel.DestinationUser.Id == followedUser.Id);
         }
 
         public bool UnfollowUser(string userName)
@@ -183,6 +184,7 @@ namespace KotaeteMVC.Service
             }
             _context.Relationships.Remove(_context.Relationships.First(rel => rel.RelationshipType == RelationshipType.Friendship &&
               rel.SourceUser.Id == currentUser.Id && rel.DestinationUser.Id == userToUnfollow.Id));
+            _context.SaveChanges();
             return true;
         }
 
@@ -234,9 +236,28 @@ namespace KotaeteMVC.Service
             };
         }
 
+        public FollowButtonViewModel GetFollowButtonViewModel(string userName)
+        {
+            var currentUser = GetCurrentUser();
+            var followingUser = GetUserWithName(userName);
+            var isFollowing = IsFollowing(currentUser, followingUser);
+            return GetFollowButtonViewModel(userName, isFollowing, currentUser != null);
+        }
+
+        private FollowButtonViewModel GetFollowButtonViewModel(string userName, bool isfollowing, bool isAuthenticated)
+        {
+            return new FollowButtonViewModel()
+            {
+                UserName = userName,
+                IsFollowing = isfollowing,
+                IsUserAuthenticated = isAuthenticated
+            };
+        }
+
         private ProfileViewModel InitializeProfile(ApplicationUser currentUser, ApplicationUser profileUser)
         {
             var questionService = new QuestionsService(_context, _pageSize);
+            var isCurrentUserFollowing = IsFollowing(currentUser, profileUser);
             return new ProfileViewModel()
             {
                 ScreenName = profileUser.ScreenName,
@@ -253,11 +274,7 @@ namespace KotaeteMVC.Service
                 QuestionsAsked = questionService.GetQuestionsAskedByUser(profileUser),
                 FollowerCount = GetFollowerCount(profileUser),
                 FollowingCount = GetFollowingCount(profileUser),
-                FollowButton = new FollowButtonViewModel()
-                {
-                    UserName = profileUser.UserName,
-                    IsFollowing = IsFollowing(profileUser, currentUser)
-                }
+                FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null)
             };
         }
     }
