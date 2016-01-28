@@ -8,17 +8,16 @@
 }
 @if (alerts.Count > 0)
 {
-    <div id="alert-container" class="container">
-        @foreach (var alert in alerts)
-        {
-            <div class="user-alert alert @alert.BootstrapClass @alert.DismissableClass" role="alert">
-                @if (alert.Dismissable)
-                {
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                }
-                @if (!string.IsNullOrWhiteSpace(alert.Header))
-                { <strong>@alert.Header</strong> } @alert.Message
-            </div>
-        }
-    </div>
+
+    foreach (var alert in alerts)
+    {
+        <div class="user-alert alert @alert.BootstrapClass @alert.DismissableClass" role="alert">
+            @if (alert.Dismissable)
+            {
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            }
+            @if (!string.IsNullOrWhiteSpace(alert.Header))
+            { <strong>@alert.Header</strong> } @alert.Message
+        </div>
+    }
 }

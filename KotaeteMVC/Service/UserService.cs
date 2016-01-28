@@ -3,6 +3,7 @@ using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Models.ViewModels.Base;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -213,7 +214,7 @@ namespace KotaeteMVC.Service
             var query = from relationship in _context.Relationships
                         where relationship.SourceUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
                         orderby relationship.Timestamp descending
-                        select relationship.SourceUser;
+                        select relationship.DestinationUser;
             return query;
         }
 
@@ -246,11 +247,16 @@ namespace KotaeteMVC.Service
 
         private FollowButtonViewModel GetFollowButtonViewModel(string userName, bool isfollowing, bool isAuthenticated)
         {
+            var screenName = this.GetUserScreenName(userName);
             return new FollowButtonViewModel()
             {
                 UserName = userName,
                 IsFollowing = isfollowing,
-                IsUserAuthenticated = isAuthenticated
+                IsUserAuthenticated = isAuthenticated,
+                SuccessFollowMessage = UsersStrings.FollowingSuccess + screenName,
+                SuccessUnollowMessage = UsersStrings.UnfollowingSuccessFst + screenName + UsersStrings.UnfollowingSuccessLst,
+                FailureMessage = UsersStrings.FollowingError,
+                IsOwnProfile = userName.Equals(GetCurrentUserName(), StringComparison.OrdinalIgnoreCase)
             };
         }
 

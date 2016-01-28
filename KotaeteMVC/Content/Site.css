@@ -208,3 +208,7 @@ textarea {
     top: 50%;
     left: 50%;
 }
+
+.alert-hidden {
+    display: none;
+}

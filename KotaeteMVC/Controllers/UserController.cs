@@ -79,7 +79,12 @@ namespace KotaeteMVC.Controllers
             var result = _usersService.FollowUser(userName);
             if (Request.IsAjaxRequest())
             {
-                return PartialView("FollowButton", _usersService.GetFollowButtonViewModel(userName));
+                if (result)
+                {
+                    var model = _usersService.GetFollowButtonViewModel(userName);
+                    return PartialView("FollowButton", model);
+                }
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             else {
                 if (result)
@@ -113,7 +118,12 @@ namespace KotaeteMVC.Controllers
             var result = _usersService.UnfollowUser(userName);
             if (Request.IsAjaxRequest())
             {
-                return PartialView("FollowButton", _usersService.GetFollowButtonViewModel(userName));
+                if (result)
+                {
+                    var model = _usersService.GetFollowButtonViewModel(userName);
+                    return PartialView("FollowButton", model);
+                }
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             else
             {

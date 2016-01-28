@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error following or unfollowing this user.
+        /// </summary>
+        internal static string FollowingError {
+            get {
+                return ResourceManager.GetString("FollowingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are now following .
         /// </summary>
         internal static string FollowingSuccess {

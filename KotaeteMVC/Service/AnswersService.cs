@@ -82,9 +82,9 @@ namespace KotaeteMVC.Service
 
         private AnswerListProfileViewModel GetAnswerListProfileModelForQuery(string userName, int page, IQueryable<Answer> query)
         {
-            var answers = GetPageFor(query, page);
+            var answers = GetPageFor(query, page).ToList();
             var userProfile = GetUserProfile(userName);
-            var answerModels = query.Select(answer => new AnswerProfileViewModel()
+            var answerModels = answers.Select(answer => new AnswerProfileViewModel()
             {
                 Answer = answer,
                 AnswerParagraphs = answer.Content.SplitLines(),

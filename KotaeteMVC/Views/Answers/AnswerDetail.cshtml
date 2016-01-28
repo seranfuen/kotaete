@@ -5,13 +5,13 @@
     <div class="panel-heading question-detail-panel-heading">
         <div class="row">
             <div class="question-asked-avatar col-md-2 col-sm-2 col-xs-2">
-                <a href="@Url.Action("Index", "User", new { @userName = Model.Answer.Question.AskedBy.UserName })">
-                    <img src="@Model.AskerAvatarUrl" alt="@Model.Answer.Question.AskedBy.ScreenName" />
+                <a href="@Url.Action("Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedBy.UserName })">
+                    <img src="@Model.AskerAvatarUrl" alt="@Model.Answer.QuestionDetail.AskedBy.ScreenName" />
                 </a>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
                 <div class="row question-meta">
-                    @Html.ActionLink(@Model.Answer.Question.AskedBy.ScreenName, "Index", "User", new { @userName = Model.Answer.Question.AskedBy.UserName }, null) @AnswerStrings.AskedHeader @Model.AskedTimeAgo
+                    @Html.ActionLink(@Model.Answer.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedBy.UserName }, null) @AnswerStrings.AskedHeader @Model.AskedTimeAgo
                 </div>
                 <div class="row question-content">
                     @foreach (var paragraph in Model.QuestionParagraphs)
@@ -24,13 +24,13 @@
     </div>
     <div class="panel-body qst-detail-answer">
         <div class="question-asked-avatar col-md-2 col-sm-2 col-xs-2">
-            <a href="@Url.Action("Index", "User", new { @userName = Model.Answer.Question.AskedTo.UserName })">
+            <a href="@Url.Action("Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedTo.UserName })">
                 <img src="@Model.ReplierAvatarUrl" alt="@Model. Model.Answer.Question.AskedTo.ScreenName" />
             </a>
         </div>
         <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
             <div class="row question-meta">
-                @Html.ActionLink(@Model.Answer.Question.AskedTo.ScreenName, "Index", "User", new { @userName = Model.Answer.Question.AskedTo.UserName }, null) @AnswerStrings.RepliedHeader @Model.RepliedTimeAgo
+                @Html.ActionLink(@Model.Answer.QuestionDetail.AskedTo.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedTo.UserName }, null) @AnswerStrings.RepliedHeader @Model.RepliedTimeAgo
             </div>
             <div class="row question-content">
                 @foreach (var paragraph in Model.AnswerParagraphs)

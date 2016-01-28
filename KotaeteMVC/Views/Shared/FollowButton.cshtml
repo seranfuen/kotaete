@@ -10,7 +10,8 @@
         {
             UpdateTargetId = Model.UserName + "-follow-button",
             InsertionMode = InsertionMode.ReplaceWith,
-            OnFailure = "FollowError()"
+            OnFailure = "KotaeteAlerts.AddAlertError('" + Model.FailureMessage + "')",
+            OnSuccess = "KotaeteAlerts.AddAlertSuccess('" + Model.FollowMessage + "')"
     }))
     {
         <button type="submit" class="btn btn-lg @buttonClass follow-button">

@@ -37,7 +37,7 @@ namespace KotaeteMVC.Service
         private List<QuestionDetailAnswerViewModel> GetQuestionDetailAnswerList(string userName, int page)
         {
             IQueryable<QuestionDetail> query = GetIncomingQuestionsQuery(userName);
-            var questionsPage = GetPageFor(query, page);
+            var questionsPage = GetPageFor(query, page).ToList();
 
             var questions = questionsPage.Select(qst => new QuestionDetailAnswerViewModel()
             {
@@ -47,7 +47,7 @@ namespace KotaeteMVC.Service
                 AskedTimeAgo = TimeHelper.GetTimeAgo(qst.TimeStamp),
                 QuestionParagraphs = qst.Question.Content.SplitLines(),
                 Seen = qst.SeenByUser
-            }).Where(qst => qst.QuestionDetail.Answered == false).OrderByDescending(qst => qst.QuestionDetail.TimeStamp).ToList();
+            });
             return questions.ToList();
         }
 
@@ -56,6 +56,7 @@ namespace KotaeteMVC.Service
             return from questionDetail in _context.QuestionDetails
                    where questionDetail.Answered == false && questionDetail.Deleted == false
                    && questionDetail.AskedTo.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                   orderby questionDetail.TimeStamp descending
                    select questionDetail;
         }
 

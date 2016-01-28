@@ -120,6 +120,9 @@
   <data name="FollowButton" xml:space="preserve">
     <value>Follow</value>
   </data>
+  <data name="FollowingError" xml:space="preserve">
+    <value>There was an error following or unfollowing this user</value>
+  </data>
   <data name="FollowingSuccess" xml:space="preserve">
     <value>You are now following </value>
     <comment>At the end of the string goes the user's screen name that was followed</comment>

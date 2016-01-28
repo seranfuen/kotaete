@@ -14,7 +14,9 @@
     @Html.Action("Index", "Navbar", null)
 
     <div class="container-fuid body-content">
-        @{ Html.RenderPartial("_Alert"); }
+        <div id="alert-container" class="container">
+            @{ Html.RenderPartial("_Alert"); }
+        </div>
         @RenderBody()
         <hr />
         <footer>
@@ -26,6 +28,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/autosize.js")
     @Scripts.Render("~/Scripts/KotaeteJavascript.js")
+    @Scripts.Render("~/Scripts/App/alerts.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
