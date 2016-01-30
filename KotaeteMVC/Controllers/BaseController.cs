@@ -19,6 +19,22 @@ namespace KotaeteMVC.Controllers
             Context = new KotaeteDbContext();
         }
 
+        public ActionResult RedirectToPrevious()
+        {
+            if (Request.UrlReferrer == null)
+            {
+                return GetDefaultView();
+            } else
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
+        public virtual ActionResult GetDefaultView()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         public virtual int GetPageSize()
         {
             return 5;

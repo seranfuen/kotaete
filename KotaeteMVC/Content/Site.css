@@ -212,3 +212,16 @@ textarea {
 .alert-hidden {
     display: none;
 }
+
+.answer-footer button, .answer-footer button:active {
+    color: darkblue;
+    font-size: 12px;
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.answer-footer img {
+    position: relative;
+    padding-bottom: 3px;
+}

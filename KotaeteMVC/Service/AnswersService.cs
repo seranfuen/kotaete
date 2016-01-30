@@ -5,6 +5,7 @@ using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Models.ViewModels.Base;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KotaeteMVC.Service
@@ -80,20 +81,11 @@ namespace KotaeteMVC.Service
             return query;
         }
 
-        private AnswerListProfileViewModel GetAnswerListProfileModelForQuery(string userName, int page, IQueryable<Answer> query)
+        protected AnswerListProfileViewModel GetAnswerListProfileModelForQuery(string userName, int page, IQueryable<Answer> query)
         {
             var answers = GetPageFor(query, page).ToList();
             var userProfile = GetUserProfile(userName);
-            var answerModels = answers.Select(answer => new AnswerProfileViewModel()
-            {
-                Answer = answer,
-                AnswerParagraphs = answer.Content.SplitLines(),
-                RepliedTimeAgo = TimeHelper.GetTimeAgo(answer.TimeStamp),
-                QuestionParagraphs = answer.QuestionDetail.Question.Content.SplitLines(),
-                AskerAvatarUrl = GetAvatarUrl(answer.QuestionDetail.AskedBy),
-                AskedTimeAgo = TimeHelper.GetTimeAgo(answer.QuestionDetail.TimeStamp),
-                ReplierAvatarUrl = GetAvatarUrl(answer.User)
-            });
+            var answerModels = GetAnswerModels(answers);
             var answerListModel = new AnswerListViewModel()
             {
                 Answers = answerModels.ToList()
@@ -104,6 +96,20 @@ namespace KotaeteMVC.Service
                 AnswerList = answerListModel
             };
             return model;
+        }
+
+        private IEnumerable<AnswerProfileViewModel> GetAnswerModels(IEnumerable<Answer> answers)
+        {
+            return answers.Select(answer => new AnswerProfileViewModel()
+            {
+                Answer = answer,
+                AnswerParagraphs = answer.Content.SplitLines(),
+                RepliedTimeAgo = TimeHelper.GetTimeAgo(answer.TimeStamp),
+                QuestionParagraphs = answer.QuestionDetail.Question.Content.SplitLines(),
+                AskerAvatarUrl = GetAvatarUrl(answer.QuestionDetail.AskedBy),
+                AskedTimeAgo = TimeHelper.GetTimeAgo(answer.QuestionDetail.TimeStamp),
+                ReplierAvatarUrl = GetAvatarUrl(answer.User)
+            });
         }
 
         private IQueryable<Answer> GetAnswersQuery(string userName)

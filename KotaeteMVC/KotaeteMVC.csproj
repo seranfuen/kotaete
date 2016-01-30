@@ -199,6 +199,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
+    <Compile Include="Controllers\LikesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="Models\Entities\AnswerLike.cs" />
     <Compile Include="Models\Entities\Relationship.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Answer.cs" />
@@ -246,6 +248,7 @@
     </Compile>
     <Compile Include="Service\AnswersService.cs" />
     <Compile Include="Service\InboxService.cs" />
+    <Compile Include="Service\LikesService.cs" />
     <Compile Include="Service\NavbarService.cs" />
     <Compile Include="Service\QuestionsService.cs" />
     <Compile Include="Service\ServiceBase.cs" />
@@ -357,7 +360,9 @@
     <Content Include="Views\User\NoFollowers.cshtml" />
     <Content Include="Views\Inbox\InboxQuestionList.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Likes\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

@@ -29,7 +29,7 @@ namespace KotaeteMVC.Controllers
         {
             if (_usersService.ExistsUser(contentQuestion.AskedToUserName))
             {
-                return Redirect(Request.UrlReferrer.ToString());
+                return RedirectToPrevious();
             }
 
             var result = false;

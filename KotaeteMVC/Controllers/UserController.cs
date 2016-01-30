@@ -86,9 +86,8 @@ namespace KotaeteMVC.Controllers
                 }
                 else
                 {
-
                     AddAlertSuccess(UsersStrings.FollowingSuccess + _usersService.GetUserScreenName(userName), "", true);
-                    return Redirect(Request.UrlReferrer.ToString());
+                    return RedirectToPrevious();
                 }
             }
             else
@@ -129,7 +128,7 @@ namespace KotaeteMVC.Controllers
                 else
                 {
                     AddAlertSuccess(UsersStrings.UnfollowingSuccessFst + _usersService.GetUserScreenName(userName) + UsersStrings.UnfollowingSuccessLst, "", true);
-                    return Redirect(Request.UrlReferrer.ToString());
+                    return RedirectToPrevious();
                 }
             }
             else

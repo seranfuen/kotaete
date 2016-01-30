@@ -5,8 +5,12 @@
     success: "alert-success",
     warning: "alert-warning",
     error: "alert-danger",
+    RemovePreviousAlerts: function() {
+        $('.alert-success, .alert-warning, .alert-info').hide();
+    },
     AddAlert: function (text, type, dismissable)
     {
+        this.RemovePreviousAlerts();
         var alertContainer = $("<div></div>").addClass("user-alert alert alert-hidden").addClass(type);
         if (dismissable === true)
         {

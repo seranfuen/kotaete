@@ -15,6 +15,8 @@ namespace KotaeteMVC.Models.Entities
         [ScaffoldColumn(false)]
         public virtual int AnswerId { get; set; }
 
+        public virtual List<AnswerLike> LikesReceived { get; set; }
+
         [Display(ResourceType = typeof(AnswerStrings), Name = "YourAnswer")]
         [Required]
         [MaxLength(1400)]

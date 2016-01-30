@@ -19,6 +19,8 @@ namespace KotaeteMVC.Models.Entities
         [ScaffoldColumn(false)]
         public virtual List<QuestionDetail> QuestionsReceived { get; set; }
 
+        public virtual List<AnswerLike> AnswerLikes { get; set; }
+
         [ScaffoldColumn(false)]
         public virtual string Avatar { get; set; }
 
