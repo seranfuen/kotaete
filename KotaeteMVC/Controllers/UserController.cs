@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public class UserController : AlertControllerBase
+    public class UserController : AlertsController
     {
         public const string PreviousQuestionKey = "PreviousQuestionKey";
         private PaginationCreator<ProfileViewModel> _paginationCreator = new PaginationCreator<ProfileViewModel>();
@@ -77,22 +77,25 @@ namespace KotaeteMVC.Controllers
         public ActionResult FollowUser(string userName)
         {
             var result = _usersService.FollowUser(userName);
-            if (Request.IsAjaxRequest())
+            if (result)
             {
-                if (result)
+                if (Request.IsAjaxRequest())
                 {
                     var model = _usersService.GetFollowButtonViewModel(userName);
                     return PartialView("FollowButton", model);
                 }
+                else
+                {
+
+                    AddAlertSuccess(UsersStrings.FollowingSuccess + _usersService.GetUserScreenName(userName), "", true);
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+            }
+            else
+            {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            else {
-                if (result)
-                {
-                    AddAlertSuccess(UsersStrings.FollowingSuccess + _usersService.GetUserScreenName(userName), "", true);
-                }
-                return Redirect(Request.UrlReferrer.ToString());
-            }
+
         }
 
         public override int GetPageSize()
@@ -116,22 +119,22 @@ namespace KotaeteMVC.Controllers
         public ActionResult UnfollowUser(string userName)
         {
             var result = _usersService.UnfollowUser(userName);
-            if (Request.IsAjaxRequest())
+            if (result)
             {
-                if (result)
+                if (Request.IsAjaxRequest())
                 {
                     var model = _usersService.GetFollowButtonViewModel(userName);
                     return PartialView("FollowButton", model);
                 }
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                else
+                {
+                    AddAlertSuccess(UsersStrings.UnfollowingSuccessFst + _usersService.GetUserScreenName(userName) + UsersStrings.UnfollowingSuccessLst, "", true);
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
             }
             else
             {
-                if (result)
-                {
-                    AddAlertSuccess(UsersStrings.UnfollowingSuccessFst + _usersService.GetUserScreenName(userName) + UsersStrings.UnfollowingSuccessLst, "", true);
-                }
-                return Redirect(Request.UrlReferrer.ToString());
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
         }
 

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public class InboxController : AlertControllerBase
+    public class InboxController : AlertsController
     {
         InboxService _inboxService;
 

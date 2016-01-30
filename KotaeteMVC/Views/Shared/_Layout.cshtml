@@ -30,5 +30,7 @@
     @Scripts.Render("~/Scripts/KotaeteJavascript.js")
     @Scripts.Render("~/Scripts/App/alerts.js")
     @RenderSection("scripts", required: false)
+    @Html.Hidden("AlertCtrlPath", Url.Action("AlertMessage", "Alerts"))
+
 </body>
 </html>

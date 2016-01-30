@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public class QuestionsController : AlertControllerBase
+    public class QuestionsController : AlertsController
     {
 
         private UsersService _usersService;

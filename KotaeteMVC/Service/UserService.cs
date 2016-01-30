@@ -1,4 +1,5 @@
 ﻿using KotaeteMVC.Context;
+using KotaeteMVC.Controllers;
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
@@ -245,16 +246,15 @@ namespace KotaeteMVC.Service
             return GetFollowButtonViewModel(userName, isFollowing, currentUser != null);
         }
 
-        private FollowButtonViewModel GetFollowButtonViewModel(string userName, bool isfollowing, bool isAuthenticated)
+        private FollowButtonViewModel GetFollowButtonViewModel(string userName, bool isFollowing, bool isAuthenticated)
         {
             var screenName = this.GetUserScreenName(userName);
             return new FollowButtonViewModel()
             {
                 UserName = userName,
-                IsFollowing = isfollowing,
+                IsFollowing = isFollowing,
                 IsUserAuthenticated = isAuthenticated,
-                SuccessFollowMessage = UsersStrings.FollowingSuccess + screenName,
-                SuccessUnollowMessage = UsersStrings.UnfollowingSuccessFst + screenName + UsersStrings.UnfollowingSuccessLst,
+                SuccessFollowMessage = isFollowing ? AlertsController.UnfollowSuccessKey : AlertsController.FollowSuccessKey,
                 FailureMessage = UsersStrings.FollowingError,
                 IsOwnProfile = userName.Equals(GetCurrentUserName(), StringComparison.OrdinalIgnoreCase)
             };

@@ -14,7 +14,7 @@ using System.Web.Routing;
 
 namespace KotaeteMVC.Controllers
 {
-    public class AnswersController : AlertControllerBase
+    public class AnswersController : AlertsController
     {
         public const string AnswerListId = "answers-list";
         private const string AjaxAnswersRoute = "answersxhr";

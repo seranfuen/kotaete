@@ -34,5 +34,26 @@
     AddAlertError: function(text, dismissable) {
         dismissable = dismissable || true;
         this.AddAlert(text, this.error, dismissable);
+    },
+    GetAlertMessageFor: function (key, func, param1, param2, param3) {
+        var url = $("#AlertCtrlPath").val();
+        $.ajax({
+            url: this.BuildUrl(url + "/" + key, param1, param2, param3)
+        }).done(function (data) {
+            func(data)
+        });
+    },
+    BuildUrl: function (url, param1, param2, param3) {
+        url = this.AddDefinedParamToUrl(url, param1);
+        url = this.AddDefinedParamToUrl(url, param2);
+        return this.AddDefinedParamToUrl(url, param3);
+    },
+    AddDefinedParamToUrl: function (url, param) {
+        if (param === undefined) {
+            return url;
+        } else {
+            url += "/" + param;
+            return url;
+        }
     }
 };

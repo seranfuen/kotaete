@@ -8,8 +8,12 @@ using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public abstract class AlertControllerBase : BaseController
+    public class AlertsController : BaseController
     {
+
+        public const string FollowSuccessKey = "FollowSuccessKey";
+        public const string UnfollowSuccessKey = "UnfollowSuccessKey";
+        public const string FollowErrorKey = "FollowErrorKey";
 
         public void AddAlertSuccess(string message, string header = "", bool dismissable = false)
         {
@@ -64,6 +68,31 @@ namespace KotaeteMVC.Controllers
                 TempData[UserAlert.Key] = new List<UserAlert>();
             }
             (TempData[UserAlert.Key] as List<UserAlert>).Add(alert);
+        }
+
+        [Route("alerts/alertMessage/{key}")]
+        [Route("alerts/alertMessage/{key}/{param1}")]
+        [Route("alerts/alertMessage/{key}/{param1}/{param2}")]
+        [Route("alerts/alertMessage/{key}/{param1}/{param2}/{param3}")]
+        public ActionResult AlertMessage(string key, string param1 = "", string param2 = "", string param3 = "")
+        {
+            return Content(GetMessageByKey(key, new string[] { param1, param2, param3 }));
+        }
+
+        private string GetMessageByKey(string key, params string[] args)
+        {
+            if (key == FollowSuccessKey)
+            {
+                return string.Format(UsersStrings.FollowingSuccess + "{0}", args);
+            } else if (key == UnfollowSuccessKey)
+            {
+                return string.Format("{0}{1}{2}", UsersStrings.UnfollowingSuccessFst, args.Count() > 0 ? args[0] : "", UsersStrings.UnfollowingSuccessLst);
+            }
+            else if (key == FollowErrorKey)
+            {
+                return UsersStrings.FollowingError;
+            }
+            return "";
         }
 
     }

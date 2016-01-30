@@ -194,7 +194,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Context\KotaeteDbContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AlertControllerBase.cs" />
+    <Compile Include="Controllers\AlertsController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
