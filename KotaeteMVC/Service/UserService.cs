@@ -280,7 +280,8 @@ namespace KotaeteMVC.Service
                 QuestionsAsked = questionService.GetQuestionsAskedByUser(profileUser),
                 FollowerCount = GetFollowerCount(profileUser),
                 FollowingCount = GetFollowingCount(profileUser),
-                FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null)
+                FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null),
+                AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id)
             };
         }
     }

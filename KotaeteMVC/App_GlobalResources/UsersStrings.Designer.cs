@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Followers.
+        /// </summary>
+        internal static string FollowerPluralLabel {
+            get {
+                return ResourceManager.GetString("FollowerPluralLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follower.
+        /// </summary>
+        internal static string FollowerSingularLabel {
+            get {
+                return ResourceManager.GetString("FollowerSingularLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error following or unfollowing this user.
         /// </summary>
         internal static string FollowingError {
@@ -79,11 +97,56 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Following.
+        /// </summary>
+        internal static string FollowingLabel {
+            get {
+                return ResourceManager.GetString("FollowingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are now following .
         /// </summary>
         internal static string FollowingSuccess {
             get {
                 return ResourceManager.GetString("FollowingSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follows you.
+        /// </summary>
+        internal static string FollowsYou {
+            get {
+                return ResourceManager.GetString("FollowsYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Likes.
+        /// </summary>
+        internal static string LikesPluralLabel {
+            get {
+                return ResourceManager.GetString("LikesPluralLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Like.
+        /// </summary>
+        internal static string LikesSingularLabel {
+            get {
+                return ResourceManager.GetString("LikesSingularLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        internal static string LocationLabel {
+            get {
+                return ResourceManager.GetString("LocationLabel", resourceCulture);
             }
         }
         
@@ -120,6 +183,60 @@ namespace Resources {
         internal static string NoFollowingTitle {
             get {
                 return ResourceManager.GetString("NoFollowingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not following you.
+        /// </summary>
+        internal static string NotFollowingYou {
+            get {
+                return ResourceManager.GetString("NotFollowingYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That&apos;s you.
+        /// </summary>
+        internal static string OwnProfile {
+            get {
+                return ResourceManager.GetString("OwnProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions.
+        /// </summary>
+        internal static string QuestionsPluralLabel {
+            get {
+                return ResourceManager.GetString("QuestionsPluralLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        internal static string QuestionsSingularLabel {
+            get {
+                return ResourceManager.GetString("QuestionsSingularLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replies.
+        /// </summary>
+        internal static string ReplyPluralLabel {
+            get {
+                return ResourceManager.GetString("ReplyPluralLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reply.
+        /// </summary>
+        internal static string ReplySingularLabel {
+            get {
+                return ResourceManager.GetString("ReplySingularLabel", resourceCulture);
             }
         }
         

@@ -117,75 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FollowButton" xml:space="preserve">
-    <value>Follow</value>
+  <data name="AnswerButton" xml:space="preserve">
+    <value>Answer</value>
   </data>
-  <data name="FollowerPluralLabel" xml:space="preserve">
-    <value>Followers</value>
+  <data name="AnswerPlaceHolder" xml:space="preserve">
+    <value>Your answer to {0}'s question</value>
   </data>
-  <data name="FollowerSingularLabel" xml:space="preserve">
-    <value>Follower</value>
+  <data name="AskedYouTitle" xml:space="preserve">
+    <value>asked you this question</value>
   </data>
-  <data name="FollowingError" xml:space="preserve">
-    <value>There was an error following or unfollowing this user</value>
+  <data name="InboxTitle" xml:space="preserve">
+    <value>Inbox</value>
   </data>
-  <data name="FollowingLabel" xml:space="preserve">
-    <value>Following</value>
+  <data name="NoQuestions" xml:space="preserve">
+    <value>What a pity. You can get a random question or try making some friends</value>
   </data>
-  <data name="FollowingSuccess" xml:space="preserve">
-    <value>You are now following </value>
-    <comment>At the end of the string goes the user's screen name that was followed</comment>
-  </data>
-  <data name="FollowsYou" xml:space="preserve">
-    <value>Follows you</value>
-  </data>
-  <data name="LikesPluralLabel" xml:space="preserve">
-    <value>Likes</value>
-  </data>
-  <data name="LikesSingularLabel" xml:space="preserve">
-    <value>Like</value>
-  </data>
-  <data name="LocationLabel" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="NoFollowers" xml:space="preserve">
-    <value>This user has no followers yet. You could try following them!</value>
-  </data>
-  <data name="NoFollowersTitle" xml:space="preserve">
-    <value>No followers</value>
-  </data>
-  <data name="NoFollowing" xml:space="preserve">
-    <value>This user is not following anyone yet</value>
-  </data>
-  <data name="NoFollowingTitle" xml:space="preserve">
-    <value>Not following anyone</value>
-  </data>
-  <data name="NotFollowingYou" xml:space="preserve">
-    <value>Not following you</value>
-  </data>
-  <data name="OwnProfile" xml:space="preserve">
-    <value>That's you</value>
-  </data>
-  <data name="QuestionsPluralLabel" xml:space="preserve">
-    <value>Questions</value>
-  </data>
-  <data name="QuestionsSingularLabel" xml:space="preserve">
-    <value>Question</value>
-  </data>
-  <data name="ReplyPluralLabel" xml:space="preserve">
-    <value>Replies</value>
-  </data>
-  <data name="ReplySingularLabel" xml:space="preserve">
-    <value>Reply</value>
-  </data>
-  <data name="UnfollowButton" xml:space="preserve">
-    <value>Unfollow</value>
-  </data>
-  <data name="UnfollowingSuccessFst" xml:space="preserve">
-    <value>You are not following </value>
-    <comment>The format is "You are not following x anymore"</comment>
-  </data>
-  <data name="UnfollowingSuccessLst" xml:space="preserve">
-    <value> anymore</value>
+  <data name="NoQuestionsTitle" xml:space="preserve">
+    <value>You have no questions!</value>
   </data>
 </root>

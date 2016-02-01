@@ -36,6 +36,8 @@ namespace KotaeteMVC.Models.ViewModels
 
         public FollowButtonViewModel FollowButton { get; set; }
 
+        public int AnswerLikesCount { get; set; }
+
         [DefaultValue(0)]
         public int FollowingCount { get; set; }
 

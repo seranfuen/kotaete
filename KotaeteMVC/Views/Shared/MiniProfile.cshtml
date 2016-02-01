@@ -1,4 +1,5 @@
-﻿@model KotaeteMVC.Models.ViewModels.ProfileViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.ProfileViewModel
 
 <div class="panel panel-default mini-profile-panel">
     <div class="mini-profile-header" @if (Model.HeaderUrl != null) { @Html.Raw("style=\"background-image: url(" + Url.Content(Model.HeaderUrl) + "\"")   }>
@@ -13,7 +14,7 @@
             <span class="text-info mini-profile-follow-info">
                 @if (Model.FollowsYou)
                 {
-                    <small>Follows you</small>
+                    <small>@UserStrings.FollowsYou</small>
                 }
             </span>
 

@@ -1,4 +1,5 @@
-﻿@model KotaeteMVC.Models.ViewModels.ProfileViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.ProfileViewModel
 
 <div class="panel panel-default profile-panel">
     <div class="panel-heading" id="profile-header">
@@ -20,15 +21,15 @@
             {
                 if (Model.IsOwnProfile)
                 {
-                    <span class="label label-default">That's you</span>
+                    <span class="label label-default">@UsersStrings.OwnProfile</span>
                 }
                 else if (Model.FollowsYou)
                 {
-                    <span class="label label-default">Follows you</span>
+                    <span class="label label-default">@UsersStrings.FollowsYou</span>
                 }
                 else
                 {
-                    <span class="label label-warning">The bastard isn't following you</span>
+                    <span class="label label-warning">@UsersStrings.NotFollowingYou</span>
                 }
             }
         </div>
@@ -45,7 +46,7 @@
             @if (!string.IsNullOrWhiteSpace(Model.Location))
             {
                 <div class="row">
-                    <p>Location: @Model.Location</p>
+                    <p>@UsersStrings.LocationLabel: @Model.Location</p>
                 </div>
             }
             @if (!string.IsNullOrWhiteSpace(Model.Homepage))
@@ -59,35 +60,54 @@
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
                         <p class="lead">@Html.RouteLink(Model.FollowingCount.ToString(), "userFollowing", new { userName = Model.User.UserName }, null)</p>
-                        <p>
-                            Following
-                        </p>
+                        <p>@UsersStrings.FollowingLabel</p>
                     </div>
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
                         <p class="lead">@Html.RouteLink(Model.FollowerCount.ToString(), "userFollowers", new { userName = Model.User.UserName }, null)</p>
-                        <p>
-                            @if (Model.FollowerCount == 1)
-                            { @("Follower") }
-                            else { @("Followers") }
-                        </p>
+                        @if (Model.FollowerCount == 1)
+                        {
+                            <p>@UsersStrings.FollowerSingularLabel</p>
+                        }
+                        else {
+                            <p>@UsersStrings.FollowerPluralLabel</p>
+                        }
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
                         <p class="lead">@Html.RouteLink(Model.QuestionsAsked.ToString(), "QuestionsProfile", new { @userName = Model.User.UserName })</p>
-                        <p>
-                            @if (Model.QuestionsAsked == 1)
-                            { @("Question") }
-                            else { @("Questions") }
-                        </p>
+                        @if (Model.QuestionsAsked == 1)
+                        {
+                            <p>@UsersStrings.QuestionsSingularLabel</p>
+                        }
+                        else
+                        {
+                            <p>@UsersStrings.QuestionsPluralLabel</p>
+                        }
                     </div>
                     <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
                         <p class="lead">@Html.RouteLink(Model.QuestionsReplied.ToString(), "AnswersProfile", new { @userName = Model.User.UserName })</p>
-                        <p>
-                            @if (Model.QuestionsReplied == 1)
-                            { @("Reply") }
-                            else { @("Replies") }
-                        </p>
+                        @if (Model.QuestionsReplied == 1)
+                        {
+                            <p>@UsersStrings.ReplySingularLabel</p>
+                        }
+                        else
+                        {
+                            <p>@UsersStrings.ReplyPluralLabel</p>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                        <p class="lead">@Html.RouteLink(Model.AnswerLikesCount.ToString(), "AnswersLiked", new { @userName = Model.User.UserName })</p>
+                        @if (Model.AnswerLikesCount == 1)
+                        {
+                            <p>@UsersStrings.LikesSingularLabel</p>
+                        }
+                        else
+                        {
+                            <p>@UsersStrings.LikesPluralLabel</p>
+                        }
                     </div>
                 </div>
             </div>

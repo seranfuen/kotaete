@@ -42,7 +42,7 @@ namespace KotaeteMVC.Controllers
         }
 
         [Route("user/{userName}/answers/liked/{page}", Name = "AnswersLikedPage")]
-        [Route("user/{userName}/answers/liked")]
+        [Route("user/{userName}/answers/liked", Name = "AnswersLiked")]
         public ActionResult ListLikedAnswers(string userName, int page = 1)
         {
             if (page < 1)

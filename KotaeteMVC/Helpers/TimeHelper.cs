@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace KotaeteMVC.Helpers
 {
@@ -13,17 +15,17 @@ namespace KotaeteMVC.Helpers
             var diff = DateTime.Now - dateTime;
             if (diff.Days > 0)
             {
-                return diff.Days + (diff.Days == 1 ? " day ago" : " days ago");
+                return diff.Days == 1 ? MainGlobal.OneDayAgo : string.Format(MainGlobal.DaysAgo, diff.Days);
             } else if (diff.Hours > 0)
             {
-                return diff.Hours + (diff.Hours == 1 ? " hour ago" : " hours ago");
+                return diff.Hours == 1 ? MainGlobal.OneHourAgo : string.Format(MainGlobal.HoursAgo, diff.Hours);
             }
             else if (diff.Minutes >= 5)
             {
-                return diff.Minutes + " minutes ago";
+                return string.Format(MainGlobal.MinutesAgo, diff.Minutes);
             } else
             {
-                return " just now";
+                return MainGlobal.JustNow;
             }
         }
     }

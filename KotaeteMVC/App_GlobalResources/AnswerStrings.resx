@@ -126,12 +126,6 @@
   <data name="AnswerMaxLengthError" xml:space="preserve">
     <value>The max length for an answer is 1400 characters</value>
   </data>
-  <data name="AnswerPlaceHolderFirstHalf" xml:space="preserve">
-    <value>Your answer to </value>
-  </data>
-  <data name="AnswerPlaceHolderSecondHalf" xml:space="preserve">
-    <value> 's question</value>
-  </data>
   <data name="Answers" xml:space="preserve">
     <value>'s answers</value>
     <comment>Before answers goes the user name</comment>

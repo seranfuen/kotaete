@@ -167,6 +167,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AnswerStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\InboxStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InboxStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\MainGlobal.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -395,6 +400,10 @@
     <Content Include="App_GlobalResources\UsersStrings.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>UsersStrings.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\InboxStrings.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>InboxStrings.Designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

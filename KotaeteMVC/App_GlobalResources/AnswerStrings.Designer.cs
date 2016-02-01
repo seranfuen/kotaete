@@ -88,24 +88,6 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your answer to .
-        /// </summary>
-        public static string AnswerPlaceHolderFirstHalf {
-            get {
-                return ResourceManager.GetString("AnswerPlaceHolderFirstHalf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  &apos;s question.
-        /// </summary>
-        public static string AnswerPlaceHolderSecondHalf {
-            get {
-                return ResourceManager.GetString("AnswerPlaceHolderSecondHalf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;s answers.
         /// </summary>
         public static string Answers {

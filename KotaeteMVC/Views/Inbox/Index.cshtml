@@ -1,4 +1,5 @@
-﻿@model KotaeteMVC.Models.ViewModels.InboxViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.InboxViewModel
 
 @{
     ViewBag.Title = "Inbox";
@@ -9,7 +10,7 @@
     @Html.Partial("Profile", Model.Profile)
 }
 
-<h2>Inbox</h2>
+<h2>@InboxStrings.InboxTitle</h2>
 
 <div id="inbox-questions">
 @Html.Partial("InboxQuestionList", Model.QuestionDetails)
