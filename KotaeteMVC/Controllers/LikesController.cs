@@ -1,31 +1,50 @@
-﻿using System;
+﻿using KotaeteMVC.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
-    public class LikesController : Controller
+    public class LikesController : BaseController
     {
-
-        [Route("answer/{answerId}/like")]
+        [Authorize]
+        [HttpPost]
+        [Route("answer/like", Name = "LikeAnswer")]
         public ActionResult LikeAnswer(int answerId)
         {
-            throw new NotImplementedException();   
+            var likesService = new LikesService(Context, this.GetPageSize());
+            var result = likesService.LikeAnswer(answerId);
+            return GetLikeResult(answerId, likesService, result);
         }
 
-        [Route("answer/{answerId}/unlike")]
+        private ActionResult GetLikeResult(int answerId, LikesService likesService, bool result)
+        {
+            if (result)
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    var likesModel = likesService.GetLikeButtonViewModel(answerId);
+                    return PartialView("LikeButton", likesModel);
+                }
+                else
+                {
+                    return RedirectToPrevious();
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("answer/unlike", Name ="UnlikeAnswer")]
         public ActionResult UnlikeAnswer(int answerId)
         {
-            throw new NotImplementedException();
+            var likesService = new LikesService(Context, this.GetPageSize());
+            var result = likesService.UnlikeAnswer(answerId);
+            return GetLikeResult(answerId, likesService, result);
         }
-
-        [Route("answer/likes/{userName}")]
-        [Route("answer/likes/{userName}/{page}")]
-        public ActionResult ShowAnswerLikes(string userName, int page = 1)
-        {
-            throw new NotImplementedException();
-        }
-    }
+     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
-namespace KotaeteMVC.Models
+namespace KotaeteMVC.Models.ViewModels
 {
     public class ProfileViewModel
     {

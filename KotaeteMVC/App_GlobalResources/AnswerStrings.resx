@@ -148,11 +148,20 @@
   <data name="ErrorAnswer" xml:space="preserve">
     <value>There was an error posting your answer</value>
   </data>
+  <data name="Likes" xml:space="preserve">
+    <value>'s liked answers</value>
+  </data>
   <data name="NoAnswers" xml:space="preserve">
     <value>This user hasn't replied to any question yet</value>
   </data>
   <data name="NoAnswersTitle" xml:space="preserve">
     <value>No answers</value>
+  </data>
+  <data name="NoLikes" xml:space="preserve">
+    <value>This user has not liked any answer yet</value>
+  </data>
+  <data name="NoLikesTitle" xml:space="preserve">
+    <value>No likes</value>
   </data>
   <data name="NoQuestions" xml:space="preserve">
     <value>This user has not asked any questions yet</value>

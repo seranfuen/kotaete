@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace KotaeteMVC.Models
+namespace KotaeteMVC.Models.ViewModels
 {
     public class AnswerProfileViewModel
     {
@@ -21,5 +21,7 @@ namespace KotaeteMVC.Models
         public string AskedTimeAgo { get; set; }
 
         public string RepliedTimeAgo { get; set; }
+
+        public AnswerLikeViewModel LikesModel {get;set;}
     }
 }

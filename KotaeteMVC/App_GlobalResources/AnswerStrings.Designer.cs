@@ -151,6 +151,15 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;s liked answers.
+        /// </summary>
+        public static string Likes {
+            get {
+                return ResourceManager.GetString("Likes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user hasn&apos;t replied to any question yet.
         /// </summary>
         public static string NoAnswers {
@@ -165,6 +174,24 @@ namespace KotaeteMVC.App_GlobalResources {
         public static string NoAnswersTitle {
             get {
                 return ResourceManager.GetString("NoAnswersTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user has not liked any answer yet.
+        /// </summary>
+        public static string NoLikes {
+            get {
+                return ResourceManager.GetString("NoLikes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No likes.
+        /// </summary>
+        public static string NoLikesTitle {
+            get {
+                return ResourceManager.GetString("NoLikesTitle", resourceCulture);
             }
         }
         

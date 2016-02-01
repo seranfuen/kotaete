@@ -2,12 +2,7 @@
 using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
-using KotaeteMVC.Models.ViewModels;
-using KotaeteMVC.Models.ViewModels.Base;
 using KotaeteMVC.Service;
-using Resources;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -16,11 +11,6 @@ namespace KotaeteMVC.Controllers
 {
     public class AnswersController : AlertsController
     {
-        public const string AnswerListId = "answers-list";
-        private const string AjaxAnswersRoute = "answersxhr";
-        private const string AjaxAnswersRouteName = "AnswerListAjax";
-        private const string AjaxQuestionsRoute = "questionsxhr";
-        private const string AjaxQuestionsRouteName = "QuestionListAjax";
         private PaginationCreator<Answer> _paginationCreator = new PaginationCreator<Answer>();
 
         private AnswersService _answersService;
@@ -33,12 +23,12 @@ namespace KotaeteMVC.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]
-        public ActionResult Create([Bind(Include = "QuestionDetailId, AnswerContent")] QuestionDetailAnswerViewModel answerViewModel)
+        public ActionResult Create(int QuestionDetailId, string AnswerContent)
         {
             var result = false;
             if (ModelState.IsValid)
             {
-                result = _answersService.SaveAnswer(answerViewModel.AnswerContent, answerViewModel.QuestionDetailId);
+                result = _answersService.SaveAnswer(AnswerContent, QuestionDetailId);
             }
             if (result)
             {
@@ -49,6 +39,40 @@ namespace KotaeteMVC.Controllers
                 AddAlertWarning(AnswerStrings.ErrorAnswer, "", true);
             }
             return RedirectToAction("Index", "Inbox");
+        }
+
+        [Route("user/{userName}/answers/liked/{page}", Name = "AnswersLikedPage")]
+        [Route("user/{userName}/answers/liked")]
+        public ActionResult ListLikedAnswers(string userName, int page = 1)
+        {
+            if (page < 1)
+            {
+                page = 1;
+            }
+            var likesService = new LikesService(Context, GetPageSize());
+            if (_answersService.ExistsUser(userName))
+            {
+                var answers = likesService.GetLikedAnswerListProfileModel(userName, page);
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("AnswerList", answers.AnswerList);
+                }
+                else
+                {
+                    if (answers.AnswerList.Answers.Any() == false)
+                    {
+                        ViewBag.NoAnswersMessage = AnswerStrings.NoLikes;
+                        ViewBag.Title = userName + " - " + AnswerStrings.NoLikesTitle;
+                        return View("NoAnswers", answers.Profile);
+                    }
+                    ViewBag.Title = answers.Profile.ScreenName + AnswerStrings.Likes;
+                    return View("ProfileAnswerList", answers);
+                }
+            }
+            else
+            {
+                return GetUserNotFoundError();
+            }
         }
 
         [Route("user/{userName}/answers/{page}", Name = "AnswersProfilePage")]
@@ -62,13 +86,19 @@ namespace KotaeteMVC.Controllers
             if (_answersService.ExistsUser(userName))
             {
                 var answerListProfileViewModel = _answersService.GetAnswersListProfileViewModel(userName, page);
-
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView("AnswerList", answerListProfileViewModel.AnswerList);
                 }
                 else
                 {
+                    if (answerListProfileViewModel.AnswerList.Answers.Any() == false)
+                    {
+                        ViewBag.NoAnswersMessage = AnswerStrings.NoAnswers;
+                        ViewBag.Title = userName + " - " + AnswerStrings.NoAnswersTitle;
+                        return View("NoAnswers", answerListProfileViewModel.Profile);
+                    }
+                    ViewBag.Title = answerListProfileViewModel.Profile.ScreenName + AnswerStrings.Answers;
                     return View("ProfileAnswerList", answerListProfileViewModel);
                 }
             }
@@ -89,13 +119,19 @@ namespace KotaeteMVC.Controllers
             if (_answersService.ExistsUser(userName))
             {
                 var answerListProfileViewModel = _answersService.GetAnsweredQuestionsListProfileViewModel(userName, page);
-
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView("AnswerList", answerListProfileViewModel.AnswerList);
                 }
                 else
                 {
+                    if (answerListProfileViewModel.AnswerList.Answers.Any() == false)
+                    {
+                        ViewBag.NoAnswersMessage = AnswerStrings.NoQuestions;
+                        ViewBag.Title = userName + " - " + AnswerStrings.NoQuestionsTitle;
+                        return View("NoAnswers", answerListProfileViewModel.Profile);
+                    }
+                    ViewBag.Title = answerListProfileViewModel.Profile.ScreenName + AnswerStrings.Questions;
                     return View("ProfileAnswerList", answerListProfileViewModel);
                 }
             }
@@ -104,7 +140,6 @@ namespace KotaeteMVC.Controllers
                 return GetUserNotFoundError();
             }
         }
-
 
         private ActionResult GetUserNotFoundError()
         {

@@ -1,8 +1,6 @@
-﻿using KotaeteMVC.Models.ViewModels.Base;
-using System;
+﻿using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Models.ViewModels.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace KotaeteMVC.Models
 {

@@ -1,25 +1,16 @@
 ﻿@using Resources
-@model KotaeteMVC.Models.ViewModels.NoAnswersProfileViewModel
+@model KotaeteMVC.Models.ViewModels.ProfileViewModel
 
 @{
     Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
-    ViewBag.Title = Model.Profile.User.UserName + " - " + (Model.IsAnswers ? AnswerStrings.NoAnswersTitle : AnswerStrings.NoQuestionsTitle);
 }
 
 
 @section Profile {
-    @Html.Partial("Profile", Model.Profile)
+    @Html.Partial("Profile", Model)
 }
 
 <h2>@ViewBag.Title</h2>
-
 <div class="jumbotron">
-    @if (Model.IsAnswers)
-    {
-    <p>@AnswerStrings.NoAnswers</p>
-    }
-    else
-    {
-        <p>@AnswerStrings.NoQuestions</p>
-    }
+    <p>@ViewBag.NoAnswersMessage</p>
 </div>

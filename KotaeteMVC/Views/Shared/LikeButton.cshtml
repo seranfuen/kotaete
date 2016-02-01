@@ -1,0 +1,30 @@
+﻿@model KotaeteMVC.Models.ViewModels.AnswerLikeViewModel
+
+<div id="answer-footer-@Model.AnswerId" class="row answer-footer">
+    @if (Request.IsAuthenticated)
+    {
+        using (Ajax.BeginRouteForm(Model.HasLiked ? "UnlikeAnswer" : "LikeAnswer", null, new AjaxOptions
+        {
+            UpdateTargetId = "answer-footer-" + Model.AnswerId,
+            InsertionMode = InsertionMode.ReplaceWith,
+        }
+                                 ))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("answerId", Model.AnswerId)
+            <button type="submit">
+                <img src="@if (Model.HasLiked)
+            {@Url.Content("~/Images/heart_on_small.png") }
+            else {@Url.Content("~/Images/heart_off_small.png")}" /> @Model.LikeCount
+        </button>
+        }
+    }
+    else
+    {
+        <a href="@Url.Action("Login", "Account")">
+            <img src="@if (Model.HasLiked)
+                {@Url.Content("~/Images/heart_on_small.png") }
+                else {@Url.Content("~/Images/heart_off_small.png")}" /> @Model.LikeCount
+        </a>
+    }
+</div>

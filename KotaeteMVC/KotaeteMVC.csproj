@@ -216,6 +216,7 @@
     <Compile Include="Models\Entities\Relationship.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Answer.cs" />
+    <Compile Include="Models\ViewModels\AnswerLikeViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerListProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerListViewModel.cs" />
     <Compile Include="Models\ViewModels\AnswerProfileViewModel.cs" />
@@ -359,6 +360,7 @@
     <Content Include="Views\User\MiniProfileGrid.cshtml" />
     <Content Include="Views\User\NoFollowers.cshtml" />
     <Content Include="Views\Inbox\InboxQuestionList.cshtml" />
+    <Content Include="Views\Shared\LikeButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />

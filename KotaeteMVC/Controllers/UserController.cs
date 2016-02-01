@@ -1,5 +1,6 @@
 ﻿using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
+using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Models.ViewModels.Base;
 using KotaeteMVC.Service;
 using Resources;

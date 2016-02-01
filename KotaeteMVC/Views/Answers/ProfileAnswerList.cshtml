@@ -6,19 +6,12 @@
 
 <h2>@ViewBag.Title</h2>
 
-@if (Model.AnswerList.Answers.Any() == false)
-{
-    Html.RenderPartial("NoAnswers");
-}
-else
-{
-    <img id="pagination-ajax-loader"
-         src="@Url.Content("~/Images/ajax-loader.gif")"
-         style="display:none" />    
-    <div id="answers-list">
-        @Html.Partial("AnswerList", Model.AnswerList)
-    </div>
-}
+<img id="pagination-ajax-loader"
+        src="@Url.Content("~/Images/ajax-loader.gif")"
+        style="display:none" />    
+<div id="answers-list">
+    @Html.Partial("~/Views/Answers/AnswerList.cshtml", Model.AnswerList)
+</div>
 
 @section Profile {
     @Html.Partial("Profile", Model.Profile)

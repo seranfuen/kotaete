@@ -81,7 +81,7 @@ namespace KotaeteMVC.Service
             return query;
         }
 
-        protected AnswerListProfileViewModel GetAnswerListProfileModelForQuery(string userName, int page, IQueryable<Answer> query)
+        public AnswerListProfileViewModel GetAnswerListProfileModelForQuery(string userName, int page, IQueryable<Answer> query)
         {
             var answers = GetPageFor(query, page).ToList();
             var userProfile = GetUserProfile(userName);
@@ -100,6 +100,8 @@ namespace KotaeteMVC.Service
 
         private IEnumerable<AnswerProfileViewModel> GetAnswerModels(IEnumerable<Answer> answers)
         {
+            var likesService = new LikesService(_context, _pageSize);
+            var currentUserName = GetCurrentUserName();
             return answers.Select(answer => new AnswerProfileViewModel()
             {
                 Answer = answer,
@@ -108,7 +110,13 @@ namespace KotaeteMVC.Service
                 QuestionParagraphs = answer.QuestionDetail.Question.Content.SplitLines(),
                 AskerAvatarUrl = GetAvatarUrl(answer.QuestionDetail.AskedBy),
                 AskedTimeAgo = TimeHelper.GetTimeAgo(answer.QuestionDetail.TimeStamp),
-                ReplierAvatarUrl = GetAvatarUrl(answer.User)
+                ReplierAvatarUrl = GetAvatarUrl(answer.User),
+                LikesModel = new AnswerLikeViewModel()
+                {
+                    HasLiked = likesService.HasLikedAnswer(currentUserName, answer.AnswerId),
+                    LikeCount = likesService.GetLikesCount(answer.AnswerId),
+                    AnswerId = answer.AnswerId
+                }
             });
         }
 

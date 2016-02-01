@@ -2,7 +2,7 @@
 
 @foreach (var answer in Model.Answers)
 {
-    @Html.Partial("AnswerDetail", answer)
+    @Html.Partial("~/Views/Answers/AnswerDetail.cshtml", answer)
 }
 
 @Html.Partial("Pagination", Model)

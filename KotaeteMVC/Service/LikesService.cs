@@ -1,6 +1,7 @@
 ﻿using KotaeteMVC.Context;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Models.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,31 @@ using System.Web;
 
 namespace KotaeteMVC.Service
 {
-    public class LikesService : AnswersService
+    public class LikesService : UsersService
     {
         public LikesService(KotaeteDbContext context, int pageSize) : base(context, pageSize)
         {
+        }
+
+        public AnswerLikeViewModel GetLikeButtonViewModel(int answerId)
+        {
+            var currentUserName = this.GetCurrentUserName();
+            return new AnswerLikeViewModel()
+            {
+                HasLiked = HasLikedAnswer(currentUserName, answerId),
+                LikeCount = GetLikesCount(answerId),
+                AnswerId = answerId
+            };
+        }
+
+        public int GetLikesCount(int answerId)
+        {
+            return _context.AnswerLikes.Count(like => like.AnswerId == answerId && like.Active);
+        }
+
+        public bool HasLikedAnswer(string userName, int answerId)
+        {
+            return _context.AnswerLikes.Any(like => like.Active && like.AnswerId == answerId && like.ApplicationUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
         }
 
         public bool LikeAnswer(int answerId)
@@ -22,7 +44,7 @@ namespace KotaeteMVC.Service
                 return false;
             }
             var currentUser = GetCurrentUser();
-            if (answer.User.Id == currentUser.Id)
+            if (currentUser == null)
             {
                 return false;
             }
@@ -88,6 +110,7 @@ namespace KotaeteMVC.Service
 
         public AnswerListProfileViewModel GetLikedAnswerListProfileModel(string userName, int page)
         {
+            var answersService = new AnswersService(_context, _pageSize);
             var user = GetUserWithName(userName);
             if (user == null)
             {
@@ -95,8 +118,11 @@ namespace KotaeteMVC.Service
             }
             else
             {
-                var answersQuery = _context.AnswerLikes.Where(like => like.Active && like.ApplicationUserId == user.Id).Select(like => like.Answer);
-                return GetAnswerListProfileModelForQuery(userName, page, answersQuery);
+                var answersQuery = _context.AnswerLikes.Where(like => like.Active && like.ApplicationUserId == user.Id).OrderByDescending(like => like.TimeStamp).Select(like => like.Answer);
+                var paginationInitializer = new PaginationInitializer("AnswersLikedPage", "answers-list", userName, _pageSize);
+                var model = answersService.GetAnswerListProfileModelForQuery(userName, page, answersQuery);
+                paginationInitializer.InitializePaginationModel(model.AnswerList, page, answersQuery.Count());
+                return model;
             }
         }
     }

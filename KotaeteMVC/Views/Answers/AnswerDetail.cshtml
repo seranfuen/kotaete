@@ -1,5 +1,5 @@
 ﻿@using Resources;
-@model KotaeteMVC.Models.AnswerProfileViewModel
+@model KotaeteMVC.Models.ViewModels.AnswerProfileViewModel
 
 <div class="panel question-detail-panel answer-detail-panel panel-success">
     <div class="panel-heading question-detail-panel-heading">
@@ -38,9 +38,7 @@
                     <p>@paragraph</p>
                 }
             </div>
-            <div class="row answer-footer">
-               <button type="button"><img src="@Url.Content("~/Images/heart_on_small.png")" /> 5</button>
-            </div>
+            @Html.Partial("LikeButton", Model.LikesModel)
         </div>
     </div>
 </div>
