@@ -79,6 +79,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error posting your question. Please try again.
+        /// </summary>
+        internal static string AskingFailure {
+            get {
+                return ResourceManager.GetString("AskingFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your question was posted.
+        /// </summary>
+        internal static string AskingSuccess {
+            get {
+                return ResourceManager.GetString("AskingSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have no followers!.
         /// </summary>
         internal static string NoFollowersHeader {

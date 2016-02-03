@@ -124,6 +124,12 @@
     <value>all your followers</value>
     <comment>Shown as if it was the screen name</comment>
   </data>
+  <data name="AskingFailure" xml:space="preserve">
+    <value>There was an error posting your question. Please try again</value>
+  </data>
+  <data name="AskingSuccess" xml:space="preserve">
+    <value>Your question was posted</value>
+  </data>
   <data name="NoFollowersHeader" xml:space="preserve">
     <value>You have no followers!</value>
   </data>

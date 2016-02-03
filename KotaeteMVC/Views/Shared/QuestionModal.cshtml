@@ -1,5 +1,6 @@
 ﻿@model KotaeteMVC.Models.ViewModels.QuestionDetailViewModel
 @using Resources;
+
 <div id="question-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -8,8 +9,14 @@
                 <h4 class="modal-title">@QuestionStrings.AllFollowersModalHeader</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "Questions", FormMethod.Post, new { @class = "panel-body" }))
-            {
+                @using (Ajax.BeginRouteForm("CreateAskFollowers", null, new AjaxOptions
+                {
+                    OnSuccess = "OnAskingSuccess('askingSuccess')",
+                    OnFailure = "OnAskingFailure('askingFailure')",
+                    HttpMethod = "POST",
+                    UpdateTargetId = "question-modal"
+                }))
+                {
 
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -20,7 +27,7 @@
                     </div>
                     @Html.HiddenFor(model => model.AskedToUserName)
                     @Html.HiddenFor(model => model.AskToAllFollowers)
-                    <div class="form-group pull-left">
+                    <div class="form-group">
                         <div>
                             <input type="submit" value="Ask" class="btn btn-default" />
                         </div>

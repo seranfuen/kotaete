@@ -92,6 +92,14 @@ namespace KotaeteMVC.Controllers
             {
                 return UsersStrings.FollowingError;
             }
+            else if (key == "askingSuccess")
+            {
+                return QuestionStrings.AskingSuccess;
+            }
+            else if (key == "askingFailure")
+            {
+                return QuestionStrings.AskingFailure;
+            }
             return "";
         }
 

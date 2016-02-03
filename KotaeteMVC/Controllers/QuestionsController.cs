@@ -6,6 +6,7 @@ using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
@@ -58,13 +59,28 @@ namespace KotaeteMVC.Controllers
         }
 
         [Authorize]
-        public ActionResult AskFollowers([Bind(Include = "QuestionContent")] QuestionDetailViewModel contentQuestion)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("AskFollowers", Name = "CreateAskFollowers")]
+        public ActionResult CreateAskFollowers([Bind(Include = "QuestionContent")] QuestionDetailViewModel contentQuestion)
         {
+            var result = false;
             if (ModelState.IsValid)
             {
-                var result = _questionsService.AskAllFollowers(contentQuestion.QuestionContent);
+                result = _questionsService.AskAllFollowers(contentQuestion.QuestionContent);
+                if (result)
+                {
+                    if (Request.IsAjaxRequest())
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+                    }
+                    else
+                    {
+                        return RedirectToPrevious();
+                    }
+                }
             }
-            throw new NotImplementedException();
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
     }
