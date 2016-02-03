@@ -16,11 +16,17 @@
                 <ul class="nav navbar-nav">
                     <li class="navbar-item">@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>
-                        <a href="@Url.Action("Index", "Inbox", null)">Inbox @if (Model.InboxCount > 0)
-                        { <span class="badge">@Model.InboxCount</span> }</a>
+                        <a href="@Url.Action("Index", "Inbox", null)">
+                            Inbox @if (Model.InboxCount > 0)
+                            { <span class="badge">@Model.InboxCount</span> }
+                        </a>
                     </li>
                     <li>
-                        <a href="#" class="navbar-item" data-toggle="modal" data-target="#question-modal">@NavbarStrings.AskItem</a>
+                        @Ajax.ActionLink(@NavbarStrings.AskItem, "AskFollowers", "Questions", null, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       OnComplete = "ShowAskFollowersModal"
+                   })
                     </li>
                 </ul>
                 @Html.Partial("_LoginPartial")

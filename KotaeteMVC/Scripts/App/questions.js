@@ -4,3 +4,9 @@
         KotaeteAlerts.AddAlertSuccess(message, false);
     });
 }
+
+function ShowAskFollowersModal(data) {
+    $(data.responseText).appendTo("body").on('hidden.bs.modal', function() {
+     $(this).remove()
+    }).modal('show');
+}

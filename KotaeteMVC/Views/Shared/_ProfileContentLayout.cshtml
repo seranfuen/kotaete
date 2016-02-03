@@ -2,11 +2,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Request.IsAuthenticated)
-{
-    @Html.Action("AskFollowers", "Questions", null)
-}
-
 <div class="container" id="page-body">
     <div class="col-md-3 col-sm-12 col-xs-12">
         @RenderSection("Profile")
