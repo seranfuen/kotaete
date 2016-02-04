@@ -367,6 +367,7 @@
     <Content Include="Views\User\NoFollowers.cshtml" />
     <Content Include="Views\Inbox\InboxQuestionList.cshtml" />
     <Content Include="Views\Shared\LikeButton.cshtml" />
+    <Content Include="Views\Shared\QuestionAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />

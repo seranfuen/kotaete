@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ask a question to all your followers.
+        /// </summary>
+        internal static string AskFollowers {
+            get {
+                return ResourceManager.GetString("AskFollowers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to here.
         /// </summary>
         internal static string ClickToGoBackLink {
@@ -160,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This page is not supposed to be seen if Javascript is enabled.
+        /// </summary>
+        internal static string ModalJS {
+            get {
+                return ResourceManager.GetString("ModalJS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1 day ago.
         /// </summary>
         internal static string OneDayAgo {
@@ -237,6 +255,15 @@ namespace Resources {
         internal static string UserNotFoundErrorMessage {
             get {
                 return ResourceManager.GetString("UserNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type your question.
+        /// </summary>
+        internal static string YourQuestion {
+            get {
+                return ResourceManager.GetString("YourQuestion", resourceCulture);
             }
         }
     }

@@ -1,9 +1,8 @@
 ﻿@model KotaeteMVC.Models.ViewModels.QuestionDetailViewModel
 @using Resources;
 
-<div id="question-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
+<div id="question-modal" class="@if(ViewBag.AjaxEnabled) {@("modal fade")}" role="dialog">
+<div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -19,14 +18,13 @@
                 {
 
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                     <div class="form-group">
                         <div>
-                            @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.AskedToScreenName + " here" })
+                            @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = MainGlobal.YourQuestion })
                         </div>
+                        @Html.ValidationMessageFor(model => model.QuestionContent, null, new { @class = "text-danger" })
                     </div>
                     @Html.HiddenFor(model => model.AskedToUserName)
-                    @Html.HiddenFor(model => model.AskToAllFollowers)
                     <div class="form-group">
                         <div>
                             <input type="submit" value="Ask" class="btn btn-default" />

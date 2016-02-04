@@ -48,21 +48,26 @@ namespace KotaeteMVC.Controllers
 
         [Authorize]
         [Route("AskFollowers", Name = "askFollowers")]
-        public ActionResult  AskFollowers()
+        public ActionResult AskFollowers()
         {
-            var model = new QuestionDetailViewModel()
+            var model = new QuestionDetailViewModel();
+            if (Request.IsAjaxRequest())
             {
-                AskToAllFollowers = true,
-                AskedToScreenName = QuestionStrings.AllYourFollowers
-            };
-            return PartialView("QuestionModal", model);
+                ViewBag.AjaxEnabled = true;
+                return PartialView("QuestionModal", model);
+            }
+            else
+            {
+                ViewBag.AjaxEnabled = false;
+                return PartialView("QuestionAll", model);
+            }
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("AskFollowers", Name = "CreateAskFollowers")]
-        public ActionResult CreateAskFollowers([Bind(Include = "QuestionContent")] QuestionDetailViewModel contentQuestion)
+        public ActionResult CreateQuestionAllFollowers([Bind(Include = "QuestionContent")] QuestionDetailViewModel contentQuestion)
         {
             var result = false;
             if (ModelState.IsValid)
@@ -76,9 +81,14 @@ namespace KotaeteMVC.Controllers
                     }
                     else
                     {
-                        return RedirectToPrevious();
+                        return RedirectToAction("Index", "Home");
                     }
                 }
+            }
+            else if (Request.IsAjaxRequest() == false)
+            {
+                ViewBag.AjaxEnabled = false;
+                return View("QuestionAll", contentQuestion);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }

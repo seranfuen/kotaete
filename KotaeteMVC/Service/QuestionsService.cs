@@ -43,12 +43,12 @@ namespace KotaeteMVC.Service
 
         private void AddQuestionToContext(string questionContent, ApplicationUser currentUser, ApplicationUser askedToUser)
         {
-            var question = new Question()
-            {
-                AskedBy = currentUser,
-                Content = questionContent,
-                TimeStamp = DateTime.Now
-            };
+            Question question = InitializeQuestion(questionContent, currentUser);
+            AddQuestionDetailToContext(currentUser, askedToUser, question);
+        }
+
+        private void AddQuestionDetailToContext(ApplicationUser currentUser, ApplicationUser askedToUser, Question question)
+        {
             var questionDetail = new QuestionDetail()
             {
                 Answered = false,
@@ -62,14 +62,25 @@ namespace KotaeteMVC.Service
             _context.QuestionDetails.Add(questionDetail);
         }
 
+        private static Question InitializeQuestion(string questionContent, ApplicationUser currentUser)
+        {
+            return new Question()
+            {
+                AskedBy = currentUser,
+                Content = questionContent,
+                TimeStamp = DateTime.Now
+            };
+        }
+
         public bool AskAllFollowers(string content)
         {
             var usersService = new UsersService(_context, _pageSize);
             var followers = usersService.GetFollowers(usersService.GetCurrentUserName());
             var currentUser = usersService.GetCurrentUser();
+            var question = InitializeQuestion(content, currentUser);
             foreach (var follower in followers)
             {
-                AddQuestionToContext(content, currentUser, follower);
+                AddQuestionDetailToContext(currentUser, follower, question);
             }
             try
             {

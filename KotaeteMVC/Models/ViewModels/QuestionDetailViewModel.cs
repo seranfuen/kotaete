@@ -12,8 +12,6 @@ namespace KotaeteMVC.Models.ViewModels
 
         public string AskedToUserName { get; set; }
 
-        public bool AskToAllFollowers { get; set; }
-
         [Required(ErrorMessageResourceName = "QuestionContentMissing", ErrorMessageResourceType =typeof(MainGlobal))]
         public string QuestionContent { get; set; }
 

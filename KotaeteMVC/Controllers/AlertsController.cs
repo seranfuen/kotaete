@@ -99,6 +99,10 @@ namespace KotaeteMVC.Controllers
             else if (key == "askingFailure")
             {
                 return QuestionStrings.AskingFailure;
+            } 
+            else if (key == "modalJS")
+            {
+                return MainGlobal.ModalJS;
             }
             return "";
         }

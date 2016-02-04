@@ -23,20 +23,20 @@
     },
     AddAlertSuccess: function(text, dismissable)
     {
-        dismissable = dismissable || true;
+        dismissable = dismissable !== false;
         this.AddAlert(text, this.success, dismissable);
     },
     AddAlertInfo: function(text, dismissable)
     {
-        dismissable = dismissable || true;
+        dismissable = dismissable !== false;
         this.AddAlert(text, this.info, dismissable);
     },
     AddAlertWarning: function(text, dismissable) {
-        dismissable = dismissable || true;
+        dismissable = dismissable !== false;
         this.AddAlert(text, this.warning, dismissable);
     },
     AddAlertError: function(text, dismissable) {
-        dismissable = dismissable || true;
+        dismissable = dismissable !== false;
         this.AddAlert(text, this.error, dismissable);
     },
     GetAlertMessageFor: function (key, func, param1, param2, param3) {

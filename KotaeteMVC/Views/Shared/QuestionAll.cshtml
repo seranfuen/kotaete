@@ -1,0 +1,9 @@
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.QuestionDetailViewModel
+
+@{
+    ViewBag.Title = MainGlobal.AskFollowers;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("QuestionModal", Model)

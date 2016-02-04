@@ -120,6 +120,9 @@
   <data name="AppName" xml:space="preserve">
     <value>Kotaete</value>
   </data>
+  <data name="AskFollowers" xml:space="preserve">
+    <value>Ask a question to all your followers</value>
+  </data>
   <data name="ClickToGoBackLink" xml:space="preserve">
     <value>here</value>
   </data>
@@ -150,6 +153,9 @@
   <data name="MinutesAgo" xml:space="preserve">
     <value>{0} minutes ago</value>
   </data>
+  <data name="ModalJS" xml:space="preserve">
+    <value>This page is not supposed to be seen if Javascript is enabled</value>
+  </data>
   <data name="OneDayAgo" xml:space="preserve">
     <value>1 day ago</value>
   </data>
@@ -178,5 +184,8 @@
   </data>
   <data name="UserNotFoundErrorMessage" xml:space="preserve">
     <value>The user you are trying to see does not exist</value>
+  </data>
+  <data name="YourQuestion" xml:space="preserve">
+    <value>Type your question</value>
   </data>
 </root>
