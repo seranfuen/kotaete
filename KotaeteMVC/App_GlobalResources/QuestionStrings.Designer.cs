@@ -79,6 +79,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ask.
+        /// </summary>
+        internal static string Ask {
+            get {
+                return ResourceManager.GetString("Ask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask a question!.
+        /// </summary>
+        internal static string AskHeader {
+            get {
+                return ResourceManager.GetString("AskHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was an error posting your question. Please try again.
         /// </summary>
         internal static string AskingFailure {
@@ -111,6 +129,33 @@ namespace Resources {
         internal static string NoFollowersMessage {
             get {
                 return ResourceManager.GetString("NoFollowersMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your question to {0} was successfully placed.
+        /// </summary>
+        internal static string QuestionAskedSuccess {
+            get {
+                return ResourceManager.GetString("QuestionAskedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question cannot be empty.
+        /// </summary>
+        internal static string QuestionContentMissing {
+            get {
+                return ResourceManager.GetString("QuestionContentMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type your question for {0} here.
+        /// </summary>
+        internal static string QuestionPlaceheader {
+            get {
+                return ResourceManager.GetString("QuestionPlaceheader", resourceCulture);
             }
         }
         

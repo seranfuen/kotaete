@@ -13,10 +13,17 @@ function OnAskingFailure(alertKey) {
 }
 
 function ShowAskFollowersModal(data) {
-    $(data.responseText).appendTo("body").on('hidden.bs.modal', function() {
-     $(this).remove()
+    $(data.responseText).appendTo("body").on('hidden.bs.modal', function () {
+        $(this).remove()
     }).modal('show');
     $.validator.unobtrusive.parse($("#question-modal"));
+}
+
+function AskedSuccess(userName) {
+    KotaeteAlerts.GetAlertMessageFor("askSuccess", function (message) {
+        KotaeteAlerts.AddAlertSuccess(message, false);
+    }, userName);
+    $(".ask-question-box").val('');
 }
 
 $(function () {

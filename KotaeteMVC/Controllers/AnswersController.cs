@@ -1,6 +1,5 @@
 ﻿using KotaeteMVC.App_GlobalResources;
 using KotaeteMVC.Helpers;
-using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Service;
 using System.Linq;

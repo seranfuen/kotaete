@@ -1,7 +1,7 @@
 ﻿using KotaeteMVC.Context;
 using KotaeteMVC.Models.Entities;
-using System.Linq;
 using System;
+using System.Linq;
 
 namespace KotaeteMVC.Service
 {
@@ -29,7 +29,7 @@ namespace KotaeteMVC.Service
             {
                 return false;
             }
-            AddQuestionToContext(questionContent, GetUserWithName(askedToUserName), currentUser);
+            AddQuestionToContext(questionContent, currentUser, GetUserWithName(askedToUserName));
             try
             {
                 _context.SaveChanges();
@@ -86,7 +86,8 @@ namespace KotaeteMVC.Service
             {
                 _context.SaveChanges();
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }

@@ -1,10 +1,5 @@
 ﻿using Resources;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
 
 namespace KotaeteMVC.Helpers
 {
@@ -16,14 +11,16 @@ namespace KotaeteMVC.Helpers
             if (diff.Days > 0)
             {
                 return diff.Days == 1 ? MainGlobal.OneDayAgo : string.Format(MainGlobal.DaysAgo, diff.Days);
-            } else if (diff.Hours > 0)
+            }
+            else if (diff.Hours > 0)
             {
                 return diff.Hours == 1 ? MainGlobal.OneHourAgo : string.Format(MainGlobal.HoursAgo, diff.Hours);
             }
             else if (diff.Minutes >= 5)
             {
                 return string.Format(MainGlobal.MinutesAgo, diff.Minutes);
-            } else
+            }
+            else
             {
                 return MainGlobal.JustNow;
             }

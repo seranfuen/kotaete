@@ -39,7 +39,8 @@ namespace KotaeteMVC.Models.ViewModels.Base
             if (_route != null)
             {
                 model.Route = _route;
-            } else
+            }
+            else
             {
                 model.Controller = _controller;
                 model.Action = _action;
@@ -70,7 +71,6 @@ namespace KotaeteMVC.Models.ViewModels.Base
             }
         }
     }
-
 
     public class PaginationInitializer<TEntity> : PaginationInitializer
     {

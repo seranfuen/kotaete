@@ -1,19 +1,11 @@
-﻿using KotaeteMVC.Helpers;
-using KotaeteMVC.Models;
-using KotaeteMVC.Models.ViewModels;
-using KotaeteMVC.Models.ViewModels.Base;
-using KotaeteMVC.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using KotaeteMVC.Service;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
     public class InboxController : AlertsController
     {
-        InboxService _inboxService;
+        private InboxService _inboxService;
 
         public InboxController()
         {

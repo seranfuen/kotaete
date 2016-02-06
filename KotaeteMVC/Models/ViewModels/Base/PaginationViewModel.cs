@@ -13,6 +13,7 @@ namespace KotaeteMVC.Models.ViewModels.Base
 
         public int TotalPages { get; set; }
         public string UpdateTargetId { get; set; }
+
         public int GetPageCount(int itemCount, int pageSize)
         {
             var pages = itemCount / pageSize;

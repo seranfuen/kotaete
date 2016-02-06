@@ -124,6 +124,12 @@
     <value>all your followers</value>
     <comment>Shown as if it was the screen name</comment>
   </data>
+  <data name="Ask" xml:space="preserve">
+    <value>Ask</value>
+  </data>
+  <data name="AskHeader" xml:space="preserve">
+    <value>Ask a question!</value>
+  </data>
   <data name="AskingFailure" xml:space="preserve">
     <value>There was an error posting your question. Please try again</value>
   </data>
@@ -135,6 +141,15 @@
   </data>
   <data name="NoFollowersMessage" xml:space="preserve">
     <value>You cannot ask a question to your followers because you don't have any yet!</value>
+  </data>
+  <data name="QuestionAskedSuccess" xml:space="preserve">
+    <value>Your question to {0} was successfully placed</value>
+  </data>
+  <data name="QuestionContentMissing" xml:space="preserve">
+    <value>The question cannot be empty</value>
+  </data>
+  <data name="QuestionPlaceheader" xml:space="preserve">
+    <value>Type your question for {0} here</value>
   </data>
   <data name="UserNotFoundHeader" xml:space="preserve">
     <value>User not found</value>

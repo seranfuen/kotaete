@@ -214,33 +214,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your question to .
-        /// </summary>
-        internal static string QuestionAskedSuccessfullyFirstHalf {
-            get {
-                return ResourceManager.GetString("QuestionAskedSuccessfullyFirstHalf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  was successfully posted.
-        /// </summary>
-        internal static string QuestionAskedSuccessfullySecondHalf {
-            get {
-                return ResourceManager.GetString("QuestionAskedSuccessfullySecondHalf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The question cannot be empty.
-        /// </summary>
-        internal static string QuestionContentMissing {
-            get {
-                return ResourceManager.GetString("QuestionContentMissing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  was not found!.
         /// </summary>
         internal static string UserNotFoundErrorHeading {

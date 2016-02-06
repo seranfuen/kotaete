@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace KotaeteMVC.Context.Initializers
 {
-    class KotaeteInitializer : DropCreateDatabaseAlways<KotaeteDbContext>
+    internal class KotaeteInitializer : DropCreateDatabaseAlways<KotaeteDbContext>
     {
         private KotaeteDbContext _context;
 

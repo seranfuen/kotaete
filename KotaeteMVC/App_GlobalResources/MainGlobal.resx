@@ -168,16 +168,6 @@
   <data name="PageNotFoundErrorMessage" xml:space="preserve">
     <value>The page number you are trying to see does not exist</value>
   </data>
-  <data name="QuestionAskedSuccessfullyFirstHalf" xml:space="preserve">
-    <value>Your question to </value>
-    <comment>F</comment>
-  </data>
-  <data name="QuestionAskedSuccessfullySecondHalf" xml:space="preserve">
-    <value> was successfully posted</value>
-  </data>
-  <data name="QuestionContentMissing" xml:space="preserve">
-    <value>The question cannot be empty</value>
-  </data>
   <data name="UserNotFoundErrorHeading" xml:space="preserve">
     <value> was not found!</value>
     <comment>Username goes before</comment>

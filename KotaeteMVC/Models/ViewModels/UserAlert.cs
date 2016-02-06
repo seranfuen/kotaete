@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace KotaeteMVC.Models
+﻿namespace KotaeteMVC.Models
 {
     public class UserAlert
     {
@@ -27,17 +22,22 @@ namespace KotaeteMVC.Models
                 {
                     case MessageType.Info:
                         return "alert-info";
+
                     case MessageType.Success:
                         return "alert-success";
+
                     case MessageType.Warning:
                         return "alert-warning";
+
                     case MessageType.Danger:
                         return "alert-danger";
+
                     default:
                         return "";
                 }
             }
         }
+
         public string Message { get; set; }
 
         public string Header { get; set; }

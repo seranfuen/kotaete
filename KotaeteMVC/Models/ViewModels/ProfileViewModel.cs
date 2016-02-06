@@ -1,10 +1,5 @@
 ﻿using KotaeteMVC.Models.Entities;
-using KotaeteMVC.Models.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels
 {
@@ -15,7 +10,7 @@ namespace KotaeteMVC.Models.ViewModels
         public bool Following { get; set; }
 
         public ApplicationUser User { get; set; }
-            
+
         public string ScreenName { get; set; }
 
         public bool IsOwnProfile { get; set; }

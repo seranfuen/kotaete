@@ -5,15 +5,13 @@
     success: "alert-success",
     warning: "alert-warning",
     error: "alert-danger",
-    RemovePreviousAlerts: function() {
+    RemovePreviousAlerts: function () {
         $('.alert-success, .alert-warning, .alert-info').hide();
     },
-    AddAlert: function (text, type, dismissable)
-    {
+    AddAlert: function (text, type, dismissable) {
         this.RemovePreviousAlerts();
         var alertContainer = $("<div></div>").addClass("user-alert alert alert-hidden").addClass(type);
-        if (dismissable === true)
-        {
+        if (dismissable === true) {
             alertContainer.addClass("alert-dismissable");
             $('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>').appendTo(alertContainer);
         }
@@ -21,21 +19,19 @@
         $(this.alert_div_id).append(alertContainer);
         alertContainer.slideDown();
     },
-    AddAlertSuccess: function(text, dismissable)
-    {
+    AddAlertSuccess: function (text, dismissable) {
         dismissable = dismissable !== false;
         this.AddAlert(text, this.success, dismissable);
     },
-    AddAlertInfo: function(text, dismissable)
-    {
+    AddAlertInfo: function (text, dismissable) {
         dismissable = dismissable !== false;
         this.AddAlert(text, this.info, dismissable);
     },
-    AddAlertWarning: function(text, dismissable) {
+    AddAlertWarning: function (text, dismissable) {
         dismissable = dismissable !== false;
         this.AddAlert(text, this.warning, dismissable);
     },
-    AddAlertError: function(text, dismissable) {
+    AddAlertError: function (text, dismissable) {
         dismissable = dismissable !== false;
         this.AddAlert(text, this.error, dismissable);
     },

@@ -3,14 +3,12 @@ using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
 {
     public class AlertsController : BaseController
     {
-
         public const string FollowSuccessKey = "FollowSuccessKey";
         public const string UnfollowSuccessKey = "UnfollowSuccessKey";
         public const string FollowErrorKey = "FollowErrorKey";
@@ -84,7 +82,8 @@ namespace KotaeteMVC.Controllers
             if (key == FollowSuccessKey)
             {
                 return string.Format(UsersStrings.FollowingSuccess + "{0}", args);
-            } else if (key == UnfollowSuccessKey)
+            }
+            else if (key == UnfollowSuccessKey)
             {
                 return string.Format("{0}{1}{2}", UsersStrings.UnfollowingSuccessFst, args.Count() > 0 ? args[0] : "", UsersStrings.UnfollowingSuccessLst);
             }
@@ -99,13 +98,16 @@ namespace KotaeteMVC.Controllers
             else if (key == "askingFailure")
             {
                 return QuestionStrings.AskingFailure;
-            } 
+            }
             else if (key == "modalJS")
             {
                 return MainGlobal.ModalJS;
             }
+            else if (key == "askSuccess")
+            {
+                return string.Format(QuestionStrings.AskingSuccess, args.Count() > 0 ? args[0] : "");
+            }
             return "";
         }
-
     }
 }

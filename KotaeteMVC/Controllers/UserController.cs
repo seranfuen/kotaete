@@ -95,7 +95,6 @@ namespace KotaeteMVC.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-
         }
 
         public override int GetPageSize()

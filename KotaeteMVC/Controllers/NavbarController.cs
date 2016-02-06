@@ -1,10 +1,5 @@
-﻿using KotaeteMVC.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using KotaeteMVC.Helpers;
+﻿using KotaeteMVC.Service;
 using System.Web.Mvc;
-using KotaeteMVC.Service;
 
 namespace KotaeteMVC.Controllers
 {

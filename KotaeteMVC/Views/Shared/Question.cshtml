@@ -1,24 +1,29 @@
-﻿@model KotaeteMVC.Models.ViewModels.QuestionDetailViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.QuestionDetailViewModel
 
 <div id="ask-question" class="panel panel-default">
     <div class="panel-heading">
-        Ask a question!
+        @QuestionStrings.AskHeader
     </div>
-    @using (Html.BeginForm("Create", "Questions", FormMethod.Post, new { @class = "panel-body" }))
+    @using (Ajax.BeginForm("Create", "Questions", null, new AjaxOptions
     {
-
+        HttpMethod = "POST",
+        OnSuccess = "AskedSuccess('" + Model.AskedToScreenName + "')",
+        OnFailure = "AskedFailure"
+    }, new { @class = "panel-body" }))
+    {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(false,"", new { @class = "text-danger" })
         <div class="form-group">
             <div>
-                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = "Your question for " + Model.AskedToScreenName + " here" })
+                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = string.Format(QuestionStrings.QuestionPlaceheader, Model.AskedToScreenName) })
+            </div>
+            @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
+        </div>
+        @Html.HiddenFor(model => model.AskedToUserName)
+        <div class="form-group pull-left">
+            <div>
+                <input type="submit" value="@QuestionStrings.Ask" class="btn btn-default" />
             </div>
         </div>
-            @Html.HiddenFor(model => model.AskedToUserName)
-            <div class="form-group pull-left">
-                <div>
-                    <input type="submit" value="Ask" class="btn btn-default" />
-                </div>
-            </div>
     }
 </div>

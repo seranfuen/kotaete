@@ -1,9 +1,5 @@
 ﻿using KotaeteMVC.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
@@ -39,12 +35,12 @@ namespace KotaeteMVC.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("answer/unlike", Name ="UnlikeAnswer")]
+        [Route("answer/unlike", Name = "UnlikeAnswer")]
         public ActionResult UnlikeAnswer(int answerId)
         {
             var likesService = new LikesService(Context, this.GetPageSize());
             var result = likesService.UnlikeAnswer(answerId);
             return GetLikeResult(answerId, likesService, result);
         }
-     }
+    }
 }

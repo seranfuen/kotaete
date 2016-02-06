@@ -1,6 +1,5 @@
 ﻿using KotaeteMVC.Context;
 using KotaeteMVC.Helpers;
-using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Models.ViewModels.Base;
@@ -65,7 +64,8 @@ namespace KotaeteMVC.Service
                 _context.Answers.Add(answer);
                 _context.SaveChanges();
                 return true;
-            }  catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }

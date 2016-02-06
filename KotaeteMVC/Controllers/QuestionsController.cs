@@ -1,11 +1,6 @@
-﻿using KotaeteMVC.Helpers;
-using KotaeteMVC.Models.Entities;
-using KotaeteMVC.Models.ViewModels;
+﻿using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Service;
 using Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -13,37 +8,13 @@ namespace KotaeteMVC.Controllers
 {
     public class QuestionsController : AlertsController
     {
-
-        private UsersService _usersService;
         private QuestionsService _questionsService;
+        private UsersService _usersService;
 
         public QuestionsController()
         {
             _usersService = new UsersService(Context, GetPageSize());
             _questionsService = new QuestionsService(Context, GetPageSize());
-        }
-
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent")] QuestionDetailViewModel contentQuestion)
-        {
-            if (_usersService.ExistsUser(contentQuestion.AskedToUserName))
-            {
-                return RedirectToPrevious();
-            }
-
-            var result = false;
-            if (ModelState.IsValid)
-            {
-                result = _questionsService.SaveQuestionDetail(contentQuestion.AskedToUserName, contentQuestion.QuestionContent);
-                AddAlertSuccess(MainGlobal.QuestionAskedSuccessfullyFirstHalf + contentQuestion.AskedToScreenName + MainGlobal.QuestionAskedSuccessfullySecondHalf, "", true);
-            }
-            else
-            {
-                TempData[UserController.PreviousQuestionKey] = contentQuestion;
-            }
-            return RedirectToRoute("userProfile", new { @userName = contentQuestion.AskedToUserName });
         }
 
         [Authorize]
@@ -60,6 +31,38 @@ namespace KotaeteMVC.Controllers
             {
                 ViewBag.AjaxEnabled = false;
                 return PartialView("QuestionAll", model);
+            }
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "AskedToUserName, QuestionContent")] QuestionDetailViewModel contentQuestion)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _questionsService.SaveQuestionDetail(contentQuestion.AskedToUserName, contentQuestion.QuestionContent);
+                if (result)
+                {
+                    if (Request.IsAjaxRequest())
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+                    }
+                    else
+                    {
+                        AddAlertSuccess(string.Format(QuestionStrings.QuestionAskedSuccess, contentQuestion.AskedToScreenName), "", true);
+                        return RedirectToPrevious();
+                    }
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            else
+            {
+                AddAlertDanger(QuestionStrings.QuestionContentMissing, "", false);
+                return RedirectToPrevious();
             }
         }
 
@@ -92,6 +95,5 @@ namespace KotaeteMVC.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-
     }
 }

@@ -1,12 +1,8 @@
 ﻿using KotaeteMVC.App_GlobalResources;
-using Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KotaeteMVC.Models.Entities
 {
@@ -37,6 +33,5 @@ namespace KotaeteMVC.Models.Entities
         [ScaffoldColumn(false)]
         [DefaultValue(false)]
         public virtual bool Deleted { get; set; }
-
     }
 }

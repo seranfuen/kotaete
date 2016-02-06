@@ -1,19 +1,12 @@
-﻿using KotaeteMVC.Models;
-using KotaeteMVC.Models.Entities;
+﻿using KotaeteMVC.Context;
+using KotaeteMVC.Models;
 using Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using KotaeteMVC.Helpers;
-using KotaeteMVC.Context;
 
 namespace KotaeteMVC.Controllers
 {
     public abstract class BaseController : Controller
     {
-
         public BaseController() : base()
         {
             Context = new KotaeteDbContext();
@@ -24,7 +17,8 @@ namespace KotaeteMVC.Controllers
             if (Request.UrlReferrer == null)
             {
                 return GetDefaultView();
-            } else
+            }
+            else
             {
                 return Redirect(Request.UrlReferrer.ToString());
             }
@@ -45,7 +39,6 @@ namespace KotaeteMVC.Controllers
             return GetErrorView(MainGlobal.PageNotFoundErrorHeader, MainGlobal.PageNotFoundErrorMessage);
         }
 
-
         public ActionResult GetErrorView(string header, string message)
         {
             var errorModel = new ErrorViewModel()
@@ -56,10 +49,7 @@ namespace KotaeteMVC.Controllers
             return View("Error", errorModel);
         }
 
-
         public KotaeteDbContext Context { get; private set; }
-
-
 
         protected override void Dispose(bool disposing)
         {
