@@ -22,10 +22,11 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     <div class="panel-body qst-detail-answer">
         <div class="question-asked-avatar col-md-2 col-sm-2 col-xs-2">
             <a href="@Url.Action("Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedTo.UserName })">
-                <img src="@Model.ReplierAvatarUrl" alt="@Model. Model.Answer.Question.AskedTo.ScreenName" />
+                <img src="@Model.ReplierAvatarUrl" alt="@Model.Answer.QuestionDetail.AskedTo.ScreenName" />
             </a>
         </div>
         <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
@@ -40,5 +41,19 @@
             </div>
             @Html.Partial("LikeButton", Model.LikesModel)
         </div>
+        <div class="clearfix"></div>
+        @if (Model.Comments.Any())
+        {
+            <div class="comment-list">
+            @foreach (var comment in Model.Comments)
+            {
+                @Html.Partial("CommentDetail", comment)
+            }
+            </div>
+        }
+        @if (Request.IsAuthenticated)
+        {
+            Html.RenderAction("PostCommentForm", "Answers", Model);
+        }
     </div>
 </div>

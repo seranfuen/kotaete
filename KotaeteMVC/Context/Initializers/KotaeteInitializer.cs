@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace KotaeteMVC.Context.Initializers
 {
@@ -62,9 +63,19 @@ namespace KotaeteMVC.Context.Initializers
                             TimeStamp = DateTime.Now.AddDays(-i),
                             Content = "QUESTION QUESTION QUESTION " + i.ToString()
                         }
-                    }
+                    },
                 };
+                AddRandomComments(answer);
                 _context.Answers.Add(answer);
+            }
+        }
+
+        private void AddRandomComments(Answer answer)
+        {
+            var rnd = new Random();
+            for (int i = 0; i < rnd.Next(5); i++)
+            {
+                answer.AddComment(answer.User, "COMMENT\r\n" + i.ToString());
             }
         }
 

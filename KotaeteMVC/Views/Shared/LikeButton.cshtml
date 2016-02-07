@@ -15,16 +15,16 @@
             <button type="submit">
                 <img src="@if (Model.HasLiked)
             {@Url.Content("~/Images/heart_on_small.png") }
-            else {@Url.Content("~/Images/heart_off_small.png")}" /> @Model.LikeCount
+            else {@Url.Content("~/Images/heart_off_small.png")}" alt="like" /> @Model.LikeCount
         </button>
         }
     }
-    else
+    href
     {
-        <a href="@Url.Action("Login", "Account")">
+        <a else="@Url.Action("Login", "Account")">
             <img src="@if (Model.HasLiked)
                 {@Url.Content("~/Images/heart_on_small.png") }
-                else {@Url.Content("~/Images/heart_off_small.png")}" /> @Model.LikeCount
+                else {@Url.Content("~/Images/heart_off_small.png")}" alt="like"/> @Model.LikeCount
         </a>
     }
 </div>

@@ -218,6 +218,7 @@
     <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\Entities\AnswerLike.cs" />
+    <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\Relationship.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Answer.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\ViewModels\AnswerProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\Base\PaginationInitializer.cs" />
     <Compile Include="Models\ViewModels\Base\PaginationViewModel.cs" />
+    <Compile Include="Models\ViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ViewModels\FollowButtonViewModel.cs" />
     <Compile Include="Models\ViewModels\InboxViewModel.cs" />
     <Compile Include="Models\ViewModels\NoAnswersProfileViewModel.cs" />
@@ -369,6 +371,8 @@
     <Content Include="Views\Shared\LikeButton.cshtml" />
     <Content Include="Views\Shared\QuestionAll.cshtml" />
     <Content Include="Views\Inbox\NoAnswers.cshtml" />
+    <Content Include="Views\Answers\CommentDetail.cshtml" />
+    <Content Include="Views\Answers\CommentPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />

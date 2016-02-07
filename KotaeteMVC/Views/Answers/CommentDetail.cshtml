@@ -1,0 +1,22 @@
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.CommentViewModel
+
+<div class="panel-body answer-comment-panel">
+    <div class="question-asked-avatar col-md-2 col-sm-2 col-xs-2">
+        <a href="@Url.Action("Index", "User", new { @userName = Model.UserName })">
+            <img src="@Model.AvatarUrl" alt="@Model.UserName" />
+        </a>
+    </div>
+    <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
+        <div class="row question-meta">
+            @Html.ActionLink(@Model.ScreenName, "Index", "User", new { @userName = Model.UserName }, null) @AnswerStrings.CommentedHeader @Model.TimeAgo
+        </div>
+        <div class="row question-content">
+            @foreach (var paragraph in Model.CommentParagraphs)
+            {
+                <p>@paragraph</p>
+            }
+        </div>
+    </div>
+</div>
+

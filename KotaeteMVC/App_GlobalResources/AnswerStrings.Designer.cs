@@ -106,6 +106,33 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string CommentButton {
+            get {
+                return ResourceManager.GetString("CommentButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to commented on this answer {1}.
+        /// </summary>
+        public static string CommentedHeader {
+            get {
+                return ResourceManager.GetString("CommentedHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a comment.
+        /// </summary>
+        public static string CommentPlaceholder {
+            get {
+                return ResourceManager.GetString("CommentPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The question you are trying to reply to was deleted.
         /// </summary>
         public static string DeletedQuestionDetailWarning {

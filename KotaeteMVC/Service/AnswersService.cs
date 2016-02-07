@@ -116,8 +116,25 @@ namespace KotaeteMVC.Service
                     HasLiked = likesService.HasLikedAnswer(currentUserName, answer.AnswerId),
                     LikeCount = likesService.GetLikesCount(answer.AnswerId),
                     AnswerId = answer.AnswerId
-                }
+                },
+                Comments = ExtractCommentViewModels(answer)
             });
+        }
+
+        private List<CommentViewModel> ExtractCommentViewModels(Answer answer)
+        {
+            var comments = answer.Comments.Where(comment => comment.Deleted == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
+            var commentModels = comments.Select(comment => new CommentViewModel()
+            {
+                ScreenName = comment.User.ScreenName,
+                Comment = comment,
+                TimeAgo = TimeHelper.GetTimeAgo(comment.TimeStamp),
+                AvatarUrl = GetAvatarUrl(comment.User),
+                CommentParagraphs = comment.Content.SplitLines(),
+                UserName = comment.User.UserName,
+                AnswerId = answer.AnswerId
+            });
+            return commentModels.ToList();
         }
 
         private IQueryable<Answer> GetAnswersQuery(string userName)

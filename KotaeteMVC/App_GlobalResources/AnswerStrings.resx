@@ -133,6 +133,15 @@
   <data name="AskedHeader" xml:space="preserve">
     <value>asked</value>
   </data>
+  <data name="CommentButton" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="CommentedHeader" xml:space="preserve">
+    <value>commented on this answer {1}</value>
+  </data>
+  <data name="CommentPlaceholder" xml:space="preserve">
+    <value>Add a comment</value>
+  </data>
   <data name="DeletedQuestionDetailWarning" xml:space="preserve">
     <value>The question you are trying to reply to was deleted</value>
   </data>

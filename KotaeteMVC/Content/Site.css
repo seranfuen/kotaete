@@ -225,3 +225,11 @@ textarea {
     position: relative;
     padding-bottom: 3px;
 }
+
+.comment-list {
+    padding-left: 35px;
+}
+
+.answer-comment-panel{
+    padding: 0px !important;
+}

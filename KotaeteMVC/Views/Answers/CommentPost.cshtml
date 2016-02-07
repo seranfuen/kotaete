@@ -1,0 +1,24 @@
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.CommentViewModel
+
+<div id="post-comment-@Model.AnswerId">
+    @using (Ajax.BeginForm("CreateComment", "Answers", null, new AjaxOptions
+    {
+        HttpMethod = "POST"
+    }, new { @id= "comment_" + Model.AnswerId, @class = "panel-body" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div>
+                @Html.TextAreaFor(model => model.Comment, 5, 50, new { @class = "ask-question-box", @placeholder = AnswerStrings.CommentPlaceholder })
+            </div>
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+        @Html.HiddenFor(model => model.AnswerId)
+        <div class="form-group pull-left">
+            <div>
+                <input type="submit" value="@AnswerStrings.CommentButton" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>

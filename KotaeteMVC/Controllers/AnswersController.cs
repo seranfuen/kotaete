@@ -2,6 +2,7 @@
 using KotaeteMVC.Helpers;
 using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
+using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Service;
 using System.Linq;
 using System.Net;
@@ -156,6 +157,15 @@ namespace KotaeteMVC.Controllers
         private ActionResult GetUserNotFoundError()
         {
             return GetErrorView(AnswerStrings.UserNotFoundErrorHeader, AnswerStrings.UserNotFoundErrorMessage);
+        }
+
+        public ActionResult PostCommentForm(AnswerProfileViewModel model)
+        {
+            var comment = new CommentViewModel()
+            {
+                AnswerId = model.Answer.AnswerId
+            };
+            return PartialView("CommentPost", comment);
         }
     }
 }

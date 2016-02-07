@@ -11,6 +11,8 @@ namespace KotaeteMVC.Models.ViewModels
 
         public Answer Answer { get; set; }
 
+        public List<CommentViewModel> Comments { get; set; }
+
         public List<string> QuestionParagraphs { set; get; }
 
         public List<string> AnswerParagraphs { set; get; }

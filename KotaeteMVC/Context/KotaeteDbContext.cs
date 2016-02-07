@@ -36,5 +36,7 @@ namespace KotaeteMVC.Context
         public DbSet<Relationship> Relationships { get; set; }
 
         public DbSet<AnswerLike> AnswerLikes { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
     }
 }
