@@ -35,5 +35,21 @@ namespace KotaeteMVC.Controllers
                 return View(inboxViewModel);
             }
         }
+
+        [Authorize]
+        [Route("InboxCount")]
+        [HttpPost]
+        public ActionResult InboxCount()
+        {
+            var navbarService = new NavbarService(Context);
+            return Json(navbarService.GetInboxCount());
+        }
+
+        [Authorize]
+        [Route("NoAnswers")]
+        public ActionResult NoAnswers()
+        {
+            return PartialView("NoAnswers");
+        }
     }
 }

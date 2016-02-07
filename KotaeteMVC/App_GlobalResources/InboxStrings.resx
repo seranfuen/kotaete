@@ -126,6 +126,9 @@
   <data name="AskedYouTitle" xml:space="preserve">
     <value>asked you this question</value>
   </data>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="InboxTitle" xml:space="preserve">
     <value>Inbox</value>
   </data>

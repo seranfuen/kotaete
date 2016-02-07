@@ -1,4 +1,5 @@
-﻿using KotaeteMVC.Models;
+﻿using KotaeteMVC.App_GlobalResources;
+using KotaeteMVC.Models;
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -85,7 +86,7 @@ namespace KotaeteMVC.Controllers
             }
             else if (key == UnfollowSuccessKey)
             {
-                return string.Format("{0}{1}{2}", UsersStrings.UnfollowingSuccessFst, args.Count() > 0 ? args[0] : "", UsersStrings.UnfollowingSuccessLst);
+                return string.Format("{0}{1}{2}", UsersStrings.UnfollowingSuccessFst, GetFirstArgOrEmpty(args), UsersStrings.UnfollowingSuccessLst);
             }
             else if (key == FollowErrorKey)
             {
@@ -105,9 +106,18 @@ namespace KotaeteMVC.Controllers
             }
             else if (key == "askSuccess")
             {
-                return string.Format(QuestionStrings.AskingSuccess, args.Count() > 0 ? args[0] : "");
+                return string.Format(QuestionStrings.AskingSuccess, GetFirstArgOrEmpty(args));
             }
-            return "";
+            else if (key == "answerSuccess")
+            {
+                return string.Format(AnswerStrings.SuccessAnswer, GetFirstArgOrEmpty(args));
+            }
+            return "UnknownAlertKey";
+        }
+
+        private string GetFirstArgOrEmpty(params string[] args)
+        {
+            return args.Count() > 0 ? args[0] : "";
         }
     }
 }

@@ -18,7 +18,7 @@
                     <li>
                         <a href="@Url.Action("Index", "Inbox", null)">
                             Inbox @if (Model.InboxCount > 0)
-                            { <span class="badge">@Model.InboxCount</span> }
+                            { <span id="inbox-count" class="badge">@Model.InboxCount</span> }
                         </a>
                     </li>
                     <li>

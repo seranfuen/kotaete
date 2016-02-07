@@ -232,7 +232,7 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your answer was posted.
+        ///   Looks up a localized string similar to Your answer to {0}&apos;s question was posted.
         /// </summary>
         public static string SuccessAnswer {
             get {

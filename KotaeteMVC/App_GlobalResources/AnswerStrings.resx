@@ -176,7 +176,7 @@
     <value>replied</value>
   </data>
   <data name="SuccessAnswer" xml:space="preserve">
-    <value>Your answer was posted</value>
+    <value>Your answer to {0}'s question was posted</value>
   </data>
   <data name="UserNotFoundErrorHeader" xml:space="preserve">
     <value>User not found</value>

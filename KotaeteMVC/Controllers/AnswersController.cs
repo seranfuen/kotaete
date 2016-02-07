@@ -1,8 +1,10 @@
 ﻿using KotaeteMVC.App_GlobalResources;
 using KotaeteMVC.Helpers;
+using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Service;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -22,22 +24,33 @@ namespace KotaeteMVC.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]
-        public ActionResult Create(int QuestionDetailId, string AnswerContent)
+        public ActionResult Create([Bind(Include = "QuestionDetailId, AnswerContent, AskerScreenName")] QuestionDetailAnswerViewModel answerViewModel)
         {
-            var result = false;
             if (ModelState.IsValid)
             {
-                result = _answersService.SaveAnswer(AnswerContent, QuestionDetailId);
-            }
-            if (result)
-            {
-                AddAlertSuccess(AnswerStrings.SuccessAnswer, "", true);
+                var result = _answersService.SaveAnswer(answerViewModel.AnswerContent, answerViewModel.QuestionDetailId);
+                if (Request.IsAjaxRequest())
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+                }
+                else
+                {
+                    AddAlertSuccess(string.Format(AnswerStrings.SuccessAnswer, answerViewModel.AskerScreenName), "", true);
+                    return RedirectToPrevious();
+                }
             }
             else
             {
-                AddAlertWarning(AnswerStrings.ErrorAnswer, "", true);
+                if (Request.IsAjaxRequest())
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    AddAlertDanger(AnswerStrings.EmptyAnswerError);
+                    return RedirectToPrevious();
+                }
             }
-            return RedirectToAction("Index", "Inbox");
         }
 
         [Route("user/{userName}/answers/liked/{page}", Name = "AnswersLikedPage")]

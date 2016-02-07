@@ -29,5 +29,7 @@ namespace KotaeteMVC.Models
 
         [ScaffoldColumn(false)]
         public virtual bool Seen { get; set; }
+
+        public string AskerScreenName { get; set; }
     }
 }
