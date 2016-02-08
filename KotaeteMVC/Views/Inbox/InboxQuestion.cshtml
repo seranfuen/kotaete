@@ -36,7 +36,7 @@
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.QuestionDetailId, new { id = Model.QuestionDetailId + "_qstDetail" });
             @Html.Hidden("AskerScreenName", Model.QuestionDetail.AskedBy.ScreenName)
-            @Html.TextAreaFor(model => model.AnswerContent, new { @id = Model.QuestionDetailId + "_content", @placeholder = string.Format(InboxStrings.AnswerPlaceHolder, Model.QuestionDetail.AskedBy.ScreenName), @rows = "3" });
+            @Html.TextAreaFor(model => model.AnswerContent, new { @id = Model.QuestionDetailId + "_content", @class = "answer-textarea", @placeholder = string.Format(InboxStrings.AnswerPlaceHolder, Model.QuestionDetail.AskedBy.ScreenName), @rows = "3" });
             @Html.ValidationMessageFor(model => model.AnswerContent, "", new { @class = "text-danger" })
             <div class="answer-buttons">
                 <button class="btn btn-success" type="submit" name="AnswerButton">@InboxStrings.AnswerButton</button>

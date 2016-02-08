@@ -69,3 +69,19 @@ $(function () {
 $(function () {
     window.setInterval(UpdateInboxCount, 2 * 60 * 1000);
 });
+
+$(function () {
+    $("#ask-question-textarea, .ask-question-box, .answer-textarea").keydown(function (e) {
+        if (e.ctrlKey && e.keyCode == 13) {
+            $(this.form).submit();
+            return false;
+        }
+    });
+});
+
+function OnCommentSuccess(data, location, commentLocation) {
+    var newComment = $(data);
+    $(location).append(newComment);
+    newComment.hide().fadeIn('slow');
+    $(commentLocation + " textarea").val('');
+}

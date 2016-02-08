@@ -15,7 +15,7 @@
         @Html.AntiForgeryToken()
         <div class="form-group">
             <div>
-                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @class = "ask-question-box", @placeholder = string.Format(QuestionStrings.QuestionPlaceheader, Model.AskedToScreenName) })
+                @Html.TextAreaFor(model => model.QuestionContent, 5, 50, new { @id = "ask-question-textarea", @class = "ask-question-box", @placeholder = string.Format(QuestionStrings.QuestionPlaceheader, Model.AskedToScreenName) })
             </div>
             @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
         </div>

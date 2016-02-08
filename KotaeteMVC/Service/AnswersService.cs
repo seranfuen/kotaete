@@ -15,6 +15,35 @@ namespace KotaeteMVC.Service
         {
         }
 
+        public CommentViewModel CreateComment(int answerId, string comment)
+        {
+            var answer = _context.Answers.FirstOrDefault(ans => ans.AnswerId == answerId && ans.Deleted == false);
+            if (answer == null)
+            {
+                return null;
+            }
+            var user = GetCurrentUser();
+            var commentEntity = answer.AddComment(user, comment);
+            try
+            {
+                _context.SaveChanges();
+                var model = new CommentViewModel()
+                {
+                    AnswerId = answerId,
+                    AvatarUrl = GetAvatarUrl(user),
+                    Comment = commentEntity,
+                    CommentParagraphs = comment.SplitLines(),
+                    ScreenName = GetUserScreenName(user.UserName),
+                    UserName = user.UserName,
+                    TimeAgo = TimeHelper.GetTimeAgo(commentEntity.TimeStamp)
+                };
+                return model;
+            }   catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public AnswerListProfileViewModel GetAnsweredQuestionsListProfileViewModel(string userName, int page)
         {
             var query = GetAnsweredQuestionsQuery(userName);

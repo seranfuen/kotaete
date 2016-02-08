@@ -47,7 +47,9 @@ namespace KotaeteMVC.Models.Entities
             var comment = new Comment()
             {
                 Answer = this,
+                AnswerId = this.AnswerId,
                 User = user,
+                UserId = user.Id,
                 Content = content,
                 Deleted = false,
                 TimeStamp = DateTime.Now

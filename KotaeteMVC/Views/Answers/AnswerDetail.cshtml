@@ -44,7 +44,7 @@
         <div class="clearfix"></div>
         @if (Model.Comments.Any())
         {
-            <div class="comment-list">
+            <div id="comments-@Model.Answer.AnswerId" class="comment-list">
             @foreach (var comment in Model.Comments)
             {
                 @Html.Partial("CommentDetail", comment)

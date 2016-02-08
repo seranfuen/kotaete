@@ -154,6 +154,42 @@ namespace KotaeteMVC.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateComment([Bind(Include = "AnswerId, Content")] CommentViewModel commentViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _answersService.CreateComment(commentViewModel.AnswerId, commentViewModel.Content);
+                if (result == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("CommentDetail", result);
+                }
+                else
+                {
+                    AddAlertSuccess(AnswerStrings.CommentPostSuccess, "", true);
+                    return RedirectToPrevious();
+                }
+            }
+            else
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    AddAlertDanger(AnswerStrings.CommentRequired);
+                    return RedirectToPrevious();
+                }
+            }
+        }
+
         private ActionResult GetUserNotFoundError()
         {
             return GetErrorView(AnswerStrings.UserNotFoundErrorHeader, AnswerStrings.UserNotFoundErrorMessage);

@@ -1,18 +1,22 @@
 ﻿@using Resources
 @model KotaeteMVC.Models.ViewModels.CommentViewModel
 
-<div id="post-comment-@Model.AnswerId">
+@{ var id = "post-comment-"  + Model.AnswerId;}
+
+<div id="@id">
     @using (Ajax.BeginForm("CreateComment", "Answers", null, new AjaxOptions
     {
-        HttpMethod = "POST"
+        HttpMethod = "POST",
+        OnSuccess = string.Format("OnCommentSuccess(data, '#{0}', '#{1}')", "comments-" + Model.AnswerId, id),
+        OnFailure = "OnCommentFailure"
     }, new { @id= "comment_" + Model.AnswerId, @class = "panel-body" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-group">
             <div>
-                @Html.TextAreaFor(model => model.Comment, 5, 50, new { @class = "ask-question-box", @placeholder = AnswerStrings.CommentPlaceholder })
+                @Html.TextAreaFor(model => model.Content, 3, 50, new { @class = "ask-question-box", @placeholder = AnswerStrings.CommentPlaceholder })
             </div>
-            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
         </div>
         @Html.HiddenFor(model => model.AnswerId)
         <div class="form-group pull-left">

@@ -137,7 +137,7 @@
     <value>Comment</value>
   </data>
   <data name="CommentedHeader" xml:space="preserve">
-    <value>commented on this answer {1}</value>
+    <value>commented on this answer {0}</value>
   </data>
   <data name="CommentPlaceholder" xml:space="preserve">
     <value>Add a comment</value>
@@ -195,5 +195,11 @@
   </data>
   <data name="YourAnswer" xml:space="preserve">
     <value>Type your answer</value>
+  </data>
+  <data name="CommentPostSuccess" xml:space="preserve">
+    <value>Your comment was successfully posted</value>
+  </data>
+  <data name="CommentRequired" xml:space="preserve">
+    <value>You need to enter a comment</value>
   </data>
 </root>

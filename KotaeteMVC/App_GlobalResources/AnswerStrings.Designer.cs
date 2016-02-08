@@ -115,7 +115,7 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to commented on this answer {1}.
+        ///   Looks up a localized string similar to commented on this answer {0}.
         /// </summary>
         public static string CommentedHeader {
             get {
@@ -129,6 +129,24 @@ namespace KotaeteMVC.App_GlobalResources {
         public static string CommentPlaceholder {
             get {
                 return ResourceManager.GetString("CommentPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your comment was successfully posted.
+        /// </summary>
+        public static string CommentPostSuccess {
+            get {
+                return ResourceManager.GetString("CommentPostSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to enter a comment.
+        /// </summary>
+        public static string CommentRequired {
+            get {
+                return ResourceManager.GetString("CommentRequired", resourceCulture);
             }
         }
         
