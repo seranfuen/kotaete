@@ -25,6 +25,7 @@ namespace KotaeteMVC.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]
+        [MultipleButton(Name = "action", Argument = "Answer")]
         public ActionResult Create([Bind(Include = "QuestionDetailId, AnswerContent, AskerScreenName")] QuestionDetailAnswerViewModel answerViewModel)
         {
             if (ModelState.IsValid)
@@ -32,7 +33,7 @@ namespace KotaeteMVC.Controllers
                 var result = _answersService.SaveAnswer(answerViewModel.AnswerContent, answerViewModel.QuestionDetailId);
                 if (Request.IsAjaxRequest())
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+                    return Json("answer");
                 }
                 else
                 {
@@ -44,13 +45,37 @@ namespace KotaeteMVC.Controllers
             {
                 if (Request.IsAjaxRequest())
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return GetBadRequestResult();
                 }
                 else
                 {
                     AddAlertDanger(AnswerStrings.EmptyAnswerError);
                     return RedirectToPrevious();
                 }
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [Authorize]
+        [MultipleButton(Name = "action", Argument = "Delete")]
+        public ActionResult DeleteQuestion([Bind(Include = "QuestionDetailId")] QuestionDetailAnswerViewModel answerViewModel)
+        {
+            var result = _answersService.DeleteQuestion(answerViewModel.QuestionDetailId);
+            if (result)
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    return Json("deleted");
+                }
+                else
+                {
+                    AddAlertSuccess(AnswerStrings.DeletedSuccess, "", true);
+                    return RedirectToPrevious();
+                }
+            } else
+            {
+                return GetBadRequestResult();
             }
         }
 
@@ -164,7 +189,7 @@ namespace KotaeteMVC.Controllers
                 var result = _answersService.CreateComment(commentViewModel.AnswerId, commentViewModel.Content);
                 if (result == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return GetBadRequestResult();
                 }
                 if (Request.IsAjaxRequest())
                 {
@@ -180,7 +205,7 @@ namespace KotaeteMVC.Controllers
             {
                 if (Request.IsAjaxRequest())
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return GetBadRequestResult();
                 }
                 else
                 {

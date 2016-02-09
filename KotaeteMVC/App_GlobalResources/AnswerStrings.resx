@@ -202,4 +202,7 @@
   <data name="CommentRequired" xml:space="preserve">
     <value>You need to enter a comment</value>
   </data>
+  <data name="DeletedSuccess" xml:space="preserve">
+    <value>The question was successfully deleted</value>
+  </data>
 </root>

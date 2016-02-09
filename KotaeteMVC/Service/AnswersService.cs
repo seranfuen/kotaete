@@ -62,6 +62,30 @@ namespace KotaeteMVC.Service
             return model;
         }
 
+        public bool DeleteQuestion(int questionDetailId)
+        {
+            var questionDetail = _context.QuestionDetails.FirstOrDefault(qst => qst.QuestionDetailId == questionDetailId);
+            if (questionDetail == null)
+            {
+                return false;
+            }
+            var currentUser = GetCurrentUser();
+            if (currentUser == null || currentUser.Id != questionDetail.AskedTo.Id)
+            {
+                return false;
+            }
+            questionDetail.Deleted = true;
+            try
+            {
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public bool SaveAnswer(string content, int questionDetailId)
         {
             if (string.IsNullOrWhiteSpace(content))

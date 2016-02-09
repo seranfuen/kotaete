@@ -1,6 +1,7 @@
 ﻿using KotaeteMVC.Context;
 using KotaeteMVC.Models;
 using Resources;
+using System.Net;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers
@@ -58,6 +59,16 @@ namespace KotaeteMVC.Controllers
                 Context.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public HttpStatusCodeResult GetBadRequestResult()
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public HttpStatusCodeResult GetAcceptedResult()
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }
     }
 }

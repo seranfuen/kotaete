@@ -26,7 +26,7 @@ function AskedSuccess(userName) {
     $(".ask-question-box").val('');
 }
 
-function AnsweredSuccess(userName, questionId) {
+function AnsweredSuccess(data, userName, questionId) {
     KotaeteAlerts.GetAlertMessageFor("answerSuccess", function (message) {
         KotaeteAlerts.AddAlertSuccess(message, false);
     }, userName);
@@ -70,18 +70,24 @@ $(function () {
     window.setInterval(UpdateInboxCount, 2 * 60 * 1000);
 });
 
-$(function () {
-    $("#ask-question-textarea, .ask-question-box, .answer-textarea").keydown(function (e) {
-        if (e.ctrlKey && e.keyCode == 13) {
-            $(this.form).submit();
-            return false;
-        }
-    });
-});
+$(SetEnterKeyFormBindings);
+
+function SetEnterKeyFormBindings() {
+    $("#ask-question-textarea, .ask-question-box, .answer-textarea").keydown(OnFormKeyDown);
+}
+
+function OnFormKeyDown(e) {
+    if (e.ctrlKey && e.keyCode == 13) {
+        $(this.form).submit();
+        $(this).blur();
+        return false;
+    }
+}
 
 function OnCommentSuccess(data, location, commentLocation) {
     var newComment = $(data);
     $(location).append(newComment);
     newComment.hide().fadeIn('slow');
     $(commentLocation + " textarea").val('');
+
 }

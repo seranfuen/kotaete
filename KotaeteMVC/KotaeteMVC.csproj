@@ -206,6 +206,7 @@
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LikesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MultipleButtonAttribute.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />

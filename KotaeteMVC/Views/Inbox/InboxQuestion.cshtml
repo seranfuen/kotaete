@@ -11,7 +11,6 @@
                     <img src="@Model.AskerAvatarUrl" alt="@Model.QuestionDetail.AskedBy.ScreenName" />
                 </a>
             </div>
-            <div class="question-delete-button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
             <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
                 <div class="row question-meta">
                     @Html.ActionLink(@Model.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.QuestionDetail.AskedBy.UserName }, null)  @InboxStrings.AskedYouTitle @Model.AskedTimeAgo
@@ -29,7 +28,7 @@
         @using (Ajax.BeginForm("Create", "Answers", null, new AjaxOptions
         {
             HttpMethod = "POST",
-            OnSuccess = string.Format("AnsweredSuccess('{0}', '{1}')", Model.QuestionDetail.AskedBy.ScreenName, questionPanelId),
+            OnSuccess = string.Format("AnsweredSuccess(data, '{0}', '{1}')", Model.QuestionDetail.AskedBy.ScreenName, questionPanelId),
             OnFailure = "AnsweredFailure"
         }))
         {
@@ -39,8 +38,8 @@
             @Html.TextAreaFor(model => model.AnswerContent, new { @id = Model.QuestionDetailId + "_content", @class = "answer-textarea", @placeholder = string.Format(InboxStrings.AnswerPlaceHolder, Model.QuestionDetail.AskedBy.ScreenName), @rows = "3" });
             @Html.ValidationMessageFor(model => model.AnswerContent, "", new { @class = "text-danger" })
             <div class="answer-buttons">
-                <button class="btn btn-success" type="submit" name="AnswerButton">@InboxStrings.AnswerButton</button>
-                <button class="btn btn-danger" type="submit" name="DeleteButton">@InboxStrings.DeleteButton</button>
+                <button class="btn btn-success" type="submit" name="action:Answer">@InboxStrings.AnswerButton</button>
+                <button class="btn btn-danger" type="submit" name="action:Delete">@InboxStrings.DeleteButton</button>
             </div>
         }
     </div>

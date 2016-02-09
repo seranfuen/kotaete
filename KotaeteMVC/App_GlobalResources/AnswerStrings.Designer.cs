@@ -160,6 +160,15 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The question was successfully deleted.
+        /// </summary>
+        public static string DeletedSuccess {
+            get {
+                return ResourceManager.GetString("DeletedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your answer cannot be empty.
         /// </summary>
         public static string EmptyAnswerError {

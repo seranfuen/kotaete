@@ -42,15 +42,12 @@
             @Html.Partial("LikeButton", Model.LikesModel)
         </div>
         <div class="clearfix"></div>
-        @if (Model.Comments.Any())
-        {
-            <div id="comments-@Model.Answer.AnswerId" class="comment-list">
+        <div id="comments-@Model.Answer.AnswerId" class="comment-list">
             @foreach (var comment in Model.Comments)
             {
                 @Html.Partial("CommentDetail", comment)
             }
-            </div>
-        }
+        </div>
         @if (Request.IsAuthenticated)
         {
             Html.RenderAction("PostCommentForm", "Answers", Model);
