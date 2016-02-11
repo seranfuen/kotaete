@@ -89,5 +89,15 @@ function OnCommentSuccess(data, location, commentLocation) {
     $(location).append(newComment);
     newComment.hide().fadeIn('slow');
     $(commentLocation + " textarea").val('');
+}
 
+$(function () {
+    $(".delete-button").click(OnDeleteQuestion);
+})
+function OnDeleteQuestion(event) {
+    event.preventDefault();
+    var form = $(event.target).closest('form');
+    $("#confirm-delete-modal").modal({ backdrop: 'static', keyboard: false }).one('click', "#delete", function () {
+        alert("HEY");
+    });
 }

@@ -39,7 +39,7 @@
             @Html.ValidationMessageFor(model => model.AnswerContent, "", new { @class = "text-danger" })
             <div class="answer-buttons">
                 <button class="btn btn-success" type="submit" name="action:Answer">@InboxStrings.AnswerButton</button>
-                <button class="btn btn-danger" type="submit" name="action:Delete">@InboxStrings.DeleteButton</button>
+                <button class="btn btn-danger delete-button" type="submit" name="action:Delete">@InboxStrings.DeleteButton</button>
             </div>
         }
     </div>

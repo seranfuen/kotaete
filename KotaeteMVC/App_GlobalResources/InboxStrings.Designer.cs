@@ -97,11 +97,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this question?.
+        /// </summary>
+        internal static string DeleteConfirm {
+            get {
+                return ResourceManager.GetString("DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inbox.
         /// </summary>
         internal static string InboxTitle {
             get {
                 return ResourceManager.GetString("InboxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string NoButton {
+            get {
+                return ResourceManager.GetString("NoButton", resourceCulture);
             }
         }
         
@@ -120,6 +138,15 @@ namespace Resources {
         internal static string NoQuestionsTitle {
             get {
                 return ResourceManager.GetString("NoQuestionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string YesButton {
+            get {
+                return ResourceManager.GetString("YesButton", resourceCulture);
             }
         }
     }

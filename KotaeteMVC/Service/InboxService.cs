@@ -8,6 +8,7 @@ using System.Web;
 using KotaeteMVC.Models;
 using KotaeteMVC.Helpers;
 using KotaeteMVC.Models.ViewModels.Base;
+using Resources;
 
 namespace KotaeteMVC.Service
 {
@@ -24,6 +25,12 @@ namespace KotaeteMVC.Service
         {
             var profile = GetUserProfile(userName);
             var viewModel = new InboxViewModel() { Profile = profile, QuestionDetails = GetQuestionDetailAnswerList(userName, page) };
+            viewModel.ConfirmModal = new ConfirmModalViewModel("confirm-delete-modal")
+            {
+                Question = InboxStrings.DeleteConfirm,
+                YesButton = InboxStrings.YesButton,
+                NoButton = InboxStrings.NoButton
+            };
             var paginationInitializer = new PaginationInitializer("InboxPage", "inbox-questions", userName, _pageSize);
             paginationInitializer.InitializePaginationModel(viewModel, page, GetIncomingQuestionsCount(userName));
             return viewModel;

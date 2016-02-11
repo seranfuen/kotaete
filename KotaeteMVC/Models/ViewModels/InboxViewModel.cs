@@ -8,5 +8,7 @@ namespace KotaeteMVC.Models.ViewModels
         public virtual ProfileViewModel Profile { get; set; }
 
         public virtual List<QuestionDetailAnswerViewModel> QuestionDetails { get; set; }
+
+        public ConfirmModalViewModel ConfirmModal { get; set; }
     }
 }

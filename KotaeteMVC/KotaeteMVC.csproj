@@ -230,6 +230,7 @@
     <Compile Include="Models\ViewModels\Base\PaginationInitializer.cs" />
     <Compile Include="Models\ViewModels\Base\PaginationViewModel.cs" />
     <Compile Include="Models\ViewModels\CommentViewModel.cs" />
+    <Compile Include="Models\ViewModels\ConfirmModalViewModel.cs" />
     <Compile Include="Models\ViewModels\FollowButtonViewModel.cs" />
     <Compile Include="Models\ViewModels\InboxViewModel.cs" />
     <Compile Include="Models\ViewModels\NoAnswersProfileViewModel.cs" />
@@ -374,6 +375,7 @@
     <Content Include="Views\Inbox\NoAnswers.cshtml" />
     <Content Include="Views\Answers\CommentDetail.cshtml" />
     <Content Include="Views\Answers\CommentPost.cshtml" />
+    <Content Include="Views\Shared\ModalConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />

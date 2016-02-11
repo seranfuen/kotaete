@@ -1,4 +1,6 @@
-﻿using KotaeteMVC.Service;
+﻿using KotaeteMVC.Models.ViewModels;
+using KotaeteMVC.Service;
+using Resources;
 using System.Web.Mvc;
 
 namespace KotaeteMVC.Controllers

@@ -12,6 +12,8 @@
 
 <h2>@InboxStrings.InboxTitle</h2>
 
+@Html.Partial("ModalConfirm", Model.ConfirmModal)
+
 <div id="inbox-questions">
 @Html.Partial("InboxQuestionList", Model.QuestionDetails)
 </div>

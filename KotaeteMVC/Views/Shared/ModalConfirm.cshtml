@@ -1,0 +1,15 @@
+﻿@model KotaeteMVC.Models.ViewModels.ConfirmModalViewModel
+
+<div id="@Model.Id" role="dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                @Model.Question
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">@Model.YesButton</button>
+                    <button type="button" data-dismiss="modal" class="btn">@Model.NoButton</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
