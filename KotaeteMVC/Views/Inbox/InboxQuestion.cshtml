@@ -13,8 +13,8 @@
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
                 <div class="row question-meta">
-                    @Html.ActionLink(@Model.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.QuestionDetail.AskedBy.UserName }, null)  @InboxStrings.AskedYouTitle @Model.AskedTimeAgo
-                </div>
+                    @Html.ActionLink(@Model.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.QuestionDetail.AskedBy.UserName }, null)  @InboxStrings.AskedYouTitle <span class="timestamp" title="@String.Format("{0:F}", Model.QuestionDetail.TimeStamp)">@Model.AskedTimeAgo</span>
+</div>
                 <div class="row question-content">
                     @foreach (var paragraph in Model.QuestionParagraphs)
                     {

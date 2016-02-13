@@ -137,7 +137,7 @@
     <value>Comment</value>
   </data>
   <data name="CommentedHeader" xml:space="preserve">
-    <value>commented on this answer {0}</value>
+    <value>commented on this answer</value>
   </data>
   <data name="CommentPlaceholder" xml:space="preserve">
     <value>Add a comment</value>

@@ -233,3 +233,7 @@ textarea {
 .answer-comment-panel{
     padding: 0px !important;
 }
+
+.timestamp {
+    border-bottom: 1px dashed;
+}

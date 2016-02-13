@@ -115,7 +115,7 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to commented on this answer {0}.
+        ///   Looks up a localized string similar to commented on this answer.
         /// </summary>
         public static string CommentedHeader {
             get {
