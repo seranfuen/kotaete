@@ -31,10 +31,9 @@ function AnsweredSuccess(data, userName, questionId) {
         KotaeteAlerts.AddAlertSuccess(message, false);
     }, userName);
     var currentReplies = parseInt($("#reply-stats a").html());
-    if (currentReplies !== NaN)
-    {
+    if (currentReplies !== NaN) {
         currentReplies += 1;
-        $("#reply-stats a").fadeOut('slow', function() { $(this).html(currentReplies).fadeIn() });
+        $("#reply-stats a").fadeOut('slow', function () { $(this).html(currentReplies).fadeIn() });
     }
     UpdateInboxCount();
     $("#" + questionId).slideUp('slow', function () {
@@ -51,7 +50,7 @@ function UpdateInboxCount() {
     $.post('InboxCount', "", function (response) {
         $("#inbox-count").fadeOut('slow', function () {
             if (response > 0) {
-                $(this).html(response).fadeIn();
+                $(this).hide().html(response).fadeIn();
             }
         });
     }, 'json');
@@ -94,10 +93,37 @@ function OnCommentSuccess(data, location, commentLocation) {
 $(function () {
     $(".delete-button").click(OnDeleteQuestion);
 })
+
 function OnDeleteQuestion(event) {
     event.preventDefault();
     var form = $(event.target).closest('form');
-    $("#confirm-delete-modal").modal({ backdrop: 'static', keyboard: false }).one('click', "#delete", function () {
-        alert("HEY");
+    $("#confirm-delete-modal").modal({ backdrop: 'static', keyboard: false }).one('click', "#delete", function (event) {
+        DeleteQuestionAjax(form)
+    }).one('click', "#cancel", function (event) {
+        $("#confirm-delete-modal").off('click');
+    });
+}
+
+function DeleteQuestionAjax(form) {
+    var model = {};
+    model['questionDetailId'] = $(form).find("input[name='QuestionDetailId']").val();
+    model['__RequestVerificationToken'] = $(form).find("input[name='__RequestVerificationToken']").val();
+    $.ajax({
+        type: "POST",
+        url: $(form).find("input[name='AjaxDeleteUrl']").val(),
+        dataType : "json",
+        data: model,
+        error: function () {
+            KotaeteAlerts.AddAlertError($(form).find("input[name='DeleteQuestionError']").val(), false);
+        },
+        success: function () {
+            KotaeteAlerts.GetAlertMessageFor("deleteSuccess", function (message) {
+                KotaeteAlerts.AddAlertSuccess(message, true);
+            });
+            $(form).closest(".question-detail-panel").fadeOut('slow', function () {
+                $(this).remove();
+            });
+            UpdateInboxCount();
+        }
     });
 }

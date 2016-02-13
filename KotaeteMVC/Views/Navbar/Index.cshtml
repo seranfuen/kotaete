@@ -17,8 +17,7 @@
                     <li class="navbar-item">@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>
                         <a href="@Url.Action("Index", "Inbox", null)">
-                            Inbox @if (Model.InboxCount > 0)
-                            { <span id="inbox-count" class="badge">@Model.InboxCount</span> }
+                            Inbox <span id="inbox-count" class="badge">@if (Model.InboxCount > 0){ @Model.InboxCount }</span> 
                         </a>
                     </li>
                     <li>

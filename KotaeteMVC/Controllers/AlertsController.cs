@@ -112,6 +112,10 @@ namespace KotaeteMVC.Controllers
             {
                 return string.Format(AnswerStrings.SuccessAnswer, GetFirstArgOrEmpty(args));
             }
+            else if (key == "deleteSuccess")
+            {
+                return string.Format(AnswerStrings.DeletedSuccess);
+            }
             return "UnknownAlertKey";
         }
 

@@ -75,6 +75,7 @@ namespace KotaeteMVC.Service
                 return false;
             }
             questionDetail.Deleted = true;
+            questionDetail.SeenByUser = true;
             try
             {
                 _context.SaveChanges();

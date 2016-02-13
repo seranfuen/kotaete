@@ -58,22 +58,32 @@ namespace KotaeteMVC.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]
+        public ActionResult DeleteQuestionAjax(int questionDetailId)
+        {
+            var result = _answersService.DeleteQuestion(questionDetailId);
+            if (result)
+            {
+                return Json("deleted");
+            }
+            else
+            {
+                return GetBadRequestResult();
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [Authorize]
         [MultipleButton(Name = "action", Argument = "Delete")]
         public ActionResult DeleteQuestion([Bind(Include = "QuestionDetailId")] QuestionDetailAnswerViewModel answerViewModel)
         {
             var result = _answersService.DeleteQuestion(answerViewModel.QuestionDetailId);
             if (result)
             {
-                if (Request.IsAjaxRequest())
-                {
-                    return Json("deleted");
-                }
-                else
-                {
-                    AddAlertSuccess(AnswerStrings.DeletedSuccess, "", true);
-                    return RedirectToPrevious();
-                }
-            } else
+                AddAlertSuccess(AnswerStrings.DeletedSuccess, "", true);
+                return RedirectToPrevious();
+            }
+            else
             {
                 return GetBadRequestResult();
             }

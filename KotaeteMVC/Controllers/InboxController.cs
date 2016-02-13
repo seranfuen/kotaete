@@ -24,6 +24,7 @@ namespace KotaeteMVC.Controllers
                 page = 1;
             }
             var inboxViewModel = _inboxService.GetInboxViewModelCurrentUser(page);
+            _inboxService.UpdateQuestionsSeenByCurrentUser();
             if (page > inboxViewModel.TotalPages)
             {
                 page = inboxViewModel.TotalPages;

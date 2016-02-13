@@ -169,6 +169,15 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error deleting this message.
+        /// </summary>
+        public static string DeleteError {
+            get {
+                return ResourceManager.GetString("DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your answer cannot be empty.
         /// </summary>
         public static string EmptyAnswerError {
