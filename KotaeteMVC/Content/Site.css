@@ -237,3 +237,7 @@ textarea {
 .timestamp {
     border-bottom: 1px dashed;
 }
+
+.edit-button {
+    padding-top: 10px;
+}

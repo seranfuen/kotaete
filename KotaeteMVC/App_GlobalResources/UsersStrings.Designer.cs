@@ -61,6 +61,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Say something about yourself.
+        /// </summary>
+        internal static string EditBioLabel {
+            get {
+                return ResourceManager.GetString("EditBioLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your homepage.
+        /// </summary>
+        internal static string EditHomepageLabel {
+            get {
+                return ResourceManager.GetString("EditHomepageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your location.
+        /// </summary>
+        internal static string EditLocationLabel {
+            get {
+                return ResourceManager.GetString("EditLocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit your profile.
+        /// </summary>
+        internal static string EditProfileButton {
+            get {
+                return ResourceManager.GetString("EditProfileButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing {0}&apos;s profile.
+        /// </summary>
+        internal static string EditProfilePageTitle {
+            get {
+                return ResourceManager.GetString("EditProfilePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit your profile.
+        /// </summary>
+        internal static string EditProfileTitle {
+            get {
+                return ResourceManager.GetString("EditProfileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string EditSaveButton {
+            get {
+                return ResourceManager.GetString("EditSaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow.
         /// </summary>
         internal static string FollowButton {
@@ -241,6 +304,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your name.
+        /// </summary>
+        internal static string ScreenNameLabel {
+            get {
+                return ResourceManager.GetString("ScreenNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unfollow.
         /// </summary>
         internal static string UnfollowButton {
@@ -264,6 +336,15 @@ namespace Resources {
         internal static string UnfollowingSuccessLst {
             get {
                 return ResourceManager.GetString("UnfollowingSuccessLst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name.
+        /// </summary>
+        internal static string UserNameLabel {
+            get {
+                return ResourceManager.GetString("UserNameLabel", resourceCulture);
             }
         }
     }

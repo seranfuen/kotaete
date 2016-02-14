@@ -21,7 +21,7 @@
             {
                 if (Model.IsOwnProfile)
                 {
-                    <span class="label label-default">@UsersStrings.OwnProfile</span>
+                    @Html.ActionLink(UsersStrings.EditProfileButton, "EditProfile", "Manage", null, new { @class = "edit-button btn btn-primary btn-large" })
                 }
                 else if (Model.FollowsYou)
                 {

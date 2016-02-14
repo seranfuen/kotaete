@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EditBioLabel" xml:space="preserve">
+    <value>Say something about yourself</value>
+  </data>
+  <data name="EditHomepageLabel" xml:space="preserve">
+    <value>Your homepage</value>
+  </data>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Your location</value>
+  </data>
+  <data name="EditProfileButton" xml:space="preserve">
+    <value>Edit your profile</value>
+  </data>
+  <data name="EditProfilePageTitle" xml:space="preserve">
+    <value>Editing {0}'s profile</value>
+  </data>
+  <data name="EditProfileTitle" xml:space="preserve">
+    <value>Edit your profile</value>
+  </data>
+  <data name="EditSaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="FollowButton" xml:space="preserve">
     <value>Follow</value>
   </data>
@@ -178,6 +199,9 @@
   <data name="ReplySingularLabel" xml:space="preserve">
     <value>Reply</value>
   </data>
+  <data name="ScreenNameLabel" xml:space="preserve">
+    <value>Your name</value>
+  </data>
   <data name="UnfollowButton" xml:space="preserve">
     <value>Unfollow</value>
   </data>
@@ -187,5 +211,8 @@
   </data>
   <data name="UnfollowingSuccessLst" xml:space="preserve">
     <value> anymore</value>
+  </data>
+  <data name="UserNameLabel" xml:space="preserve">
+    <value>User name</value>
   </data>
 </root>

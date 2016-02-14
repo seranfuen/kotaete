@@ -19,7 +19,8 @@ namespace KotaeteMVC.Service
                 IsAuthenticated = isAuthenticated,
                 InboxCount = GetInboxCount(),
                 AvatarUrl = currentUser != null ? currentUser.AvatarUrl : null,
-                UserName = currentUser != null ? currentUser.ScreenName : null
+                ScreenName = currentUser != null ? currentUser.ScreenName : null,
+                UserName = currentUser != null ? currentUser.User.UserName : null
             };
             return model;
         }

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using KotaeteMVC.App_GlobalResources;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Resources;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
@@ -10,6 +12,9 @@ namespace KotaeteMVC.Models.Entities
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+
+        private string _screenName;
+
         [ScaffoldColumn(false)]
         public virtual List<QuestionDetail> QuestionsAsked { get; set; }
 
@@ -25,15 +30,33 @@ namespace KotaeteMVC.Models.Entities
         public virtual string Header { get; set; }
 
         [ScaffoldColumn(false)]
-        public virtual string ScreenName { get; set; }
+        [Display(ResourceType = typeof(UsersStrings), Name = "ScreenNameLabel")]
+        public virtual string ScreenName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_screenName))
+                {
+                    return UserName;
+                }
+                return _screenName;
+            }
+            set
+            {
+                _screenName = value;
+            }
+        }
 
         [ScaffoldColumn(false)]
+        [Display(ResourceType =typeof(UsersStrings), Name = "EditLocationLabel")]
         public virtual string Location { get; set; }
 
         [ScaffoldColumn(false)]
+        [Display(ResourceType = typeof(UsersStrings), Name = "EditBioLabel")]
         public virtual string Bio { get; set; }
 
         [ScaffoldColumn(false)]
+        [Display(ResourceType = typeof(UsersStrings), Name = "EditHomepageLabel")]
         public virtual string Homepage { get; set; }
 
         public virtual List<Comment> Comments { get; set; }

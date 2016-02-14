@@ -9,7 +9,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a class="navbar-avatar" href="@Url.Action("Index", "Manage", null)"><img class="navbar-avatar-img" src="@Model.AvatarUrl" alt="@Model.UserName"/></a>
+            <a class="navbar-avatar" href="@Url.Action("Index", "User", new { @userName = Model.UserName })"><img class="navbar-avatar-img" src="@Model.AvatarUrl" alt="@Model.ScreenName"/></a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

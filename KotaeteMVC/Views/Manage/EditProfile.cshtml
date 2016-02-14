@@ -1,0 +1,49 @@
+﻿@using Resources
+@model KotaeteMVC.Models.Entities.ApplicationUser
+
+@{
+    ViewBag.Title = String.Format(UsersStrings.EditProfilePageTitle, Model.ScreenName);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" id="page-body">
+    <div class="col-md-9 col-sm-12 col-xs-12">
+
+        <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
+
+        @using (@Ajax.BeginForm("EditProfile", "User", new AjaxOptions { }, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.Label(UsersStrings.ScreenNameLabel, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ScreenName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label(UsersStrings.EditLocationLabel, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Location)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label(UsersStrings.EditHomepageLabel, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Homepage)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label(UsersStrings.EditBioLabel, new { @class = "col-md-12" })
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Bio)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-primary" type="submit">@UsersStrings.EditSaveButton</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

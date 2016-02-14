@@ -1,4 +1,5 @@
 ﻿using KotaeteMVC.Models;
+using KotaeteMVC.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -10,13 +11,15 @@ using System.Web.Mvc;
 namespace KotaeteMVC.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private UsersService _usersService;
 
         public ManageController()
         {
+            _usersService = new UsersService(Context, 0);
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -318,6 +321,14 @@ namespace KotaeteMVC.Controllers
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
+
+        [Authorize]
+        public ActionResult EditProfile()
+        {
+            var user = _usersService.GetCurrentUser();
+            return View("EditProfile", user);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

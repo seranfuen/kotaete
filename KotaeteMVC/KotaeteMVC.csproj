@@ -376,6 +376,7 @@
     <Content Include="Views\Answers\CommentDetail.cshtml" />
     <Content Include="Views\Answers\CommentPost.cshtml" />
     <Content Include="Views\Shared\ModalConfirm.cshtml" />
+    <Content Include="Views\Manage\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />
