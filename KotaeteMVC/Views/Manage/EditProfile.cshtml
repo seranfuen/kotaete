@@ -5,11 +5,24 @@
     ViewBag.Title = String.Format(UsersStrings.EditProfilePageTitle, Model.ScreenName);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Styles.Render("~/Content/cropper.min.css")
 
 <div class="container" id="page-body">
     <div class="col-md-9 col-sm-12 col-xs-12">
 
         <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
+
+        <div id="avatar-cropper">
+            <div class="col-md-7">
+                <img style="max-height:300px; width:auto" id="avatar" />
+            </div>
+            <div class="col-md-5">
+                @Html.Label(UsersStrings.UploadAvatarLabel)
+            <input id="avatar-input" type="file" accept="image/*" />
+            </div>
+       </div>
+
+        <div class="clearfix"></div>
 
         @using (@Ajax.BeginForm("EditProfile", "User", new AjaxOptions { }, new { @class = "form-horizontal", role = "form" }))
         {
@@ -47,3 +60,6 @@
         }
     </div>
 </div>
+
+@Scripts.Render("~/Scripts/App/cropper.js")
+@Scripts.Render("~/Scripts/App/profile.js")

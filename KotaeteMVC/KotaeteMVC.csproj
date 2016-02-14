@@ -290,6 +290,7 @@
     <Content Include="Images\Headers\mio.jpg" />
     <Content Include="Scripts\App\alerts.js" />
     <Content Include="Scripts\App\paginator.js" />
+    <Content Include="Scripts\App\profile.js" />
     <Content Include="Scripts\App\questions.js" />
     <Content Include="Scripts\App\users.js" />
     <Content Include="Scripts\autosize.js" />

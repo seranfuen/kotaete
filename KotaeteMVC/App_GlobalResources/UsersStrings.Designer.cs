@@ -340,6 +340,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload avatar.
+        /// </summary>
+        internal static string UploadAvatarLabel {
+            get {
+                return ResourceManager.GetString("UploadAvatarLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User name.
         /// </summary>
         internal static string UserNameLabel {
