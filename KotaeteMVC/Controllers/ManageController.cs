@@ -1,8 +1,10 @@
 ﻿using KotaeteMVC.Models;
+using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -329,6 +331,14 @@ namespace KotaeteMVC.Controllers
             return View("EditProfile", user);
         }
 
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult EditProfile([Bind(Include = "Avatar, ScreenName, Location, Bio, Homepage")] ApplicationUser userModel)
+        {
+            var result = _usersService.SaveProfile(userModel);
+            return View("EditProfile", userModel);
+        }
 
         protected override void Dispose(bool disposing)
         {

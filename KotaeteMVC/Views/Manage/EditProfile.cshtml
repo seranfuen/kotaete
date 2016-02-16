@@ -24,9 +24,10 @@
 
         <div class="clearfix"></div>
 
-        @using (@Ajax.BeginForm("EditProfile", "User", new AjaxOptions { }, new { @class = "form-horizontal", role = "form" }))
+        @using (@Ajax.BeginForm("EditProfile", "Manage", new AjaxOptions { }, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
+            @Html.Hidden("Avatar", null, new { @id = "avatar-image" });
             <div class="form-group">
                 @Html.Label(UsersStrings.ScreenNameLabel, new { @class = "col-md-2" })
                 <div class="col-md-10">
@@ -54,7 +55,7 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    <button class="btn btn-primary" type="submit">@UsersStrings.EditSaveButton</button>
+                    <button id="edit-profile-button" class="btn btn-primary" type="submit">@UsersStrings.EditSaveButton</button>
                 </div>
             </div>
         }

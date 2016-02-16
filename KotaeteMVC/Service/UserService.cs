@@ -7,6 +7,9 @@ using KotaeteMVC.Models.ViewModels.Base;
 using Resources;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -283,6 +286,70 @@ namespace KotaeteMVC.Service
                 FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null),
                 AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id)
             };
+        }
+
+        public bool SaveProfile(ApplicationUser userModel)
+        {
+            var currentUser = GetCurrentUser();
+            if (currentUser == null)
+            {
+                return false;
+            }
+            if (_context.Users.Any(user => user.Id != currentUser.Id && user.ScreenName.Equals(userModel.ScreenName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false;
+            }
+            currentUser.ScreenName = userModel.ScreenName;
+            if (string.IsNullOrEmpty(userModel.Avatar) == false)
+            {
+                var image = ExtractImage(userModel.Avatar);
+                if (image != null)
+                {
+                    var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+                    path = Path.Combine(path, "Avatars");
+                    var fileName = currentUser.UserName + "-" + Guid.NewGuid().ToString() + ".jpg";
+                    path = Path.Combine(path, fileName);
+                    try
+                    {
+                        image.Save(path, ImageFormat.Jpeg);
+                        currentUser.Avatar = fileName;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+                }
+            }
+            currentUser.Bio = userModel.Bio;
+            currentUser.Location = userModel.Location;
+            currentUser.Homepage = userModel.Homepage;
+            try
+            {
+                _context.SaveChanges();
+                return true;
+            } catch (Exception e)
+            {
+                return false;
+            }
+            
+        }
+
+        private Image ExtractImage(string base64Image)
+        {
+            var mime = base64Image.Substring(0, base64Image.IndexOf(","));
+            var imageString = base64Image.Substring(base64Image.IndexOf(",") + 1);
+            byte[] imageBytes = Convert.FromBase64String(imageString);
+            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            {
+                try {
+                    Image image = Image.FromStream(ms, true);
+                    return image;
+                }
+                catch (ArgumentException e)
+                {
+                    return null;
+                }
+            }
         }
     }
 }
