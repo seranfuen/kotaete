@@ -12,9 +12,9 @@
 
         <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
 
-        <div id="avatar-cropper">
-            <div class="col-md-7">
-                <img style="max-height:300px; width:auto" id="avatar" />
+        <div>
+            <div id="avatar-cropper"class="col-md-7">
+                <img id="avatar" />
             </div>
             <div class="col-md-5">
                 @Html.Label(UsersStrings.UploadAvatarLabel)
@@ -24,7 +24,7 @@
 
         <div class="clearfix"></div>
 
-        @using (@Ajax.BeginForm("EditProfile", "Manage", new AjaxOptions { }, new { @class = "form-horizontal", role = "form" }))
+        @using (@Html.BeginForm("EditProfile", "Manage", new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("Avatar", null, new { @id = "avatar-image" });

@@ -241,3 +241,12 @@ textarea {
 .edit-button {
     padding-top: 10px;
 }
+
+#avatar {
+    max-height: 500px;
+    max-width: 500px;
+}
+
+#avatar-cropper {
+    margin-bottom: 10px;
+}

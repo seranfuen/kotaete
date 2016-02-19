@@ -187,6 +187,9 @@
   <data name="OwnProfile" xml:space="preserve">
     <value>That's you</value>
   </data>
+  <data name="ProfileSavedAlert" xml:space="preserve">
+    <value>Your profile was saved</value>
+  </data>
   <data name="QuestionsPluralLabel" xml:space="preserve">
     <value>Questions</value>
   </data>

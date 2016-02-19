@@ -15,6 +15,14 @@ using System.Web;
 
 namespace KotaeteMVC.Service
 {
+    public enum ProfileSaveResult
+    {
+        OK,
+        ImageRejected,
+        DuplicateScreenName,
+        DatabaseError
+    }
+
     public class UsersService : ServiceBase
     {
         public UsersService(KotaeteDbContext context, int pageSize) : base(context, pageSize)
@@ -288,16 +296,16 @@ namespace KotaeteMVC.Service
             };
         }
 
-        public bool SaveProfile(ApplicationUser userModel)
+        public ProfileSaveResult SaveProfile(ApplicationUser userModel)
         {
             var currentUser = GetCurrentUser();
             if (currentUser == null)
             {
-                return false;
+                return ProfileSaveResult.DatabaseError;
             }
             if (_context.Users.Any(user => user.Id != currentUser.Id && user.ScreenName.Equals(userModel.ScreenName, StringComparison.OrdinalIgnoreCase)))
             {
-                return false;
+                return ProfileSaveResult.DuplicateScreenName;
             }
             currentUser.ScreenName = userModel.ScreenName;
             if (string.IsNullOrEmpty(userModel.Avatar) == false)
@@ -316,7 +324,7 @@ namespace KotaeteMVC.Service
                     }
                     catch (Exception e)
                     {
-                        return false;
+                        return ProfileSaveResult.ImageRejected;
                     }
                 }
             }
@@ -326,10 +334,10 @@ namespace KotaeteMVC.Service
             try
             {
                 _context.SaveChanges();
-                return true;
+                return ProfileSaveResult.OK;
             } catch (Exception e)
             {
-                return false;
+                return ProfileSaveResult.DatabaseError;
             }
             
         }

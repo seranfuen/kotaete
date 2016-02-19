@@ -268,6 +268,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your profile was saved.
+        /// </summary>
+        internal static string ProfileSavedAlert {
+            get {
+                return ResourceManager.GetString("ProfileSavedAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Questions.
         /// </summary>
         internal static string QuestionsPluralLabel {

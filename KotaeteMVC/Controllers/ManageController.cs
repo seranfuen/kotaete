@@ -4,6 +4,7 @@ using KotaeteMVC.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Resources;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using System.Web.Mvc;
 namespace KotaeteMVC.Controllers
 {
     [Authorize]
-    public class ManageController : BaseController
+    public class ManageController : AlertsController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -337,6 +338,11 @@ namespace KotaeteMVC.Controllers
         public ActionResult EditProfile([Bind(Include = "Avatar, ScreenName, Location, Bio, Homepage")] ApplicationUser userModel)
         {
             var result = _usersService.SaveProfile(userModel);
+            if (result == ProfileSaveResult.OK)
+            {
+                AddAlertSuccess(UsersStrings.ProfileSavedAlert, "", true);
+                return RedirectToAction("Index", "User", new { @userName = _usersService.GetCurrentUserName() });
+            }
             return View("EditProfile", userModel);
         }
 
