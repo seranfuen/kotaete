@@ -358,6 +358,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload header.
+        /// </summary>
+        internal static string UploadHeaderLabel {
+            get {
+                return ResourceManager.GetString("UploadHeaderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User name.
         /// </summary>
         internal static string UserNameLabel {

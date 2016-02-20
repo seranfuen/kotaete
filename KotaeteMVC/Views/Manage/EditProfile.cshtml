@@ -13,8 +13,18 @@
         <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
 
         <div>
+            <div id="header-cropper" class="col-md-7">
+                <img id="header" src="@Model.Header" />
+            </div>
+            <div class="col-md-5">
+                @Html.Label(UsersStrings.UploadHeaderLabel)
+                <input id="header-input" type="file" accept="image/*" />
+            </div>
+        </div>
+
+        <div>
             <div id="avatar-cropper"class="col-md-7">
-                <img id="avatar" />
+                <img id="avatar" src="@Model.Avatar"/>
             </div>
             <div class="col-md-5">
                 @Html.Label(UsersStrings.UploadAvatarLabel)
@@ -28,6 +38,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("Avatar", null, new { @id = "avatar-image" });
+            @Html.Hidden("Header", null, new { @id = "header-image" });
             <div class="form-group">
                 @Html.Label(UsersStrings.ScreenNameLabel, new { @class = "col-md-2" })
                 <div class="col-md-10">

@@ -1,25 +1,38 @@
 ﻿$(function () {
-    Profile.SelectedFile = false;
-    $("#avatar-input").change(function () {
-        Profile.SelectedFile = true;
+    BindCropperReloading("#avatar-input", "#avatar-cropper", "#avatar", 1);
+    BindCropperReloading("#header-input", "#header-cropper", "#header", 3);
+});
+
+function BindCropperReloading(inputSelector, imageCropperSelector, imageSelector, cropperAspectRatio) {
+    Profile.SelectedFiles.header = false;
+    Profile.SelectedFiles.avatar = false;
+    $(inputSelector).change(function () {
+        if (inputSelector == "#avatar-input") {
+            Profile.SelectedFiles.avatar = true;
+        } else if (inputSelector == "#header-input") {
+            Profile.SelectedFiles.header = true;
+        }
         if (this.files && this.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#avatar-cropper').html('<img id="avatar" />');
-                $('#avatar').cropper("replace", e.target.result);
-                $('#avatar').cropper('destroy').cropper({ viewMode: 3, aspectRatio : 1 });
-                $('#avatar').cropper('setDragMode', 'move');
+                $(imageCropperSelector).html('<img id="' + imageSelector + '" />');
+                $(imageSelector).cropper("replace", e.target.result);
+                $(imageSelector).cropper('destroy').cropper({ viewMode: 3, aspectRatio: cropperAspectRatio });
+                $(imageSelector).cropper('setDragMode', 'move');
             }
             reader.readAsDataURL(this.files[0]);
         }
     });
-});
+}
 
 $(function () {
     $("#edit-profile-button").click(function (event) {
         event.preventDefault();
-        if (Profile.SelectedFile == true) {
+        if (Profile.SelectedFiles.avatar) {
             $("#avatar-image").val($("#avatar").cropper('getCroppedCanvas').toDataURL());
+        }
+        if (Profile.SelectedFiles.header) {
+            $("#header-image").val($("#header").cropper('getCroppedCanvas').toDataURL());
         }
         $(this).closest("form").submit();
     });
@@ -27,5 +40,5 @@ $(function () {
 
 var Profile = Profile ||
 {
-    SelectedFile : false  
+    SelectedFiles : { header : false, avatar : false }
 };

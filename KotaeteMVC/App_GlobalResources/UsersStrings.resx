@@ -218,6 +218,9 @@
   <data name="UploadAvatarLabel" xml:space="preserve">
     <value>Upload avatar</value>
   </data>
+  <data name="UploadHeaderLabel" xml:space="preserve">
+    <value>Upload header</value>
+  </data>
   <data name="UserNameLabel" xml:space="preserve">
     <value>User name</value>
   </data>
