@@ -7,12 +7,10 @@
 }
 @Styles.Render("~/Content/cropper.min.css")
 
-<div class="container" id="page-body">
-    <div class="col-md-9 col-sm-12 col-xs-12">
+<div class="container">
+    @*<h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
 
-        <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
-
-        <div>
+        <div id="header-selector">
             <div id="header-cropper" class="col-md-7">
                 <img id="header" src="@Model.Header" />
             </div>
@@ -22,55 +20,44 @@
             </div>
         </div>
 
-        <div>
-            <div id="avatar-cropper"class="col-md-7">
-                <img id="avatar" src="@Model.Avatar"/>
+        <div id="avatar-selector">
+            <div id="avatar-cropper" class="col-md-7">
+                <img id="avatar" src="@Model.Avatar" />
             </div>
             <div class="col-md-5">
                 @Html.Label(UsersStrings.UploadAvatarLabel)
-            <input id="avatar-input" type="file" accept="image/*" />
+                <input id="avatar-input" type="file" accept="image/*" />
             </div>
-       </div>
+        </div>
 
-        <div class="clearfix"></div>
+        <div class="clearfix"></div>*@
 
-        @using (@Html.BeginForm("EditProfile", "Manage", new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.Hidden("Avatar", null, new { @id = "avatar-image" });
-            @Html.Hidden("Header", null, new { @id = "header-image" });
+    @using (@Html.BeginForm("EditProfile", "Manage", new { role = "form" }))
+            {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("Avatar", null, new { @id = "avatar-image" });
+        @Html.Hidden("Header", null, new { @id = "header-image" });
+        <div class="form-group">
+            @Html.Label("ScreenName", UsersStrings.ScreenNameLabel, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.ScreenName, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Location", UsersStrings.EditLocationLabel, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Homepage", UsersStrings.EditHomepageLabel, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.Homepage, new { @class = "form-control" })
+        </div>
             <div class="form-group">
-                @Html.Label(UsersStrings.ScreenNameLabel, new { @class = "col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.ScreenName)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label(UsersStrings.EditLocationLabel, new { @class = "col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.Location)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label(UsersStrings.EditHomepageLabel, new { @class = "col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.Homepage)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label(UsersStrings.EditBioLabel, new { @class = "col-md-12" })
-                <div class="col-md-12">
-                    @Html.TextAreaFor(model => model.Bio)
-                </div>
+                @Html.Label("Bio", UsersStrings.EditBioLabel, new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Bio, new { @class = "form-control" })
             </div>
 
-            <div class="form-group">
-                <div class="col-md-10">
+                <div class="form-group">
                     <button id="edit-profile-button" class="btn btn-primary" type="submit">@UsersStrings.EditSaveButton</button>
                 </div>
-            </div>
-        }
-    </div>
+    }
 </div>
 
 @Scripts.Render("~/Scripts/App/cropper.js")

@@ -243,10 +243,11 @@ textarea {
 }
 
 #avatar, #header {
-    max-height: 500px;
+    max-height: 400px;
     max-width: 500px;
 }
 
-#avatar-cropper, #header-cropper {
-    margin-bottom: 10px;
+#avatar-selector, #header-selector {
+    padding-bottom: 80px;
 }
+

@@ -313,19 +313,26 @@ namespace KotaeteMVC.Service
                 var image = ExtractImage(userModel.Avatar);
                 if (image != null)
                 {
-                    var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-                    path = Path.Combine(path, "Avatars");
-                    var fileName = currentUser.UserName + "-" + Guid.NewGuid().ToString() + ".jpg";
-                    path = Path.Combine(path, fileName);
                     try
                     {
-                        image.Save(path, ImageFormat.Jpeg);
-                        currentUser.Avatar = fileName;
+                        currentUser.Avatar = SaveImage(currentUser, image, "Avatars");
                     }
                     catch (Exception e)
                     {
                         return ProfileSaveResult.ImageRejected;
                     }
+                }
+            }
+            if (string.IsNullOrEmpty(userModel.Header) == false)
+            {
+                var image = ExtractImage(userModel.Header);
+                try
+                {
+                    currentUser.Header = SaveImage(currentUser, image, "Headers");
+                }
+                catch (Exception e)
+                {
+                    return ProfileSaveResult.ImageRejected;
                 }
             }
             currentUser.Bio = userModel.Bio;
@@ -340,6 +347,16 @@ namespace KotaeteMVC.Service
                 return ProfileSaveResult.DatabaseError;
             }
             
+        }
+
+        private static string SaveImage(ApplicationUser currentUser, Image image, string imageFolder)
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+            path = Path.Combine(path, imageFolder);
+            var fileName = currentUser.UserName + "-" + Guid.NewGuid().ToString() + ".jpg";
+            path = Path.Combine(path, fileName);
+            image.Save(path, ImageFormat.Jpeg);
+            return fileName;
         }
 
         private Image ExtractImage(string base64Image)
