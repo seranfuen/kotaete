@@ -110,6 +110,7 @@ namespace KotaeteMVC.Controllers
                 return GetUserNotFoundView(userName);
             }
             var userProfileModel = _usersService.GetProfileQuestionViewModel(userName);
+            ViewBag.HeaderImage = userProfileModel.Profile.HeaderUrl;
             return View(userProfileModel);
         }
 

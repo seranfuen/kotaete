@@ -12,8 +12,9 @@
     <div class="panel-body" id="profile-body">
         <div class="row">
             @if (Model.AvatarUrl != null)
-            {
+            { <a href="@Url.Action("Index", "User", new {@userName = Model.User.UserName})">
                 <img class="avatar" src="@Url.Content(Model.AvatarUrl)" alt="@Model.ScreenName" />
+            </a>
             }
         </div>
         <div class="row follow-indication">
@@ -21,7 +22,7 @@
             {
                 if (Model.IsOwnProfile)
                 {
-                    @Html.ActionLink(UsersStrings.EditProfileButton, "EditProfile", "Manage", null, new { @class = "edit-button btn btn-primary btn-large" })
+                    @Html.ActionLink(UsersStrings.EditProfileButton, "EditProfile", "Manage", null, new { @class = "edit-profile-button btn btn-primary btn-large" })
                 }
                 else if (Model.FollowsYou)
                 {

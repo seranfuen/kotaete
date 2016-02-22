@@ -329,6 +329,8 @@ namespace KotaeteMVC.Controllers
         public ActionResult EditProfile()
         {
             var user = _usersService.GetCurrentUser();
+            ViewBag.Avatar = _usersService.GetAvatarUrl(user);
+            ViewBag.Header = _usersService.GetHeaderUrl(user);
             return View("EditProfile", user);
         }
 

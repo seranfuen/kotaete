@@ -14,6 +14,13 @@
 
     @Html.Action("Index", "Navbar", null)
 
+    @if (!string.IsNullOrWhiteSpace(ViewBag.HeaderImage))
+    {
+        <div id="header-banner" style="background-image:url(@ViewBag.HeaderImage)">
+            <img src="@ViewBag.HeaderImage" />
+        </div>
+    }
+
     <div class="container-fuid body-content">
         <div id="alert-container" class="container">
             @{ Html.RenderPartial("_Alert"); }

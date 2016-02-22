@@ -230,7 +230,7 @@ namespace KotaeteMVC.Service
             return query;
         }
 
-        private string GetHeaderUrl(ApplicationUser user)
+        public string GetHeaderUrl(ApplicationUser user)
         {
             var url = "/Images/Headers/";
             if (user.Header != null)
@@ -308,7 +308,7 @@ namespace KotaeteMVC.Service
                 return ProfileSaveResult.DuplicateScreenName;
             }
             currentUser.ScreenName = userModel.ScreenName;
-            if (string.IsNullOrEmpty(userModel.Avatar) == false)
+            if (string.IsNullOrWhiteSpace(userModel.Avatar) == false)
             {
                 var image = ExtractImage(userModel.Avatar);
                 if (image != null)
@@ -323,7 +323,7 @@ namespace KotaeteMVC.Service
                     }
                 }
             }
-            if (string.IsNullOrEmpty(userModel.Header) == false)
+            if (string.IsNullOrWhiteSpace(userModel.Header) == false)
             {
                 var image = ExtractImage(userModel.Header);
                 try
@@ -361,6 +361,10 @@ namespace KotaeteMVC.Service
 
         private Image ExtractImage(string base64Image)
         {
+            if (base64Image.IndexOf(",") == -1)
+            {
+                return null;
+            }
             var mime = base64Image.Substring(0, base64Image.IndexOf(","));
             var imageString = base64Image.Substring(base64Image.IndexOf(",") + 1);
             byte[] imageBytes = Convert.FromBase64String(imageString);

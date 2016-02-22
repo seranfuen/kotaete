@@ -8,29 +8,35 @@
 @Styles.Render("~/Content/cropper.min.css")
 
 <div class="container">
-    @*<h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
+    <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
 
-        <div id="header-selector">
+    <div class="col-md-12" id="profile-image-editor">
+        <div class="row">
             <div id="header-cropper" class="col-md-7">
-                <img id="header" src="@Model.Header" />
+                <img id="header" @if (!string.IsNullOrWhiteSpace(@ViewBag.Header))
+                {
+                    @:alt = "@Model.ScreenName" src = "@ViewBag.Header" 
+                }/>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5" id="header-file-chooser">
                 @Html.Label(UsersStrings.UploadHeaderLabel)
                 <input id="header-input" type="file" accept="image/*" />
             </div>
         </div>
 
-        <div id="avatar-selector">
+        <div class="row">
             <div id="avatar-cropper" class="col-md-7">
-                <img id="avatar" src="@Model.Avatar" />
+                <img id="avatar" @if (!string.IsNullOrWhiteSpace(@ViewBag.Avatar))
+                {
+                    @:alt = "@Model.ScreenName" src = "@ViewBag.Avatar" 
+                }/>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5" id="avatar-file-chooser">
                 @Html.Label(UsersStrings.UploadAvatarLabel)
                 <input id="avatar-input" type="file" accept="image/*" />
             </div>
         </div>
-
-        <div class="clearfix"></div>*@
+    </div>
 
     @using (@Html.BeginForm("EditProfile", "Manage", new { role = "form" }))
             {
@@ -49,14 +55,14 @@
             @Html.Label("Homepage", UsersStrings.EditHomepageLabel, new { @class = "control-label" })
             @Html.TextBoxFor(model => model.Homepage, new { @class = "form-control" })
         </div>
-            <div class="form-group">
-                @Html.Label("Bio", UsersStrings.EditBioLabel, new { @class = "control-label" })
-                @Html.TextAreaFor(model => model.Bio, new { @class = "form-control" })
-            </div>
+        <div class="form-group">
+            @Html.Label("Bio", UsersStrings.EditBioLabel, new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.Bio, new { @class = "form-control" })
+        </div>
 
-                <div class="form-group">
-                    <button id="edit-profile-button" class="btn btn-primary" type="submit">@UsersStrings.EditSaveButton</button>
-                </div>
+        <div class="form-group">
+            <button id="edit-profile-button" class="btn btn-primary" type="submit">@UsersStrings.EditSaveButton</button>
+        </div>
     }
 </div>
 

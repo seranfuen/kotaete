@@ -47,7 +47,7 @@ textarea {
 }
 
 #page-body {
-    margin-top: 20px;
+    margin-top: 100px;
 }
 
 .user-name {
@@ -238,16 +238,40 @@ textarea {
     border-bottom: 1px dashed;
 }
 
-.edit-button {
+.edit-profile-button {
     padding-top: 10px;
+    margin-top: 10px;
 }
 
 #avatar, #header {
-    max-height: 400px;
-    max-width: 500px;
+    max-height: 300px;
+    max-width: 400px;
+    border: 2px solid black;
 }
 
-#avatar-selector, #header-selector {
-    padding-bottom: 80px;
+#avatar-cropper, #header-cropper {
+    padding-bottom: 20px;
+    vertical-align: middle;
 }
 
+#profile-image-editor .row {
+    margin-bottom: 10px;
+}
+
+#profile-image-editor {
+    margin-bottom: 20px;
+}
+
+#header-banner {
+    width: 100%;
+    padding: 0px !important;
+    margin: 0px !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: absolute;
+}
+
+#header-banner img {
+    visibility: hidden;
+    width: 100%;
+}
