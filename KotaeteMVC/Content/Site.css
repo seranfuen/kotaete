@@ -46,9 +46,7 @@ textarea {
 #profile-column {
 }
 
-#page-body {
-    margin-top: 100px;
-}
+
 
 .user-name {
     font-size:1.2em;
@@ -263,15 +261,23 @@ textarea {
 }
 
 #header-banner {
-    width: 100%;
-    padding: 0px !important;
+    top: 0px;
+    width: 80%;
+    left: 10%;
+    padding: 0px;
     margin: 0px !important;
     background-repeat: no-repeat;
     background-size: 100%;
-    position: absolute;
+    position: relative;
+}
+
+#page-body {
+    padding: 0px 20px 20px 20px;
+    margin-top:-7px !important;
 }
 
 #header-banner img {
     visibility: hidden;
     width: 100%;
+    height: auto;
 }

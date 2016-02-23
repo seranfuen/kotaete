@@ -42,6 +42,7 @@ namespace KotaeteMVC.Controllers
             }
             else
             {
+                ViewBag.HeaderImage = followerModel.OwnerProfile.HeaderUrl;
                 return View("Followers", followerModel);
             }
         }
@@ -69,6 +70,7 @@ namespace KotaeteMVC.Controllers
             }
             else
             {
+                ViewBag.HeaderImage = followerModel.OwnerProfile.HeaderUrl;
                 return View("Following", followerModel);
             }
         }

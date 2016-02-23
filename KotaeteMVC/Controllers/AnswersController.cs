@@ -114,6 +114,7 @@ namespace KotaeteMVC.Controllers
                         return View("NoAnswers", answers.Profile);
                     }
                     ViewBag.Title = answers.Profile.ScreenName + AnswerStrings.Likes;
+                    ViewBag.HeaderImage = answers.Profile.HeaderUrl;
                     return View("ProfileAnswerList", answers);
                 }
             }
@@ -146,6 +147,7 @@ namespace KotaeteMVC.Controllers
                         ViewBag.Title = userName + " - " + AnswerStrings.NoAnswersTitle;
                         return View("NoAnswers", answerListProfileViewModel.Profile);
                     }
+                    ViewBag.HeaderImage = answerListProfileViewModel.Profile.HeaderUrl;
                     ViewBag.Title = answerListProfileViewModel.Profile.ScreenName + AnswerStrings.Answers;
                     return View("ProfileAnswerList", answerListProfileViewModel);
                 }
@@ -179,6 +181,7 @@ namespace KotaeteMVC.Controllers
                         ViewBag.Title = userName + " - " + AnswerStrings.NoQuestionsTitle;
                         return View("NoAnswers", answerListProfileViewModel.Profile);
                     }
+                    ViewBag.HeaderImage = answerListProfileViewModel.Profile.HeaderUrl;
                     ViewBag.Title = answerListProfileViewModel.Profile.ScreenName + AnswerStrings.Questions;
                     return View("ProfileAnswerList", answerListProfileViewModel);
                 }

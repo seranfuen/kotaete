@@ -35,6 +35,7 @@ namespace KotaeteMVC.Controllers
             }
             else
             {
+                ViewBag.HeaderImage = inboxViewModel.Profile.HeaderUrl;
                 return View(inboxViewModel);
             }
         }

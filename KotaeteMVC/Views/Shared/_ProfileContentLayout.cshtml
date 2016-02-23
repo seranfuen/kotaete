@@ -3,6 +3,16 @@
 }
 
 <div class="container" id="page-body">
+
+
+    @if (!string.IsNullOrWhiteSpace(ViewBag.HeaderImage))
+    {
+        <div id="header-banner" style="background-image:url(@ViewBag.HeaderImage)">
+            <img src="@ViewBag.HeaderImage" />
+        </div>
+    }
+
+
     <div class="col-md-3 col-sm-12 col-xs-12">
         @RenderSection("Profile")
     </div>
