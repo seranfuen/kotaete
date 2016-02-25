@@ -1,12 +1,15 @@
 ﻿var KotaeteAlerts = KotaeteAlerts ||
 {
+    secondsToShow : 15,
     alert_div_id: "#alert-container",
     info: "alert-info",
     success: "alert-success",
     warning: "alert-warning",
     error: "alert-danger",
     RemovePreviousAlerts: function () {
-        $('.alert-success, .alert-warning, .alert-info').hide();
+        $('.alert-success, .alert-danger, .alert-warning, .alert-info').hide('fast', function () {
+            $(this).remove();
+        });
     },
     AddAlert: function (text, type, dismissable) {
         this.RemovePreviousAlerts();
@@ -17,7 +20,10 @@
         }
         $(alertContainer).append(text);
         $(this.alert_div_id).append(alertContainer);
-        alertContainer.slideDown();
+        alertContainer.fadeIn();
+        window.setTimeout(function () {
+            $(alertContainer).fadeOut('slow', function () { $(this).remove(); });
+        }, this.secondsToShow * 1000);
     },
     AddAlertSuccess: function (text, dismissable) {
         dismissable = dismissable !== false;

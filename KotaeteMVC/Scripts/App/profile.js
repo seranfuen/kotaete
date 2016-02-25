@@ -1,6 +1,6 @@
 ﻿$(function () {
     BindCropperReloading("#avatar-input", "#avatar-cropper", "#avatar", 1);
-    BindCropperReloading("#header-input", "#header-cropper", "#header", 3);
+    BindCropperReloading("#header-input", "#header-cropper", "#header", 5);
 });
 
 function BindCropperReloading(inputSelector, imageCropperSelector, imageSelector, cropperAspectRatio) {
