@@ -285,7 +285,7 @@ namespace KotaeteMVC.Service
                 HeaderUrl = GetHeaderUrl(profileUser),
                 Bio = profileUser.Bio,
                 Location = profileUser.Location,
-                Homepage = profileUser.Homepage,
+                Homepage = GetHomepage(profileUser.Homepage),
                 User = profileUser,
                 QuestionsReplied = questionService.GetQuestionsAnsweredByUser(profileUser),
                 QuestionsAsked = questionService.GetQuestionsAskedByUser(profileUser),
@@ -294,6 +294,23 @@ namespace KotaeteMVC.Service
                 FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null),
                 AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id)
             };
+        }
+
+        private string GetHomepage(string homepage)
+        {
+            if (string.IsNullOrWhiteSpace(homepage))
+            {
+                return null;
+            }
+            homepage = homepage.ToLower().Trim();
+            if (homepage.StartsWith("http://") || homepage.StartsWith("https://"))
+            {
+                return homepage;
+            }
+            else
+            {
+                return "http://" + homepage;
+            }
         }
 
         public ProfileSaveResult SaveProfile(ApplicationUser userModel)

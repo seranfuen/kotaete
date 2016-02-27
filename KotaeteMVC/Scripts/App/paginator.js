@@ -6,6 +6,9 @@
 
 function PaginationOnSuccess(entityName) {
     $(toReplaceId).removeClass('fadeout').unwrap();
+    $('html, body').animate({
+        scrollTop: $("#page-body").offset().top - 30
+    }, 500);
 }
 
 function PaginationOnFailure(entityName) {
@@ -15,5 +18,3 @@ function PaginationOnFailure(entityName) {
 function RemoveHref() {
     $("#pagination-list li a").attr('href', '#');
 }
-
-//$(RemoveHref);

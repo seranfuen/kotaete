@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enable Javascript to be able to upload your avatar and header.
+        /// </summary>
+        internal static string EnableJSAvatar {
+            get {
+                return ResourceManager.GetString("EnableJSAvatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow.
         /// </summary>
         internal static string FollowButton {

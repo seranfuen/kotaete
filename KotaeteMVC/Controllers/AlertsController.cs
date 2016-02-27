@@ -14,24 +14,24 @@ namespace KotaeteMVC.Controllers
         public const string UnfollowSuccessKey = "UnfollowSuccessKey";
         public const string FollowErrorKey = "FollowErrorKey";
 
-        public void AddAlertSuccess(string message, string header = "", bool dismissable = false)
+        public void AddAlertSuccess(string message, string header = "")
         {
-            AddAlert(message, header, dismissable, UserAlert.MessageType.Success);
+            AddAlert(message, header, UserAlert.MessageType.Success);
         }
 
-        public void AddAlertInfo(string message, string header = "", bool dismissable = false)
+        public void AddAlertInfo(string message, string header = "")
         {
-            AddAlert(message, header, dismissable, UserAlert.MessageType.Info);
+            AddAlert(message, header, UserAlert.MessageType.Info);
         }
 
-        public void AddAlertWarning(string message, string header = "", bool dismissable = false)
+        public void AddAlertWarning(string message, string header = "")
         {
-            AddAlert(message, header, dismissable, UserAlert.MessageType.Warning);
+            AddAlert(message, header, UserAlert.MessageType.Warning);
         }
 
-        public void AddAlertDanger(string message, string header = "", bool dismissable = false)
+        public void AddAlertDanger(string message, string header = "")
         {
-            AddAlert(message, header, dismissable, UserAlert.MessageType.Danger);
+            AddAlert(message, header, UserAlert.MessageType.Danger);
         }
 
         public void AddAlertDangerOverride(string message, string header = "")
@@ -46,21 +46,21 @@ namespace KotaeteMVC.Controllers
         public void AddAlertDatabaseErrror(Exception e)
         {
 #if (DEBUG)
-            AddAlertDanger(e.Message + " ##### " + e.StackTrace, "", true);
+            AddAlertDanger(e.Message + " ##### " + e.StackTrace, "");
 #else
-            AddAlertDanger(MainGlobal.DatabaseError, MainGlobal.ErrorHeader, false);
+            AddAlertDanger(MainGlobal.DatabaseError, MainGlobal.ErrorHeader);
 #endif
             // TODO: log e, show e if debug
         }
 
-        private void AddAlert(string message, string header, bool dismissable, UserAlert.MessageType alertType)
+        private void AddAlert(string message, string header, UserAlert.MessageType alertType)
         {
             var alert = new UserAlert()
             {
                 Message = message,
                 Header = header,
                 Type = alertType,
-                Dismissable = dismissable
+                Dismissable = true
             };
             if (!TempData.ContainsKey(UserAlert.Key))
             {

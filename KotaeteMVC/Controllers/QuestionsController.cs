@@ -50,7 +50,7 @@ namespace KotaeteMVC.Controllers
                     }
                     else
                     {
-                        AddAlertSuccess(string.Format(QuestionStrings.QuestionAskedSuccess, contentQuestion.AskedToScreenName), "", true);
+                        AddAlertSuccess(string.Format(QuestionStrings.QuestionAskedSuccess, contentQuestion.AskedToScreenName), "");
                         return RedirectToPrevious();
                     }
                 }
@@ -61,7 +61,7 @@ namespace KotaeteMVC.Controllers
             }
             else
             {
-                AddAlertDanger(QuestionStrings.QuestionContentMissing, "", false);
+                AddAlertDanger(QuestionStrings.QuestionContentMissing, "");
                 return RedirectToPrevious();
             }
         }

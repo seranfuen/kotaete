@@ -37,7 +37,7 @@ namespace KotaeteMVC.Controllers
                 }
                 else
                 {
-                    AddAlertSuccess(string.Format(AnswerStrings.SuccessAnswer, answerViewModel.AskerScreenName), "", true);
+                    AddAlertSuccess(string.Format(AnswerStrings.SuccessAnswer, answerViewModel.AskerScreenName), "");
                     return RedirectToPrevious();
                 }
             }
@@ -80,7 +80,7 @@ namespace KotaeteMVC.Controllers
             var result = _answersService.DeleteQuestion(answerViewModel.QuestionDetailId);
             if (result)
             {
-                AddAlertSuccess(AnswerStrings.DeletedSuccess, "", true);
+                AddAlertSuccess(AnswerStrings.DeletedSuccess, "");
                 return RedirectToPrevious();
             }
             else
@@ -210,7 +210,7 @@ namespace KotaeteMVC.Controllers
                 }
                 else
                 {
-                    AddAlertSuccess(AnswerStrings.CommentPostSuccess, "", true);
+                    AddAlertSuccess(AnswerStrings.CommentPostSuccess, "");
                     return RedirectToPrevious();
                 }
             }

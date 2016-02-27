@@ -138,6 +138,9 @@
   <data name="EditSaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="EnableJSAvatar" xml:space="preserve">
+    <value>Please enable Javascript to be able to upload your avatar and header</value>
+  </data>
   <data name="FollowButton" xml:space="preserve">
     <value>Follow</value>
   </data>

@@ -89,7 +89,7 @@ namespace KotaeteMVC.Controllers
                 }
                 else
                 {
-                    AddAlertSuccess(UsersStrings.FollowingSuccess + _usersService.GetUserScreenName(userName), "", true);
+                    AddAlertSuccess(UsersStrings.FollowingSuccess + _usersService.GetUserScreenName(userName), "");
                     return RedirectToPrevious();
                 }
             }
@@ -130,7 +130,7 @@ namespace KotaeteMVC.Controllers
                 }
                 else
                 {
-                    AddAlertSuccess(UsersStrings.UnfollowingSuccessFst + _usersService.GetUserScreenName(userName) + UsersStrings.UnfollowingSuccessLst, "", true);
+                    AddAlertSuccess(UsersStrings.UnfollowingSuccessFst + _usersService.GetUserScreenName(userName) + UsersStrings.UnfollowingSuccessLst, "");
                     return RedirectToPrevious();
                 }
             }

@@ -245,7 +245,6 @@ textarea {
 #avatar, #header {
     max-height: 300px;
     max-width: 400px;
-    border: 2px solid black;
 }
 
 #avatar-cropper, #header-cropper {
@@ -285,4 +284,8 @@ textarea {
     visibility: hidden;
     width: 100%;
     height: auto;
+}
+
+.image-border {
+    border: solid 1px black;
 }

@@ -342,7 +342,7 @@ namespace KotaeteMVC.Controllers
             var result = _usersService.SaveProfile(userModel);
             if (result == ProfileSaveResult.OK)
             {
-                AddAlertSuccess(UsersStrings.ProfileSavedAlert, "", true);
+                AddAlertSuccess(UsersStrings.ProfileSavedAlert, "");
                 return RedirectToAction("Index", "User", new { @userName = _usersService.GetCurrentUserName() });
             }
             return View("EditProfile", userModel);

@@ -1,6 +1,6 @@
 ﻿var KotaeteAlerts = KotaeteAlerts ||
 {
-    secondsToShow : 15,
+    secondsToShow: 10,
     alert_div_id: "#alert-container",
     info: "alert-info",
     success: "alert-success",
@@ -11,13 +11,11 @@
             $(this).remove();
         });
     },
-    AddAlert: function (text, type, dismissable) {
+    AddAlert: function (text, type) {
         this.RemovePreviousAlerts();
         var alertContainer = $("<div></div>").addClass("user-alert alert alert-hidden").addClass(type);
-        if (dismissable === true) {
-            alertContainer.addClass("alert-dismissable");
-            $('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>').appendTo(alertContainer);
-        }
+        alertContainer.addClass("alert-dismissable");
+        $('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>').appendTo(alertContainer);
         $(alertContainer).append(text);
         $(this.alert_div_id).append(alertContainer);
         alertContainer.fadeIn();
@@ -25,21 +23,17 @@
             $(alertContainer).fadeOut('slow', function () { $(this).remove(); });
         }, this.secondsToShow * 1000);
     },
-    AddAlertSuccess: function (text, dismissable) {
-        dismissable = dismissable !== false;
-        this.AddAlert(text, this.success, dismissable);
+    AddAlertSuccess: function (text) {
+        this.AddAlert(text, this.success);
     },
-    AddAlertInfo: function (text, dismissable) {
-        dismissable = dismissable !== false;
-        this.AddAlert(text, this.info, dismissable);
+    AddAlertInfo: function (text) {
+        this.AddAlert(text, this.info);
     },
-    AddAlertWarning: function (text, dismissable) {
-        dismissable = dismissable !== false;
-        this.AddAlert(text, this.warning, dismissable);
+    AddAlertWarning: function (text) {
+        this.AddAlert(text, this.warning);
     },
-    AddAlertError: function (text, dismissable) {
-        dismissable = dismissable !== false;
-        this.AddAlert(text, this.error, dismissable);
+    AddAlertError: function (text) {
+        this.AddAlert(text, this.error);
     },
     GetAlertMessageFor: function (key, func, param1, param2, param3) {
         var url = $("#AlertCtrlPath").val();
@@ -63,3 +57,11 @@
         }
     }
 };
+
+$(function () {
+    window.setTimeout(function () {
+        $(".user-alert").fadeOut('slow', function () {
+            $(this).remove();
+        })
+    }, KotaeteAlerts.secondsToShow * 1000)
+})
