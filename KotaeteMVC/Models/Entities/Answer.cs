@@ -52,7 +52,7 @@ namespace KotaeteMVC.Models.Entities
                 UserId = user.Id,
                 Content = content,
                 Deleted = false,
-                TimeStamp = DateTime.Now
+                TimeStamp = DateTime.Now.AddDays((new Random()).Next(0, 15))
             };
             Comments.Add(comment);
             return comment;

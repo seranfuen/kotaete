@@ -73,7 +73,8 @@ namespace KotaeteMVC.Context.Initializers
         private void AddRandomComments(Answer answer)
         {
             var rnd = new Random();
-            for (int i = 0; i < rnd.Next(5); i++)
+            var comments = rnd.Next(6);
+            for (int i = 0; i < comments; i++)
             {
                 answer.AddComment(answer.User, "COMMENT\r\n" + i.ToString());
             }

@@ -156,6 +156,9 @@
   <data name="ModalJS" xml:space="preserve">
     <value>This page is not supposed to be seen if Javascript is enabled</value>
   </data>
+  <data name="MoreButton" xml:space="preserve">
+    <value>More...</value>
+  </data>
   <data name="OneDayAgo" xml:space="preserve">
     <value>1 day ago</value>
   </data>

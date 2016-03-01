@@ -226,7 +226,11 @@ textarea {
 }
 
 .comment-list {
-    padding-left: 35px;
+    margin-top: 10px;
+    background-color: ivory;
+    border: 1px solid LightGrey;
+    border-radius: 5px;
+    padding: 20px 20px 20px 50px;
 }
 
 .answer-comment-panel{
@@ -288,4 +292,10 @@ textarea {
 
 .image-border {
     border: solid 1px black;
+}
+
+.more-button {
+    max-width: 100px;
+    margin-top: 10px;
+    margin-left: 15px;
 }

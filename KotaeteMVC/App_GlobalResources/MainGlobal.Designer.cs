@@ -178,6 +178,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More....
+        /// </summary>
+        internal static string MoreButton {
+            get {
+                return ResourceManager.GetString("MoreButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1 day ago.
         /// </summary>
         internal static string OneDayAgo {

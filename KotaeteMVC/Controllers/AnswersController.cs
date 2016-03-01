@@ -4,10 +4,12 @@ using KotaeteMVC.Models;
 using KotaeteMVC.Models.Entities;
 using KotaeteMVC.Models.ViewModels;
 using KotaeteMVC.Service;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System;
 
 namespace KotaeteMVC.Controllers
 {
@@ -101,6 +103,7 @@ namespace KotaeteMVC.Controllers
             if (_answersService.ExistsUser(userName))
             {
                 var answers = likesService.GetLikedAnswerListProfileModel(userName, page);
+                InitializeMoreButton(answers.AnswerList);
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView("AnswerList", answers.AnswerList);
@@ -135,6 +138,7 @@ namespace KotaeteMVC.Controllers
             if (_answersService.ExistsUser(userName))
             {
                 var answerListProfileViewModel = _answersService.GetAnswersListProfileViewModel(userName, page);
+                InitializeMoreButton(answerListProfileViewModel.AnswerList);
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView("AnswerList", answerListProfileViewModel.AnswerList);
@@ -158,6 +162,17 @@ namespace KotaeteMVC.Controllers
             }
         }
 
+        private void InitializeMoreButton(AnswerListViewModel answerList)
+        {
+            foreach (var answer in answerList.Answers)
+            {
+                var button = answer.CommentsMoreButton;
+                button.RequestUrl = Url.RouteUrl("Comments", new { answerId = answer.Answer.AnswerId, page = 2 });
+                button.HasMore = answer.Comments.Any();
+                button.TargetElementId = "comments-" + answer.Answer.AnswerId;
+            }
+        }
+
         [Route("user/{userName}/questions", Name = "QuestionsProfile")]
         [Route("user/{userName}/questions/{page}", Name = "QuestionsProfilePage")]
         public ActionResult ListQuestions(string userName, int page = 1)
@@ -169,6 +184,7 @@ namespace KotaeteMVC.Controllers
             if (_answersService.ExistsUser(userName))
             {
                 var answerListProfileViewModel = _answersService.GetAnsweredQuestionsListProfileViewModel(userName, page);
+                InitializeMoreButton(answerListProfileViewModel.AnswerList);
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView("AnswerList", answerListProfileViewModel.AnswerList);
@@ -240,6 +256,35 @@ namespace KotaeteMVC.Controllers
                 AnswerId = model.Answer.AnswerId
             };
             return PartialView("CommentPost", comment);
+        }
+
+        [Route("answer/{answerId}/comments/{page}", Name = "Comments")]
+        [HttpPost]
+        public ActionResult Comments(int answerId, int page)
+        {
+            if (Request.IsAjaxRequest() == false)
+            {
+                return GetBadRequestResult();
+            }
+            else
+            {
+                var comments = _answersService.GetComments(answerId, page);
+                if (comments == null)
+                {
+                    return GetBadRequestResult();
+                }
+                var stringWriter = new StringWriter();
+                var view = ViewEngines.Engines.FindPartialView(ControllerContext, "CommentList");
+                ViewData.Model = comments;
+                var viewContext = new ViewContext(ControllerContext, view.View, ViewData, TempData, stringWriter);
+                viewContext.View.Render(viewContext, stringWriter);
+                return Json(new
+                {
+                    html = stringWriter.ToString(),
+                    url = Url.RouteUrl("Comments", new { answerId = answerId, page = page + 1 }),
+                    hasMore = comments.Any()
+                });
+            }
         }
     }
 }

@@ -17,7 +17,12 @@ namespace KotaeteMVC.Service
 
         protected IEnumerable<T> GetPageFor<T>(IQueryable<T> query, int page)
         {
-            return query.Skip((page - 1) * _pageSize).Take(_pageSize);
+            return GetPageFor(query, page, _pageSize);
+        }
+
+        protected IEnumerable<T> GetPageFor<T>(IQueryable<T> query, int page, int pageSize)
+        {
+            return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
     }
 }

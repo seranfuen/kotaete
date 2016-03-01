@@ -13,6 +13,8 @@ namespace KotaeteMVC.Models.ViewModels
 
         public List<CommentViewModel> Comments { get; set; }
 
+        public MoreButtonViewModel CommentsMoreButton { get; set; }
+
         public List<string> QuestionParagraphs { set; get; }
 
         public List<string> AnswerParagraphs { set; get; }

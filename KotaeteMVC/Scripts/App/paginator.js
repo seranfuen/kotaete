@@ -18,3 +18,25 @@ function PaginationOnFailure(entityName) {
 function RemoveHref() {
     $("#pagination-list li a").attr('href', '#');
 }
+
+// Init more button
+$(function () {
+    $(".more-button input").click(function () {
+        var callUrl = $(this).attr("data-url");
+        var elementToUpdate = $(this).attr("data-target");
+        var button = $(this);
+        $.ajax({
+            url: callUrl,
+            method: "POST"
+        }).done(function (data, status) {
+            $(data.html).hide().appendTo("#" + elementToUpdate).slideDown('slow');
+            if (data.hasMore === false) {
+                $(button).fadeOut('fast', function () { $(button).remove(); });
+            }
+            else
+            {
+                button.attr("data-url", data.url);
+            }
+        });
+    });
+});

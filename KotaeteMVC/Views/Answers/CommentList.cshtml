@@ -1,0 +1,6 @@
+﻿@model List<KotaeteMVC.Models.ViewModels.CommentViewModel>
+
+@foreach (var comment in Model)
+{
+    @Html.Partial("CommentDetail", comment)
+}

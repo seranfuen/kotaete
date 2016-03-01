@@ -11,6 +11,8 @@ namespace KotaeteMVC.Service
 {
     public class AnswersService : UsersService
     {
+        private const int CommentPageSize = 1;
+
         public AnswersService(KotaeteDbContext context, int pageSize) : base(context, pageSize)
         {
         }
@@ -171,13 +173,22 @@ namespace KotaeteMVC.Service
                     LikeCount = likesService.GetLikesCount(answer.AnswerId),
                     AnswerId = answer.AnswerId
                 },
-                Comments = ExtractCommentViewModels(answer)
+                Comments = ExtractFirstCommentViewModels(answer),
+                CommentsMoreButton = new MoreButtonViewModel()
+                {
+                    HasMore = true,
+                }
             });
         }
 
-        private List<CommentViewModel> ExtractCommentViewModels(Answer answer)
+        private List<CommentViewModel> ExtractFirstCommentViewModels(Answer answer)
         {
-            var comments = answer.Comments.Where(comment => comment.Deleted == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
+            var comments = answer.Comments.Where(comment => comment.Deleted == false).OrderBy(comment => comment.TimeStamp).Take(CommentPageSize);
+            return GetCommentModels(comments.ToList());
+        }
+
+        private List<CommentViewModel> GetCommentModels(List<Comment> comments)
+        {
             var commentModels = comments.Select(comment => new CommentViewModel()
             {
                 ScreenName = comment.User.ScreenName,
@@ -186,7 +197,7 @@ namespace KotaeteMVC.Service
                 AvatarUrl = GetAvatarUrl(comment.User),
                 CommentParagraphs = comment.Content.SplitLines(),
                 UserName = comment.User.UserName,
-                AnswerId = answer.AnswerId
+                AnswerId = comment.AnswerId
             });
             return commentModels.ToList();
         }
@@ -199,6 +210,13 @@ namespace KotaeteMVC.Service
                         orderby answer.TimeStamp descending
                         select answer;
             return query;
+        }
+
+        public List<CommentViewModel> GetComments(int answerId, int page)
+        {
+            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Deleted == false).OrderBy(comment => comment.TimeStamp);
+            var commentList = GetPageFor(commentsQuery, page, CommentPageSize);
+            return GetCommentModels(commentList.ToList());
         }
     }
 }
