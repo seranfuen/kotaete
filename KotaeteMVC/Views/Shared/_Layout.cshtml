@@ -27,11 +27,11 @@
 
 
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     @Scripts.Render("~/Scripts/autosize.js")
     @Scripts.Render("~/Scripts/KotaeteJavascript.js")
     @Scripts.Render("~/Scripts/App/alerts.js")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/Scripts/App/questions.js")
     @Html.Hidden("AlertCtrlPath", Url.Action("AlertMessage", "Alerts"))

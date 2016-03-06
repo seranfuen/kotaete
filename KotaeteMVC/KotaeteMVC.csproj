@@ -290,6 +290,7 @@
     <Content Include="Images\Headers\Kuro.jpg" />
     <Content Include="Images\Headers\mio.jpg" />
     <Content Include="Scripts\App\alerts.js" />
+    <Content Include="Scripts\App\answers.js" />
     <Content Include="Scripts\App\paginator.js" />
     <Content Include="Scripts\App\profile.js" />
     <Content Include="Scripts\App\questions.js" />
@@ -381,10 +382,9 @@
     <Content Include="Views\Manage\EditProfile.cshtml" />
     <Content Include="Views\Shared\MoreButton.cshtml" />
     <Content Include="Views\Answers\CommentList.cshtml" />
+    <Content Include="Views\Shared\CommentButton.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Likes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

@@ -7,12 +7,12 @@
         string buttonText = Model.IsFollowing ? UsersStrings.UnfollowButton : UsersStrings.FollowButton;
     }
     @using (Ajax.BeginForm(action, "User", new { @userName = Model.UserName }, new AjaxOptions
-        {
-            UpdateTargetId = Model.UserName + "-follow-button",
-            InsertionMode = InsertionMode.ReplaceWith,
-            OnFailure = "OnFollowError('" + Model.FailureMessage + "')",
-            OnSuccess = "OnFollowSuccess('" + Model.SuccessFollowMessage + "', '" + Model.UserName + "')"
-    }))
+    {
+        UpdateTargetId = Model.UserName + "-follow-button",
+        InsertionMode = InsertionMode.ReplaceWith,
+        OnFailure = "OnFollowError('" + Model.FailureMessage + "')",
+        OnSuccess = "OnFollowSuccess('" + Model.SuccessFollowMessage + "', '" + Model.UserName + "')"
+    }, new { @id = "form-follow-" + Model.UserName, @class = "form-follow" }))
     {
         <button type="submit" class="btn btn-lg @buttonClass follow-button">
             @buttonText
