@@ -34,9 +34,9 @@
                                 {
                                     InsertionMode = InsertionMode.Replace,
                                     UpdateTargetId = Model.UpdateTargetId,
-                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
-                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
-                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "', '" + Url.Content("~/Images/ajax-loader.gif") + "')"
+                                    OnFailure = "Paginator.PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "Paginator.PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "Paginator.PaginationOnBegin('" + Model.UpdateTargetId + "', '" + Url.Content("~/Images/ajax-loader.gif") + "')"
                                 })
                     }
                 </li>
@@ -49,9 +49,9 @@
                                 {
                                     InsertionMode = InsertionMode.Replace,
                                     UpdateTargetId = Model.UpdateTargetId,
-                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
-                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
-                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
+                                    OnFailure = "Paginator.PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "Paginator.PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "Paginator.PaginationOnBegin('" + Model.UpdateTargetId + "')"
                                 }, null)
                     </li>
                     if (windowStart > 2)
@@ -70,9 +70,9 @@
                                 {
                                     InsertionMode = InsertionMode.Replace,
                                     UpdateTargetId = Model.UpdateTargetId,
-                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
-                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
-                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
+                                    OnFailure = "Paginator.PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "Paginator.PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "Paginator.PaginationOnBegin('" + Model.UpdateTargetId + "')"
                                 }, null)
                         </li>
                     }
@@ -94,9 +94,9 @@
                                 {
                                     InsertionMode = InsertionMode.Replace,
                                     UpdateTargetId = Model.UpdateTargetId,
-                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
-                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
-                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "')"
+                                    OnFailure = "PaginatorPaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "Paginator.PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "Paginator.PaginationOnBegin('" + Model.UpdateTargetId + "')"
                                 }, null)
                     </li>
                 }
@@ -114,9 +114,9 @@
                                 {
                                     InsertionMode = InsertionMode.Replace,
                                     UpdateTargetId = Model.UpdateTargetId,
-                                    OnFailure = "PaginationOnFailure('" + Model.UpdateTargetId + "')",
-                                    OnSuccess = "PaginationOnSuccess('" + Model.UpdateTargetId + "')",
-                                    OnBegin = "PaginationOnBegin('" + Model.UpdateTargetId + "', '" + Url.Content("~/Images/ajax-loader.gif") + "')"
+                                    OnFailure = "Paginator.PaginationOnFailure('" + Model.UpdateTargetId + "')",
+                                    OnSuccess = "Paginator.PaginationOnSuccess('" + Model.UpdateTargetId + "')",
+                                    OnBegin = "Paginator.PaginationOnBegin('" + Model.UpdateTargetId + "', '" + Url.Content("~/Images/ajax-loader.gif") + "')"
                                 })
                     }
                 </li>

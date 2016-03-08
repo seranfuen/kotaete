@@ -24,5 +24,7 @@ namespace KotaeteMVC.Models.ViewModels
         public string RepliedTimeAgo { get; set; }
 
         public AnswerLikeViewModel LikesModel { get; set; }
+
+        public int TotalComments { get; set; }
     }
 }

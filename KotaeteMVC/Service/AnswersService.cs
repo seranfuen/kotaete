@@ -11,7 +11,7 @@ namespace KotaeteMVC.Service
 {
     public class AnswersService : UsersService
     {
-        private const int CommentPageSize = 5;
+        private const int CommentPageSize =2;
 
         public AnswersService(KotaeteDbContext context, int pageSize) : base(context, pageSize)
         {
@@ -154,6 +154,11 @@ namespace KotaeteMVC.Service
             return model;
         }
 
+        public int GetCommentNumber(int answerId)
+        {
+            return _context.Comments.Count(comment => comment.Deleted == false && comment.AnswerId == answerId);
+        }
+
         private IEnumerable<AnswerProfileViewModel> GetAnswerModels(IEnumerable<Answer> answers)
         {
             var likesService = new LikesService(_context, _pageSize);
@@ -179,6 +184,11 @@ namespace KotaeteMVC.Service
                     HasMore = true,
                 }
             });
+        }
+
+        public bool HasManyCommentPages(int answerId)
+        {
+            return GetCommentNumber(answerId) > CommentPageSize;
         }
 
         private List<CommentViewModel> ExtractFirstCommentViewModels(Answer answer)
@@ -214,7 +224,7 @@ namespace KotaeteMVC.Service
 
         public List<CommentViewModel> GetComments(int answerId, int page)
         {
-            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Deleted == false).OrderBy(comment => comment.TimeStamp);
+            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Deleted == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
             var commentList = GetPageFor(commentsQuery, page, CommentPageSize);
             return GetCommentModels(commentList.ToList());
         }

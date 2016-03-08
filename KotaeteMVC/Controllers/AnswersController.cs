@@ -168,8 +168,9 @@ namespace KotaeteMVC.Controllers
             {
                 var button = answer.CommentsMoreButton;
                 button.RequestUrl = Url.RouteUrl("Comments", new { answerId = answer.Answer.AnswerId, page = 2 });
-                button.HasMore = answer.Comments.Any();
+                button.HasMore = _answersService.HasManyCommentPages(answer.Answer.AnswerId);
                 button.TargetElementId = "comments-" + answer.Answer.AnswerId;
+                answer.TotalComments = _answersService.GetCommentNumber(answer.Answer.AnswerId);
             }
         }
 
