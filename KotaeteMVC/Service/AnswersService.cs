@@ -11,7 +11,7 @@ namespace KotaeteMVC.Service
 {
     public class AnswersService : UsersService
     {
-        private const int CommentPageSize =2;
+        private const int CommentPageSize = 15;
 
         public AnswersService(KotaeteDbContext context, int pageSize) : base(context, pageSize)
         {

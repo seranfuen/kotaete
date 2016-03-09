@@ -53,7 +53,7 @@
              } comment-area">
                     @Html.Partial("CommentList", Model.Comments)
                 </div>
-                @if (Model.Comments.Any())
+                @if (Model.CommentsMoreButton.HasMore)
                 {
                     @Html.Partial("MoreButton", Model.CommentsMoreButton)
                 }
