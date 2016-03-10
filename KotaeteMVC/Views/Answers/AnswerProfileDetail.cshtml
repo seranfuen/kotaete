@@ -1,0 +1,19 @@
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.AnswerProfileViewModel
+
+@{
+    ViewBag.Title = string.Format(AnswerStrings.UserAnswer, Model.Answer.User.ScreenName);
+    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
+}
+
+<h2>@{string.Format(AnswerStrings.UserAnswer, Model.Answer.User.ScreenName);}</h2>
+
+@section Profile {
+    @Html.Action("UserProfile", "User", new { @userName = Model.Answer.User.UserName })
+}
+
+@Html.Partial("AnswerDetail", Model)
+
+@section scripts {
+    @Scripts.Render("~/Scripts/App/answers.js");
+}

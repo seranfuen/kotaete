@@ -208,4 +208,7 @@
   <data name="DeleteError" xml:space="preserve">
     <value>There was an error deleting this message</value>
   </data>
+  <data name="UserAnswer" xml:space="preserve">
+    <value>{0}'s answer</value>
+  </data>
 </root>

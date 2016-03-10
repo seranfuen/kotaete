@@ -259,6 +259,29 @@ namespace KotaeteMVC.Controllers
             return PartialView("CommentPost", comment);
         }
 
+        [Route("answer/{answerId}", Name = "Answer")]
+        [HttpGet]
+        public ActionResult AnswerDetail(int answerId)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return GetBadRequestResult();
+            }
+            else
+            {
+                var answerModel = _answersService.GetAnswerDetail(answerId);
+                if (answerModel == null)
+                {
+                    return GetBadRequestResult();
+                }
+                else
+                {
+                    answerModel.ShowingFullDetail = true;
+                    return View("AnswerProfileDetail", answerModel);
+                }
+            }
+        }
+
         [Route("answer/{answerId}/comments/{page}", Name = "Comments")]
         [HttpPost]
         public ActionResult Comments(int answerId, int page)

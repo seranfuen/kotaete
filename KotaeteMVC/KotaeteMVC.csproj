@@ -383,6 +383,7 @@
     <Content Include="Views\Shared\MoreButton.cshtml" />
     <Content Include="Views\Answers\CommentList.cshtml" />
     <Content Include="Views\Shared\CommentButton.cshtml" />
+    <Content Include="Views\Answers\AnswerProfileDetail.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

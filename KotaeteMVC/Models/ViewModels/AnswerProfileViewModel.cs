@@ -26,5 +26,7 @@ namespace KotaeteMVC.Models.ViewModels
         public AnswerLikeViewModel LikesModel { get; set; }
 
         public int TotalComments { get; set; }
+
+        public bool ShowingFullDetail { get; set; }
     }
 }

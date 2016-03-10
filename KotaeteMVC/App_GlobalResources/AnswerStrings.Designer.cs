@@ -304,6 +304,15 @@ namespace KotaeteMVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}&apos;s answer.
+        /// </summary>
+        public static string UserAnswer {
+            get {
+                return ResourceManager.GetString("UserAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User not found.
         /// </summary>
         public static string UserNotFoundErrorHeader {

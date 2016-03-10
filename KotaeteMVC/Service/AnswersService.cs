@@ -161,9 +161,16 @@ namespace KotaeteMVC.Service
 
         private IEnumerable<AnswerProfileViewModel> GetAnswerModels(IEnumerable<Answer> answers)
         {
-            var likesService = new LikesService(_context, _pageSize);
+
             var currentUserName = GetCurrentUserName();
-            return answers.Select(answer => new AnswerProfileViewModel()
+            return answers.Select(answer => GetAnswerModel(answer, false));
+        }
+
+        private AnswerProfileViewModel GetAnswerModel(Answer answer, bool allComments)
+        {
+            var likesService = new LikesService(_context, _pageSize);
+            var comments = allComments ? GetCommentModels(_context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && !cmnt.Deleted).ToList()) : ExtractFirstCommentViewModels(answer);
+            return new AnswerProfileViewModel()
             {
                 Answer = answer,
                 AnswerParagraphs = answer.Content.SplitLines(),
@@ -174,16 +181,16 @@ namespace KotaeteMVC.Service
                 ReplierAvatarUrl = GetAvatarUrl(answer.User),
                 LikesModel = new AnswerLikeViewModel()
                 {
-                    HasLiked = likesService.HasLikedAnswer(currentUserName, answer.AnswerId),
+                    HasLiked = likesService.HasLikedAnswer(GetCurrentUserName(), answer.AnswerId),
                     LikeCount = likesService.GetLikesCount(answer.AnswerId),
                     AnswerId = answer.AnswerId
                 },
-                Comments = ExtractFirstCommentViewModels(answer),
+                Comments = comments,
                 CommentsMoreButton = new MoreButtonViewModel()
                 {
-                    HasMore = true,
+                    HasMore = !allComments
                 }
-            });
+            };
         }
 
         public bool HasManyCommentPages(int answerId)
@@ -227,6 +234,16 @@ namespace KotaeteMVC.Service
             var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Deleted == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
             var commentList = GetPageFor(commentsQuery, page, CommentPageSize);
             return GetCommentModels(commentList.ToList());
+        }
+
+        internal AnswerProfileViewModel GetAnswerDetail(int answerId)
+        {
+            var answer = _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Deleted == false);
+            if (answer == null)
+            {
+                return null;
+            }
+            return GetAnswerModel(answer, true);
         }
     }
 }

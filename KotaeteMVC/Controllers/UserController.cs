@@ -116,6 +116,16 @@ namespace KotaeteMVC.Controllers
             return View(userProfileModel);
         }
 
+        public PartialViewResult UserProfile(string userName)
+        {
+            if (_usersService.ExistsUser(userName) == false)
+            {
+                return null;
+            }
+            var profile = _usersService.GetUserProfile(userName);
+            return PartialView("Profile", profile);
+        }
+
         [Authorize]
         [Route("user/{userName}/unfollow")]
         public ActionResult UnfollowUser(string userName)
