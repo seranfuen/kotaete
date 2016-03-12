@@ -1,10 +1,11 @@
 ﻿@model KotaeteMVC.Models.ViewModels.AnswerLikeViewModel
 
+<div class="like-button" id="like-button-@(Model.AnswerId)">
     @if (Request.IsAuthenticated)
     {
         using (Ajax.BeginRouteForm(Model.HasLiked ? "UnlikeAnswer" : "LikeAnswer", null, new AjaxOptions
         {
-            UpdateTargetId = "answer-footer-" + Model.AnswerId,
+            UpdateTargetId = "like-button-" + Model.AnswerId,
             InsertionMode = InsertionMode.ReplaceWith,
         }, null))
         {
@@ -25,3 +26,4 @@
             else {@Url.Content("~/Images/heart_off_small.png")}" alt="like" /> @Model.LikeCount
         </a>
     }
+</div>

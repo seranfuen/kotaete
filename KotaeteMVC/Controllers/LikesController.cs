@@ -8,7 +8,7 @@ namespace KotaeteMVC.Controllers
     {
         [Authorize]
         [HttpPost]
-        [Route("answer/like", Name = "LikeAnswer")]
+        [Route("like", Name = "LikeAnswer")]
         public ActionResult LikeAnswer(int answerId)
         {
             var likesService = new LikesService(Context, this.GetPageSize());
@@ -35,7 +35,7 @@ namespace KotaeteMVC.Controllers
 
         [Authorize]
         [HttpPost]
-        [Route("answer/unlike", Name = "UnlikeAnswer")]
+        [Route("unlike", Name = "UnlikeAnswer")]
         public ActionResult UnlikeAnswer(int answerId)
         {
             var likesService = new LikesService(Context, this.GetPageSize());

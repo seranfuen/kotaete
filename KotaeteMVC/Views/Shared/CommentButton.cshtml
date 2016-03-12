@@ -1,6 +1,6 @@
 ﻿@model KotaeteMVC.Models.ViewModels.AnswerProfileViewModel
 
-<a class="footer-button comment-button" href="@Url.Action("Answers", "Comments")">
+<a class="footer-button comment-button" href="@Url.RouteUrl("Answer", new { @answerId = Model.Answer.AnswerId })">
     <img src="@if (Model.Comments.Any())
     {@Url.Content("~/Images/comments-on.png") }
     else {@Url.Content("~/Images/comments-off.png")}" alt="like" /> @(Model.Comments.Count > 0 ? Model.TotalComments.ToString() : "")

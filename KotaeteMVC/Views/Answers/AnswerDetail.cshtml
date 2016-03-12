@@ -15,7 +15,7 @@
                 </div>
                 <div class="row question-content">
                     @foreach (var paragraph in Model.QuestionParagraphs)
-                        {
+                    {
                         <p>@paragraph</p>
                     }
                 </div>
@@ -32,10 +32,10 @@
         <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
             <div class="row question-meta">
                 @Html.ActionLink(@Model.Answer.QuestionDetail.AskedTo.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedTo.UserName }, null) <a href="@Url.RouteUrl("Answer", new { @answerId = Model.Answer.AnswerId })"> @AnswerStrings.RepliedHeader <span class="timestamp" title="@String.Format("{0:F}", Model.Answer.TimeStamp)">@Model.RepliedTimeAgo</span></a>
-</div>
+            </div>
             <div class="row question-content">
                 @foreach (var paragraph in Model.AnswerParagraphs)
-                    {
+                {
                     <p>@paragraph</p>
                 }
             </div>
@@ -43,17 +43,13 @@
                 @Html.Partial("LikeButton", Model.LikesModel)
                 @if (!Model.ShowingFullDetail)
                 {
-                        Html.RenderPartial("CommentButton", Model);
+                    Html.RenderPartial("CommentButton", Model);
                 }
             </div>
         </div>
         <div class="clearfix"></div>
-        @if (Model.Comments.Any() || Request.IsAuthenticated)
-        {
             <div class="comment-list @if (!Model.ShowingFullDetail) { @("hidden") }">
-            <div id="comments-@Model.Answer.AnswerId" class="@if (Model.Comments.Count == 0)
-            {@:hidden
-             } comment-area">
+                <div id="comments-@Model.Answer.AnswerId" class="comment-area">
                     @Html.Partial("CommentList", Model.Comments)
                 </div>
                 @if (Model.ShowingFullDetail == false && Model.CommentsMoreButton.HasMore)
@@ -65,6 +61,5 @@
                     Html.RenderAction("PostCommentForm", "Answers", Model);
                 }
             </div>
-        }
     </div>
 </div>

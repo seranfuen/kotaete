@@ -225,6 +225,16 @@ textarea {
     padding-bottom: 3px;
 }
 
+.like-button, .like-button form  {
+    display: inline !important;
+}
+
+.like-button button {
+    padding: 0px;
+    outline: none;
+    border: none !important;
+}
+
 .comment-list {
     margin-top: 10px;
     background-color: ivory;
