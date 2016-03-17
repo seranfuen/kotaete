@@ -167,6 +167,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AnswerStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EventStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\InboxStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -208,6 +213,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MultipleButtonAttribute.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -232,6 +238,7 @@
     <Compile Include="Models\ViewModels\CommentViewModel.cs" />
     <Compile Include="Models\ViewModels\ConfirmModalViewModel.cs" />
     <Compile Include="Models\ViewModels\FollowButtonViewModel.cs" />
+    <Compile Include="Models\ViewModels\FollowerNotificationViewModel.cs" />
     <Compile Include="Models\ViewModels\InboxViewModel.cs" />
     <Compile Include="Models\ViewModels\MoreButtonViewModel.cs" />
     <Compile Include="Models\ViewModels\NoAnswersProfileViewModel.cs" />
@@ -261,6 +268,7 @@
     <Compile Include="Service\InboxService.cs" />
     <Compile Include="Service\LikesService.cs" />
     <Compile Include="Service\NavbarService.cs" />
+    <Compile Include="Service\NotificationsService.cs" />
     <Compile Include="Service\QuestionsService.cs" />
     <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="Service\UserService.cs" />
@@ -385,7 +393,9 @@
     <Content Include="Views\Shared\CommentButton.cshtml" />
     <Content Include="Views\Answers\AnswerProfileDetail.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Notifications\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -420,6 +430,10 @@
     <Content Include="App_GlobalResources\InboxStrings.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>InboxStrings.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\EventStrings.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EventStrings.Designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

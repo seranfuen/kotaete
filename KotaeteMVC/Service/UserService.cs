@@ -51,11 +51,22 @@ namespace KotaeteMVC.Service
                 SourceUser = currentUser,
                 DestinationUser = userToFollow,
                 RelationshipType = RelationshipType.Friendship,
-                Timestamp = DateTime.Now
+                TimeStamp = DateTime.Now
             };
             _context.Relationships.Add(friendship);
             _context.SaveChanges();
             return true;
+        }
+
+        public string GetAvatarUrl(ApplicationUser user)
+        {
+            if (user == null) return null;
+            var url = "/Images/Avatars/";
+            if (user.Avatar != null)
+            {
+                return url + user.Avatar;
+            }
+            return url + "anonymous.jpg";
         }
 
         public ApplicationUser GetCurrentUser()
@@ -69,6 +80,14 @@ namespace KotaeteMVC.Service
             return HttpContext.Current.User.Identity.Name;
         }
 
+        public FollowButtonViewModel GetFollowButtonViewModel(string userName)
+        {
+            var currentUser = GetCurrentUser();
+            var followingUser = GetUserWithName(userName);
+            var isFollowing = IsFollowing(currentUser, followingUser);
+            return GetFollowButtonViewModel(userName, isFollowing, currentUser != null);
+        }
+
         public int GetFollowerCount(ApplicationUser user)
         {
             return GetFollowerCount(user.UserName);
@@ -80,19 +99,18 @@ namespace KotaeteMVC.Service
                 rel.DestinationUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
         }
 
-        public FollowersViewModel GetFollowersViewModel(string userName)
-        {
-            var query = GetFollowersQuery(userName);
-            FollowersViewModel viewModel = InitializeFollowersViewModel(userName, query);
-            return viewModel;
-        }
-
         public List<ApplicationUser> GetFollowers(string userName)
         {
             var query = GetFollowersQuery(userName);
             return query.ToList();
         }
 
+        public FollowersViewModel GetFollowersViewModel(string userName)
+        {
+            var query = GetFollowersQuery(userName);
+            FollowersViewModel viewModel = InitializeFollowersViewModel(userName, query);
+            return viewModel;
+        }
         public FollowersViewModel GetFollowersViewModel(string userName, int page)
         {
             var followersForPage = GetPageFor(GetFollowersQuery(userName), page);
@@ -127,6 +145,16 @@ namespace KotaeteMVC.Service
             var paginator = new PaginationInitializer("userPageFollowing", "follower-grid", userName, _pageSize);
             paginator.InitializePaginationModel(followersModel, page, GetFollowerCount(userName));
             return followersModel;
+        }
+
+        public string GetHeaderUrl(ApplicationUser user)
+        {
+            var url = "/Images/Headers/";
+            if (user.Header != null)
+            {
+                return url + user.Header;
+            }
+            return null;
         }
 
         public NoFollowersViewModel GetNoFollowersViewModel(string userName)
@@ -169,7 +197,7 @@ namespace KotaeteMVC.Service
         }
 
         public ApplicationUser GetUserWithName(string userName)
-       { 
+        {
             return _context.Users.FirstOrDefault(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -181,136 +209,6 @@ namespace KotaeteMVC.Service
             }
             return _context.Relationships.Where(rel => rel.RelationshipType == RelationshipType.Friendship).Any(rel =>
                 rel.SourceUser.Id == followingUser.Id && rel.DestinationUser.Id == followedUser.Id);
-        }
-
-        public bool UnfollowUser(string userName)
-        {
-            var currentUser = GetCurrentUser();
-            if (currentUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-            var userToUnfollow = GetUserWithName(userName);
-            if (IsFollowing(currentUser, userToUnfollow) == false)
-            {
-                return false;
-            }
-            _context.Relationships.Remove(_context.Relationships.First(rel => rel.RelationshipType == RelationshipType.Friendship &&
-              rel.SourceUser.Id == currentUser.Id && rel.DestinationUser.Id == userToUnfollow.Id));
-            _context.SaveChanges();
-            return true;
-        }
-
-        public string GetAvatarUrl(ApplicationUser user)
-        {
-            if (user == null) return null;
-            var url = "/Images/Avatars/";
-            if (user.Avatar != null)
-            {
-                return url + user.Avatar;
-            }
-            return url + "anonymous.jpg";
-        }
-
-        private IQueryable<ApplicationUser> GetFollowersQuery(string sourceUserName)
-        {
-            var query = from relationship in _context.Relationships
-                        where relationship.DestinationUser.UserName.Equals(sourceUserName, StringComparison.OrdinalIgnoreCase)
-                        orderby relationship.Timestamp descending
-                        select relationship.SourceUser;
-            return query;
-        }
-
-        private IQueryable<ApplicationUser> GetFollowingUsersQuery(string userName)
-        {
-            var query = from relationship in _context.Relationships
-                        where relationship.SourceUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
-                        orderby relationship.Timestamp descending
-                        select relationship.DestinationUser;
-            return query;
-        }
-
-        public string GetHeaderUrl(ApplicationUser user)
-        {
-            var url = "/Images/Headers/";
-            if (user.Header != null)
-            {
-                return url + user.Header;
-            }
-            return null;
-        }
-
-        private FollowersViewModel InitializeFollowersViewModel(string destinationUserName, IEnumerable<ApplicationUser> query)
-        {
-            return new FollowersViewModel()
-            {
-                Followers = query.ToList().Select(user => GetUserProfile(user.UserName)).ToList(),
-                OwnerProfile = GetUserProfile(destinationUserName)
-            };
-        }
-
-        public FollowButtonViewModel GetFollowButtonViewModel(string userName)
-        {
-            var currentUser = GetCurrentUser();
-            var followingUser = GetUserWithName(userName);
-            var isFollowing = IsFollowing(currentUser, followingUser);
-            return GetFollowButtonViewModel(userName, isFollowing, currentUser != null);
-        }
-
-        private FollowButtonViewModel GetFollowButtonViewModel(string userName, bool isFollowing, bool isAuthenticated)
-        {
-            var screenName = this.GetUserScreenName(userName);
-            return new FollowButtonViewModel()
-            {
-                UserName = userName,
-                IsFollowing = isFollowing,
-                IsUserAuthenticated = isAuthenticated,
-                SuccessFollowMessage = isFollowing ? AlertsController.UnfollowSuccessKey : AlertsController.FollowSuccessKey,
-                FailureMessage = UsersStrings.FollowingError,
-                IsOwnProfile = userName.Equals(GetCurrentUserName(), StringComparison.OrdinalIgnoreCase)
-            };
-        }
-
-        private ProfileViewModel InitializeProfile(ApplicationUser currentUser, ApplicationUser profileUser)
-        {
-            var questionService = new QuestionsService(_context, _pageSize);
-            var isCurrentUserFollowing = IsFollowing(currentUser, profileUser);
-            return new ProfileViewModel()
-            {
-                ScreenName = profileUser.ScreenName,
-                FollowsYou = IsFollowing(profileUser, currentUser),
-                Following = IsFollowing(currentUser, profileUser),
-                IsOwnProfile = currentUser != null && currentUser.UserName == profileUser.UserName,
-                AvatarUrl = GetAvatarUrl(profileUser),
-                HeaderUrl = GetHeaderUrl(profileUser),
-                Bio = profileUser.Bio,
-                Location = profileUser.Location,
-                Homepage = GetHomepage(profileUser.Homepage),
-                User = profileUser,
-                QuestionsReplied = questionService.GetQuestionsAnsweredByUser(profileUser),
-                QuestionsAsked = questionService.GetQuestionsAskedByUser(profileUser),
-                FollowerCount = GetFollowerCount(profileUser),
-                FollowingCount = GetFollowingCount(profileUser),
-                FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null),
-                AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id)
-            };
-        }
-
-        private string GetHomepage(string homepage)
-        {
-            if (string.IsNullOrWhiteSpace(homepage))
-            {
-                return null;
-            }
-            homepage = homepage.ToLower().Trim();
-            if (homepage.StartsWith("http://") || homepage.StartsWith("https://"))
-            {
-                return homepage;
-            }
-            else
-            {
-                return "http://" + homepage;
-            }
         }
 
         public ProfileSaveResult SaveProfile(ApplicationUser userModel)
@@ -359,11 +257,29 @@ namespace KotaeteMVC.Service
             {
                 _context.SaveChanges();
                 return ProfileSaveResult.OK;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return ProfileSaveResult.DatabaseError;
             }
-            
+        }
+
+        public bool UnfollowUser(string userName)
+        {
+            var currentUser = GetCurrentUser();
+            if (currentUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            var userToUnfollow = GetUserWithName(userName);
+            if (IsFollowing(currentUser, userToUnfollow) == false)
+            {
+                return false;
+            }
+            _context.Relationships.Remove(_context.Relationships.First(rel => rel.RelationshipType == RelationshipType.Friendship &&
+              rel.SourceUser.Id == currentUser.Id && rel.DestinationUser.Id == userToUnfollow.Id));
+            _context.SaveChanges();
+            return true;
         }
 
         private static string SaveImage(ApplicationUser currentUser, Image image, string imageFolder)
@@ -387,7 +303,8 @@ namespace KotaeteMVC.Service
             byte[] imageBytes = Convert.FromBase64String(imageString);
             using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             {
-                try {
+                try
+                {
                     Image image = Image.FromStream(ms, true);
                     return image;
                 }
@@ -396,6 +313,87 @@ namespace KotaeteMVC.Service
                     return null;
                 }
             }
+        }
+
+        private FollowButtonViewModel GetFollowButtonViewModel(string userName, bool isFollowing, bool isAuthenticated)
+        {
+            var screenName = this.GetUserScreenName(userName);
+            return new FollowButtonViewModel()
+            {
+                UserName = userName,
+                IsFollowing = isFollowing,
+                IsUserAuthenticated = isAuthenticated,
+                SuccessFollowMessage = isFollowing ? AlertsController.UnfollowSuccessKey : AlertsController.FollowSuccessKey,
+                FailureMessage = UsersStrings.FollowingError,
+                IsOwnProfile = userName.Equals(GetCurrentUserName(), StringComparison.OrdinalIgnoreCase)
+            };
+        }
+
+        private IQueryable<ApplicationUser> GetFollowersQuery(string sourceUserName)
+        {
+            var query = from relationship in _context.Relationships
+                        where relationship.DestinationUser.UserName.Equals(sourceUserName, StringComparison.OrdinalIgnoreCase)
+                        orderby relationship.TimeStamp descending
+                        select relationship.SourceUser;
+            return query;
+        }
+
+        private IQueryable<ApplicationUser> GetFollowingUsersQuery(string userName)
+        {
+            var query = from relationship in _context.Relationships
+                        where relationship.SourceUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                        orderby relationship.TimeStamp descending
+                        select relationship.DestinationUser;
+            return query;
+        }
+        private string GetHomepage(string homepage)
+        {
+            if (string.IsNullOrWhiteSpace(homepage))
+            {
+                return null;
+            }
+            homepage = homepage.ToLower().Trim();
+            if (homepage.StartsWith("http://") || homepage.StartsWith("https://"))
+            {
+                return homepage;
+            }
+            else
+            {
+                return "http://" + homepage;
+            }
+        }
+
+        private FollowersViewModel InitializeFollowersViewModel(string destinationUserName, IEnumerable<ApplicationUser> query)
+        {
+            return new FollowersViewModel()
+            {
+                Followers = query.ToList().Select(user => GetUserProfile(user.UserName)).ToList(),
+                OwnerProfile = GetUserProfile(destinationUserName)
+            };
+        }
+        private ProfileViewModel InitializeProfile(ApplicationUser currentUser, ApplicationUser profileUser)
+        {
+            var questionService = new QuestionsService(_context, _pageSize);
+            var isCurrentUserFollowing = IsFollowing(currentUser, profileUser);
+            return new ProfileViewModel()
+            {
+                ScreenName = profileUser.ScreenName,
+                FollowsYou = IsFollowing(profileUser, currentUser),
+                Following = IsFollowing(currentUser, profileUser),
+                IsOwnProfile = currentUser != null && currentUser.UserName == profileUser.UserName,
+                AvatarUrl = GetAvatarUrl(profileUser),
+                HeaderUrl = GetHeaderUrl(profileUser),
+                Bio = profileUser.Bio,
+                Location = profileUser.Location,
+                Homepage = GetHomepage(profileUser.Homepage),
+                User = profileUser,
+                QuestionsReplied = questionService.GetQuestionsAnsweredByUser(profileUser),
+                QuestionsAsked = questionService.GetQuestionsAskedByUser(profileUser),
+                FollowerCount = GetFollowerCount(profileUser),
+                FollowingCount = GetFollowingCount(profileUser),
+                FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null),
+                AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id)
+            };
         }
     }
 }

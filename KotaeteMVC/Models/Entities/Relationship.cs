@@ -13,7 +13,9 @@ namespace KotaeteMVC.Models.Entities
     public class Relationship
     {
         public virtual int RelationshipId { get; set; }
-        public virtual DateTime Timestamp { get; set; }
+        public virtual DateTime TimeStamp { get; set; }
+
+        public bool Active { get; set; }
 
         [Required]
         [ForeignKey("DestinationUserId")]

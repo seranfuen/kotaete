@@ -33,7 +33,8 @@ namespace KotaeteMVC.Context.Initializers
                     DestinationUser = followed,
                     SourceUser = nUser,
                     RelationshipType = RelationshipType.Friendship,
-                    Timestamp = DateTime.Now
+                    TimeStamp = DateTime.Now,
+                    Active = true
                 });
                 AddUser(nUser);
             }
@@ -146,7 +147,7 @@ namespace KotaeteMVC.Context.Initializers
                 DestinationUser = followed,
                 SourceUser = followingUser,
                 RelationshipType = RelationshipType.Friendship,
-                Timestamp = DateTime.Now
+                TimeStamp = DateTime.Now
             });
             _context.Relationships.AddRange(relationships);
         }
