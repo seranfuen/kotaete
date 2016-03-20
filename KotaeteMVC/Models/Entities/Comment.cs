@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,7 @@ namespace KotaeteMVC.Models.Entities
         public virtual Answer Answer { get; set; }
         public virtual int AnswerId { get; set; }
         public virtual DateTime TimeStamp { get; set; }
+        [DefaultValue(true)]
         public virtual bool Active { get; set; }
         public virtual string Content { get; set; }
     }

@@ -61,6 +61,8 @@ namespace KotaeteMVC.Models.Entities
 
         public virtual List<Comment> Comments { get; set; }
 
+        public virtual List<Notification> Notifications { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

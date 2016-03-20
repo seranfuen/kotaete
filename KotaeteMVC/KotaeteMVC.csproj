@@ -229,6 +229,7 @@
     <Compile Include="Models\Entities\IActivable.cs" />
     <Compile Include="Models\Entities\IEventDate.cs" />
     <Compile Include="Models\Entities\IEventEntity.cs" />
+    <Compile Include="Models\Entities\Notification.cs" />
     <Compile Include="Models\Entities\Relationship.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Answer.cs" />

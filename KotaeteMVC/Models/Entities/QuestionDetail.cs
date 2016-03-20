@@ -25,7 +25,7 @@ namespace KotaeteMVC.Models.Entities
         public virtual DateTime TimeStamp { get; set; }
 
         [ScaffoldColumn(false)]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         public virtual bool Active { get; set; }
 
         [ScaffoldColumn(false)]

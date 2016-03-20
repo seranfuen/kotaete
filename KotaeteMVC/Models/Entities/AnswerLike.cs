@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace KotaeteMVC.Models.Entities
@@ -17,6 +18,7 @@ namespace KotaeteMVC.Models.Entities
         public virtual string ApplicationUserId { get; set; }
 
         [Required]
+        [DefaultValue(true)]
         public virtual bool Active { get; set; }
 
         [Required]

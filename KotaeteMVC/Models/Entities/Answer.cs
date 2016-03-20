@@ -37,7 +37,7 @@ namespace KotaeteMVC.Models.Entities
         public virtual DateTime TimeStamp { get; set; }
 
         [ScaffoldColumn(false)]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         public virtual bool Active { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
@@ -51,7 +51,7 @@ namespace KotaeteMVC.Models.Entities
                 User = user,
                 UserId = user.Id,
                 Content = content,
-                Active = false,
+                Active = true,
                 TimeStamp = DateTime.Now.AddDays((new Random()).Next(0, 15))
             };
             Comments.Add(comment);

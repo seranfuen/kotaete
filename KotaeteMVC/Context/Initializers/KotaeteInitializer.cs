@@ -47,7 +47,7 @@ namespace KotaeteMVC.Context.Initializers
                 var answer = new Answer()
                 {
                     Content = "TESTTESTTEST " + i.ToString(),
-                    Active = false,
+                    Active = true,
                     TimeStamp = DateTime.Now.AddDays(-i).AddHours(i),
                     User = _context.Users.First(user => user.UserName.Equals("admin", StringComparison.OrdinalIgnoreCase)),
                     QuestionDetail = new QuestionDetail()
@@ -57,7 +57,7 @@ namespace KotaeteMVC.Context.Initializers
                         Answered = true,
                         SeenByUser = true,
                         TimeStamp = DateTime.Now.AddDays(-i),
-                        Active = false,
+                        Active = true,
                         Question = new Question()
                         {
                             AskedBy = _context.Users.First(user => user.UserName.Equals("turtle", StringComparison.OrdinalIgnoreCase)),
@@ -131,7 +131,7 @@ namespace KotaeteMVC.Context.Initializers
             {
                 AskedBy = askingUser,
                 AskedTo = askedUser,
-                Active = false,
+                Active = true,
                 SeenByUser = seen,
                 Question = qst,
                 TimeStamp = qst.TimeStamp
@@ -147,7 +147,8 @@ namespace KotaeteMVC.Context.Initializers
                 DestinationUser = followed,
                 SourceUser = followingUser,
                 RelationshipType = RelationshipType.Friendship,
-                TimeStamp = DateTime.Now
+                TimeStamp = DateTime.Now,
+                Active = true
             });
             _context.Relationships.AddRange(relationships);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,7 @@ namespace KotaeteMVC.Models.Entities
         public virtual int RelationshipId { get; set; }
         public virtual DateTime TimeStamp { get; set; }
 
+        [DefaultValue(true)]
         public bool Active { get; set; }
 
         [Required]

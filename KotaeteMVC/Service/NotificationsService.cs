@@ -16,7 +16,59 @@ namespace KotaeteMVC.Service
 
         public List<IEventEntity> GetLastEventEntities(string userName, int count)
         {
-            throw new NotImplementedException();
+            var queryRels = GetRelationshipEventsForUser(userName);
+            var queryQuestions = GetQuestionDetailEventsForUser(userName);
+            var queryAnswers = GetAnswerEventsForUser(userName);
+            var queryLikes = GetAnswerLikesForUser(userName);
+            var queryComments = GetCommentsForUser(userName);
+            var queryUnion = queryRels.Union(queryQuestions).Union(queryAnswers).Union(queryLikes).Union(queryComments);
+            var query = from notification in queryUnion
+                        orderby notification.TimeStamp descending
+                        select notification;
+            return query.Take(count).ToList();
+        }
+
+        private List<IEventEntity> GetRelationshipEventsForUser(string userName)
+        {
+            var queryRelationships = from rel in _context.Relationships
+                                     where rel.Active &&
+                                     (rel.DestinationUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) || rel.SourceUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                                     select rel;
+            return queryRelationships.ToList().Cast<IEventEntity>().ToList();
+        }
+
+        private List<IEventEntity> GetQuestionDetailEventsForUser(string userName)
+        {
+            var queryQuestions = from question in _context.QuestionDetails
+                                     where !question.Answered && question.AskedTo.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && question.Active
+                                     select question;
+            return queryQuestions.ToList().Cast<IEventEntity>().ToList();
+        }
+
+        private List<IEventEntity> GetAnswerEventsForUser(string userName)
+        {
+            var queryAnswers = from answer in _context.Answers
+                               where answer.Active && answer.QuestionDetail.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
+                               select answer;
+            return queryAnswers.ToList().Cast<IEventEntity>().ToList();
+        }
+
+        private List<IEventEntity> GetAnswerLikesForUser(string userName)
+        {
+            var queryLikes = from answerLike in _context.AnswerLikes
+                             where answerLike.Active && (answerLike.Answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
+                             select answerLike;
+            return queryLikes.ToList().Cast<IEventEntity>().ToList();
+        }
+
+        private List<IEventEntity> GetCommentsForUser(string userName)
+        {
+            var queryComments = from comment in _context.Comments
+                                where comment.Active && (comment.Answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) ||
+                                comment.Answer.Comments.Any(otherComment => otherComment.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)))
+                                select comment;
+            return queryComments.ToList().Cast<IEventEntity>().ToList();
+
         }
 
         //public List<FollowerNotificationViewModel> GetLastFollowersNotification(string userName, int number = 10)
