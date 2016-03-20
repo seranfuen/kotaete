@@ -19,12 +19,12 @@ namespace KotaeteMVC.Helpers
 
         private static int GetQuestionsAnsweredByUser(BaseController controller, ApplicationUser profileUser)
         {
-            return controller.Context.Answers.Count(answer => answer.Deleted == false && answer.User.Id == profileUser.Id);
+            return controller.Context.Answers.Count(answer => answer.Active == false && answer.User.Id == profileUser.Id);
         }
 
         private static int GetQuestionsAnsweredToUser(BaseController controller, ApplicationUser profileUser)
         {
-            return profileUser.QuestionsAsked.Count(qst => controller.Context.Answers.Any(answer => qst.QuestionDetailId == answer.QuestionDetailId && answer.Deleted == false));
+            return profileUser.QuestionsAsked.Count(qst => controller.Context.Answers.Any(answer => qst.QuestionDetailId == answer.QuestionDetailId && answer.Active == false));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace KotaeteMVC.Service
 
         public CommentViewModel CreateComment(int answerId, string comment)
         {
-            var answer = _context.Answers.FirstOrDefault(ans => ans.AnswerId == answerId && ans.Deleted == false);
+            var answer = _context.Answers.FirstOrDefault(ans => ans.AnswerId == answerId && ans.Active == false);
             if (answer == null)
             {
                 return null;
@@ -76,7 +76,7 @@ namespace KotaeteMVC.Service
             {
                 return false;
             }
-            questionDetail.Deleted = true;
+            questionDetail.Active = true;
             questionDetail.SeenByUser = true;
             try
             {
@@ -96,7 +96,7 @@ namespace KotaeteMVC.Service
                 return false;
             }
             var questionDetail = _context.QuestionDetails.FirstOrDefault(qstDetail => qstDetail.QuestionDetailId == questionDetailId);
-            if (questionDetail == null || questionDetail.Answered || questionDetail.Deleted)
+            if (questionDetail == null || questionDetail.Answered || questionDetail.Active)
             {
                 return false;
             }
@@ -108,7 +108,7 @@ namespace KotaeteMVC.Service
             var answer = new Answer()
             {
                 Content = content,
-                Deleted = false,
+                Active = false,
                 QuestionDetailId = questionDetailId,
                 TimeStamp = DateTime.Now,
                 User = user
@@ -131,7 +131,7 @@ namespace KotaeteMVC.Service
         {
             var query = from answer in _context.Answers
                         where answer.QuestionDetail.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) &&
-                        answer.Deleted == false
+                        answer.Active == false
                         orderby answer.TimeStamp descending
                         select answer;
             return query;
@@ -156,7 +156,7 @@ namespace KotaeteMVC.Service
 
         public int GetCommentNumber(int answerId)
         {
-            return _context.Comments.Count(comment => comment.Deleted == false && comment.AnswerId == answerId);
+            return _context.Comments.Count(comment => comment.Active == false && comment.AnswerId == answerId);
         }
 
         private IEnumerable<AnswerProfileViewModel> GetAnswerModels(IEnumerable<Answer> answers)
@@ -169,7 +169,7 @@ namespace KotaeteMVC.Service
         private AnswerProfileViewModel GetAnswerModel(Answer answer, bool allComments)
         {
             var likesService = new LikesService(_context, _pageSize);
-            var comments = allComments ? GetCommentModels(_context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && !cmnt.Deleted).ToList()) : ExtractFirstCommentViewModels(answer);
+            var comments = allComments ? GetCommentModels(_context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && !cmnt.Active).ToList()) : ExtractFirstCommentViewModels(answer);
             return new AnswerProfileViewModel()
             {
                 Answer = answer,
@@ -200,7 +200,7 @@ namespace KotaeteMVC.Service
 
         private List<CommentViewModel> ExtractFirstCommentViewModels(Answer answer)
         {
-            var comments = answer.Comments.Where(comment => comment.Deleted == false).OrderBy(comment => comment.TimeStamp).Take(CommentPageSize);
+            var comments = answer.Comments.Where(comment => comment.Active == false).OrderBy(comment => comment.TimeStamp).Take(CommentPageSize);
             return GetCommentModels(comments.ToList());
         }
 
@@ -223,7 +223,7 @@ namespace KotaeteMVC.Service
         {
             var query = from answer in _context.Answers
                         where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) &&
-                        answer.Deleted == false
+                        answer.Active == false
                         orderby answer.TimeStamp descending
                         select answer;
             return query;
@@ -231,14 +231,14 @@ namespace KotaeteMVC.Service
 
         public List<CommentViewModel> GetComments(int answerId, int page)
         {
-            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Deleted == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
+            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Active == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
             var commentList = GetPageFor(commentsQuery, page, CommentPageSize);
             return GetCommentModels(commentList.ToList());
         }
 
         internal AnswerProfileViewModel GetAnswerDetail(int answerId)
         {
-            var answer = _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Deleted == false);
+            var answer = _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Active == false);
             if (answer == null)
             {
                 return null;

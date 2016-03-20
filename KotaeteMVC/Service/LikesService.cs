@@ -76,7 +76,7 @@ namespace KotaeteMVC.Service
 
         private Answer GetAnswerById(int answerId)
         {
-            return _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Deleted == false);
+            return _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Active == false);
         }
 
         public bool UnlikeAnswer(int answerId)

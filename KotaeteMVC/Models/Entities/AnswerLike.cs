@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KotaeteMVC.Models.Entities
 {
-    public class AnswerLike
+    public class AnswerLike : IEventEntity
     {
         public virtual int AnswerLikeId { get; set; }
         public virtual int AnswerId { get; set; }

@@ -29,7 +29,7 @@ namespace KotaeteMVC.Service
         {
             var user = GetCurrentUser();
             if (user == null) return 0;
-            return _context.QuestionDetails.Count(entity => entity.AskedTo.Id == user.Id && entity.SeenByUser == false && entity.Deleted == false);
+            return _context.QuestionDetails.Count(entity => entity.AskedTo.Id == user.Id && entity.SeenByUser == false && entity.Active == false);
         }
     }
 }

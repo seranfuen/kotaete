@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KotaeteMVC.Models.Entities
 {
-    public class Answer
+    public class Answer : IEventEntity
     {
 
         public Answer()
@@ -38,7 +38,7 @@ namespace KotaeteMVC.Models.Entities
 
         [ScaffoldColumn(false)]
         [DefaultValue(false)]
-        public virtual bool Deleted { get; set; }
+        public virtual bool Active { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
 
@@ -51,7 +51,7 @@ namespace KotaeteMVC.Models.Entities
                 User = user,
                 UserId = user.Id,
                 Content = content,
-                Deleted = false,
+                Active = false,
                 TimeStamp = DateTime.Now.AddDays((new Random()).Next(0, 15))
             };
             Comments.Add(comment);

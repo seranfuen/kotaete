@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KotaeteMVC.Models.Entities
 {
-    public class QuestionDetail
+    public class QuestionDetail : IEventEntity
     {
         [ScaffoldColumn(false)]
         public virtual int QuestionDetailId { get; set; }
@@ -26,7 +26,7 @@ namespace KotaeteMVC.Models.Entities
 
         [ScaffoldColumn(false)]
         [DefaultValue(false)]
-        public virtual bool Deleted { get; set; }
+        public virtual bool Active { get; set; }
 
         [ScaffoldColumn(false)]
         [DefaultValue(false)]

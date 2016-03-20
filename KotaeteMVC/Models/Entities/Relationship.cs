@@ -10,7 +10,7 @@ namespace KotaeteMVC.Models.Entities
         Block
     }
 
-    public class Relationship
+    public class Relationship : IEventEntity
     {
         public virtual int RelationshipId { get; set; }
         public virtual DateTime TimeStamp { get; set; }

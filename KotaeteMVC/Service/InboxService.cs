@@ -61,7 +61,7 @@ namespace KotaeteMVC.Service
         private IQueryable<QuestionDetail> GetIncomingQuestionsQuery(string userName)
         {
             return from questionDetail in _context.QuestionDetails
-                   where questionDetail.Answered == false && questionDetail.Deleted == false
+                   where questionDetail.Answered == false && questionDetail.Active == false
                    && questionDetail.AskedTo.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)
                    orderby questionDetail.TimeStamp descending
                    select questionDetail;
