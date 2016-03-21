@@ -17,5 +17,28 @@ namespace KotaeteMVC.Models.Entities
         [DefaultValue(true)]
         public virtual bool Active { get; set; }
         public virtual string Content { get; set; }
+
+        public void AddNotifications()
+        {
+            var commentingUsers = Answer.Comments.Select(comment => comment.User).ToList();
+            commentingUsers.Add(Answer.User);
+            var query = from user in commentingUsers
+                        where user != User
+                        select user;
+            query.Distinct().ToList().ForEach(AddNotification);
+        }
+
+        private void AddNotification(ApplicationUser user)
+        {
+            user.Notifications.Add(new Notification()
+            {
+                AllowNotificationAlert = true,
+                 EntityId = CommentId,
+                 User = user,
+                 TimeStamp = TimeStamp,
+                 Type = Notification.NotificationType.Comment,
+                 Seen = false
+            });
+        }
     }
 }

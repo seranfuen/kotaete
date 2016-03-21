@@ -42,6 +42,20 @@ namespace KotaeteMVC.Models.Entities
 
         public virtual List<Comment> Comments { get; set; }
 
+        public void AddNotification()
+        {
+            QuestionDetail.AskedTo.Notifications.Add(new Notification()
+            {
+                AllowNotificationAlert = true,
+                EntityId = AnswerId,
+                Seen = false,
+                TimeStamp = TimeStamp,
+                Type = Notification.NotificationType.Answer,
+                User = QuestionDetail.AskedTo,
+                UserId = QuestionDetail.AskedTo.Id
+            });
+        }
+
         public Comment AddComment(ApplicationUser user, string content)
         {
             var comment = new Comment()
@@ -55,6 +69,7 @@ namespace KotaeteMVC.Models.Entities
                 TimeStamp = DateTime.Now.AddDays((new Random()).Next(0, 15))
             };
             Comments.Add(comment);
+            comment.AddNotifications();
             return comment;
         }
     }

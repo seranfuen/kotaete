@@ -32,5 +32,29 @@ namespace KotaeteMVC.Models.Entities
 
         [Required]
         public virtual RelationshipType RelationshipType { get; set; }
+
+        public void AddNotifications()
+        {
+            SourceUser.Notifications.Add(new Notification()
+            {
+                AllowNotificationAlert = false,
+                EntityId = RelationshipId,
+                Seen = false,
+                TimeStamp = TimeStamp,
+                User = SourceUser,
+                UserId = SourceUser.Id,
+                Type = Notification.NotificationType.Relationship
+            });
+            DestinationUser.Notifications.Add(new Notification()
+            {
+                AllowNotificationAlert = true,
+                EntityId = RelationshipId,
+                Seen = false,
+                TimeStamp = TimeStamp,
+                User = DestinationUser,
+                UserId = DestinationUser.Id,
+                Type = Notification.NotificationType.Relationship
+            });
+        }
     }
 }

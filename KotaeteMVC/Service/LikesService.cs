@@ -61,6 +61,7 @@ namespace KotaeteMVC.Service
                     ApplicationUser = currentUser,
                     TimeStamp = DateTime.Now
                 };
+                answerLike.AddNotification();
                 _context.AnswerLikes.Add(answerLike);
                 try
                 {

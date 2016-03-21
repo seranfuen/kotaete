@@ -17,12 +17,16 @@ namespace KotaeteMVC.Models.Entities
             AnswerLike
         }
 
+        [Key]
+        [Required]
+        public int NotificationId { get; set; }
+
         [Required]
         public virtual NotificationType Type { get; set; }
         [Required]
         public virtual ApplicationUser User { get; set; }
         [Required]
-        public virtual int UserId { get; set; }
+        public virtual string UserId { get; set; }
         [Required]
         public virtual int EntityId { get; set; }
         public virtual bool Seen { get; set; }

@@ -53,6 +53,7 @@ namespace KotaeteMVC.Service
                 RelationshipType = RelationshipType.Friendship,
                 TimeStamp = DateTime.Now
             };
+            friendship.AddNotifications();
             _context.Relationships.Add(friendship);
             _context.SaveChanges();
             return true;

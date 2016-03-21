@@ -110,6 +110,7 @@ namespace KotaeteMVC.Service
                 Content = content,
                 Active = false,
                 QuestionDetailId = questionDetailId,
+                QuestionDetail = questionDetail,
                 TimeStamp = DateTime.Now,
                 User = user
             };
@@ -117,6 +118,7 @@ namespace KotaeteMVC.Service
             {
                 questionDetail.Answered = true;
                 questionDetail.SeenByUser = true;
+                answer.AddNotification();
                 _context.Answers.Add(answer);
                 _context.SaveChanges();
                 return true;

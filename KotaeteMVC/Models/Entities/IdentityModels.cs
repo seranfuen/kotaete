@@ -13,6 +13,11 @@ namespace KotaeteMVC.Models.Entities
     public class ApplicationUser : IdentityUser
     {
 
+        public ApplicationUser()
+        {
+            Notifications = new List<Notification>();
+        }
+
         private string _screenName;
 
         [ScaffoldColumn(false)]

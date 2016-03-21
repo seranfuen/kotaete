@@ -35,5 +35,18 @@ namespace KotaeteMVC.Models.Entities
         [ScaffoldColumn(false)]
         [DefaultValue(false)]
         public virtual bool Answered { get; set; }
+
+        public void AddNotification()
+        {
+            AskedTo.Notifications.Add(new Notification()
+            {
+                AllowNotificationAlert  = true,
+                Seen = false,
+                TimeStamp = TimeStamp,
+                User = AskedTo,
+                Type = Notification.NotificationType.Question,
+                EntityId = QuestionDetailId   
+            });
+        }
     }
 }

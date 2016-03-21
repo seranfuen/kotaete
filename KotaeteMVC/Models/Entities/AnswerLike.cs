@@ -23,5 +23,19 @@ namespace KotaeteMVC.Models.Entities
 
         [Required]
         public virtual DateTime TimeStamp { get; set; }
+
+        public void AddNotification()
+        {
+            Answer.User.Notifications.Add(new Notification()
+            {
+                AllowNotificationAlert = true,
+                EntityId = AnswerLikeId,
+                Seen = false,
+                TimeStamp = TimeStamp,
+                Type = Notification.NotificationType.AnswerLike,
+                User = Answer.User,
+                UserId = Answer.User.Id
+            });
+        }
     }
 }

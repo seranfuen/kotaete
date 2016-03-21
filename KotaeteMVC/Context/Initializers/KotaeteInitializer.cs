@@ -28,14 +28,16 @@ namespace KotaeteMVC.Context.Initializers
             for (int i = 0; i < 12; i++)
             {
                 var nUser = CreateApplicationUser("User" + i, "User" + i);
-                _context.Relationships.Add(new Relationship()
+                var relationship = new Relationship()
                 {
                     DestinationUser = followed,
                     SourceUser = nUser,
                     RelationshipType = RelationshipType.Friendship,
                     TimeStamp = DateTime.Now,
                     Active = true
-                });
+                };
+                relationship.AddNotifications();
+                _context.Relationships.Add(relationship);
                 AddUser(nUser);
             }
         }
@@ -66,6 +68,8 @@ namespace KotaeteMVC.Context.Initializers
                         }
                     },
                 };
+                answer.QuestionDetail.AddNotification();
+                answer.AddNotification();
                 AddRandomComments(answer);
                 _context.Answers.Add(answer);
             }
@@ -136,6 +140,7 @@ namespace KotaeteMVC.Context.Initializers
                 Question = qst,
                 TimeStamp = qst.TimeStamp
             };
+            qstDetail.AddNotification();
             _context.Questions.Add(qst);
             _context.QuestionDetails.Add(qstDetail);
         }
@@ -150,6 +155,7 @@ namespace KotaeteMVC.Context.Initializers
                 TimeStamp = DateTime.Now,
                 Active = true
             });
+            relationships.ToList().ForEach(rel => rel.AddNotifications());
             _context.Relationships.AddRange(relationships);
         }
 

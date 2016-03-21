@@ -59,6 +59,7 @@ namespace KotaeteMVC.Service
                 Active = false,
                 TimeStamp = question.TimeStamp
             };
+            questionDetail.AddNotification();
             _context.QuestionDetails.Add(questionDetail);
         }
 
