@@ -23,7 +23,7 @@ namespace KotaeteMVC.Controllers
             var currentUser = _notificationsService.GetCurrentUserName();
             if (currentUser == null)
             {
-                return RedirectToAction("Index", "AccountController");
+                return RedirectToAction("Login", "Account");
             }
             var listNotifications = GetLastNotificationPartialViews(currentUser, 20);
             throw new NotImplementedException(); // Create model that includes current user profile to display in the profile layout
@@ -32,10 +32,8 @@ namespace KotaeteMVC.Controllers
 
         private List<ActionResult> GetLastNotificationPartialViews(string userName, int count)
         {
-            var eventList = _notificationsService.GetLastEventEntities(userName, count);
-            var query = from eventEntity in eventList
-                        select GetNotificationPartialView(eventEntity);
-            return query.ToList();
+            var notifications = _notificationsService.GetLastUserNotifications(userName, count);
+            return null;
         }
 
         private ActionResult GetNotificationPartialView(IEventEntity eventEntity)

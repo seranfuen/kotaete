@@ -34,28 +34,38 @@ namespace KotaeteMVC.Service
             return GetUserWithName(userName) != null;
         }
 
-        public bool FollowUser(string userName)
+        public bool FollowUser(string followedUserName)
         {
-            var currentUser = GetCurrentUser();
-            if (currentUser.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase))
+            return FollowUser(followedUserName, GetCurrentUserName());
+        }
+
+        public bool FollowUser(string followedUserName, string followingUserName)
+        {
+            var userFollowing = GetUserWithName(followingUserName);
+            if (userFollowing == null)
             {
                 return false;
             }
-            var userToFollow = GetUserWithName(userName);
-            if (IsFollowing(currentUser, userToFollow))
+            var userToFollow = GetUserWithName(followedUserName);
+            if (IsFollowing(userFollowing, userToFollow))
             {
                 return false;
             }
             var friendship = new Relationship()
             {
-                SourceUser = currentUser,
+                SourceUser = userFollowing,
                 DestinationUser = userToFollow,
                 RelationshipType = RelationshipType.Friendship,
                 TimeStamp = DateTime.Now
             };
-            friendship.AddNotifications();
-            _context.Relationships.Add(friendship);
-            _context.SaveChanges();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                _context.Relationships.Add(friendship);
+                _context.SaveChanges();
+                friendship.AddNotifications();
+                _context.SaveChanges();
+                transaction.Commit();
+            }
             return true;
         }
 
@@ -78,7 +88,8 @@ namespace KotaeteMVC.Service
 
         public string GetCurrentUserName()
         {
-            return HttpContext.Current.User.Identity.Name;
+            var name = HttpContext.Current.User.Identity.Name;
+            return string.IsNullOrWhiteSpace(name) ? null : name;
         }
 
         public FollowButtonViewModel GetFollowButtonViewModel(string userName)

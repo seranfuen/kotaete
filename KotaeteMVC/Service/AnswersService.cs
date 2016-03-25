@@ -89,21 +89,21 @@ namespace KotaeteMVC.Service
             }
         }
 
-        public bool SaveAnswer(string content, int questionDetailId)
+        public Answer SaveAnswer(string answeringUserName, string content, int questionDetailId)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
-                return false;
+                return null;
+            }
+            var answeringUser = GetUserWithName(answeringUserName);
+            if (answeringUser == null)
+            {
+                return null;
             }
             var questionDetail = _context.QuestionDetails.FirstOrDefault(qstDetail => qstDetail.QuestionDetailId == questionDetailId);
             if (questionDetail == null || questionDetail.Answered || questionDetail.Active)
             {
-                return false;
-            }
-            var user = GetCurrentUser();
-            if (user == null || questionDetail.AskedTo != user)
-            {
-                return false;
+                return null;
             }
             var answer = new Answer()
             {
@@ -112,7 +112,7 @@ namespace KotaeteMVC.Service
                 QuestionDetailId = questionDetailId,
                 QuestionDetail = questionDetail,
                 TimeStamp = DateTime.Now,
-                User = user
+                User = answeringUser
             };
             try
             {
@@ -121,12 +121,18 @@ namespace KotaeteMVC.Service
                 answer.AddNotification();
                 _context.Answers.Add(answer);
                 _context.SaveChanges();
-                return true;
+                return answer;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
+        }
+
+        public Answer SaveAnswer(string content, int questionDetailId)
+        {
+            var currentUserName = GetCurrentUserName();
+            return SaveAnswer(currentUserName, content, questionDetailId);
         }
 
         private IQueryable<Answer> GetAnsweredQuestionsQuery(string userName)

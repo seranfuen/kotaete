@@ -26,5 +26,10 @@ namespace KotaeteMVC.Helpers
         {
             return profileUser.QuestionsAsked.Count(qst => controller.Context.Answers.Any(answer => qst.QuestionDetailId == answer.QuestionDetailId && answer.Active == false));
         }
+
+        public static bool HasUserName(this ApplicationUser user, string userName)
+        {
+            return user.UserName.Equals(userName, System.StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

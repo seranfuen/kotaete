@@ -42,7 +42,7 @@ namespace KotaeteMVC.Controllers
             if (ModelState.IsValid)
             {
                 var result = _questionsService.SaveQuestionDetail(contentQuestion.AskedToUserName, contentQuestion.QuestionContent);
-                if (result)
+                if (result != null)
                 {
                     if (Request.IsAjaxRequest())
                     {

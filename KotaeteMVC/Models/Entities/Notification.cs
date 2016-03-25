@@ -10,11 +10,11 @@ namespace KotaeteMVC.Models.Entities
     {
         public enum NotificationType
         {
-            Comment,
-            Relationship,
-            Answer,
-            Question,
-            AnswerLike
+            Comment = 1,
+            Relationship = 2,
+            Answer = 3,
+            Question = 4,
+            AnswerLike = 5
         }
 
         [Key]

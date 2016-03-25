@@ -21,33 +21,50 @@ namespace KotaeteMVC.Service
             return _context.Answers.Count(answer => answer.Active == false && answer.QuestionDetail.AskedBy.Id == user.Id);
         }
 
-        public bool SaveQuestionDetail(string askedToUserName, string questionContent)
+        public QuestionDetail SaveQuestionDetail(string askedUserName, string askingUserName, string question)
         {
-            var currentUser = GetCurrentUser();
-            var askedToUser = GetUserWithName(askedToUserName);
-            if (askedToUserName == null)
+            var askingUser = GetUserWithName(askingUserName);
+            if (askingUser == null)
             {
-                return false;
+                return null;
             }
-            AddQuestionToContext(questionContent, currentUser, GetUserWithName(askedToUserName));
-            try
+            var askedToUser = GetUserWithName(askedUserName);
+            if (askedUserName == null)
             {
-                _context.SaveChanges();
-                return true;
+                return null;
             }
-            catch (Exception e)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return false;
+                var questionDetail = AddQuestionToContext(question, askingUser, GetUserWithName(askedUserName));
+                try
+                {
+                    _context.SaveChanges();
+                    questionDetail.AddNotification();
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return questionDetail;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
         }
 
-        private void AddQuestionToContext(string questionContent, ApplicationUser currentUser, ApplicationUser askedToUser)
+        public QuestionDetail SaveQuestionDetail(string askedUserName, string question)
+        {
+            return SaveQuestionDetail(askedUserName, GetCurrentUserName(), question);
+        }
+
+        private QuestionDetail AddQuestionToContext(string questionContent, ApplicationUser currentUser, ApplicationUser askedToUser)
         {
             Question question = InitializeQuestion(questionContent, currentUser);
-            AddQuestionDetailToContext(currentUser, askedToUser, question);
+            return AddQuestionDetailToContext(currentUser, askedToUser, question);
         }
 
-        private void AddQuestionDetailToContext(ApplicationUser currentUser, ApplicationUser askedToUser, Question question)
+
+
+        private QuestionDetail AddQuestionDetailToContext(ApplicationUser currentUser, ApplicationUser askedToUser, Question question)
         {
             var questionDetail = new QuestionDetail()
             {
@@ -59,8 +76,8 @@ namespace KotaeteMVC.Service
                 Active = false,
                 TimeStamp = question.TimeStamp
             };
-            questionDetail.AddNotification();
             _context.QuestionDetails.Add(questionDetail);
+            return questionDetail;
         }
 
         private static Question InitializeQuestion(string questionContent, ApplicationUser currentUser)

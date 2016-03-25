@@ -5,6 +5,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
+using KotaeteMVC.Service;
 
 namespace KotaeteMVC.Context.Initializers
 {
@@ -25,53 +26,27 @@ namespace KotaeteMVC.Context.Initializers
         {
             var followed = CreateApplicationUser("Followers", "Followers");
             AddUser(followed);
+            var userService = new UsersService(_context, 10);
             for (int i = 0; i < 12; i++)
             {
                 var nUser = CreateApplicationUser("User" + i, "User" + i);
-                var relationship = new Relationship()
-                {
-                    DestinationUser = followed,
-                    SourceUser = nUser,
-                    RelationshipType = RelationshipType.Friendship,
-                    TimeStamp = DateTime.Now,
-                    Active = true
-                };
-                relationship.AddNotifications();
-                _context.Relationships.Add(relationship);
                 AddUser(nUser);
+                userService.FollowUser(followed.UserName, nUser.UserName);
             }
         }
 
         private void AddQuestionsAnswers()
         {
-            for (int i = 0; i < 35; i++)
+            var questionsService = new QuestionsService(_context, 10);
+            var answersService = new AnswersService(_context, 10);
+            for (int i = 0; i < 3; i++)
             {
-                var answer = new Answer()
-                {
-                    Content = "TESTTESTTEST " + i.ToString(),
-                    Active = true,
-                    TimeStamp = DateTime.Now.AddDays(-i).AddHours(i),
-                    User = _context.Users.First(user => user.UserName.Equals("admin", StringComparison.OrdinalIgnoreCase)),
-                    QuestionDetail = new QuestionDetail()
-                    {
-                        AskedBy = _context.Users.First(user => user.UserName.Equals("turtle", StringComparison.OrdinalIgnoreCase)),
-                        AskedTo = _context.Users.First(user => user.UserName.Equals("admin", StringComparison.OrdinalIgnoreCase)),
-                        Answered = true,
-                        SeenByUser = true,
-                        TimeStamp = DateTime.Now.AddDays(-i),
-                        Active = true,
-                        Question = new Question()
-                        {
-                            AskedBy = _context.Users.First(user => user.UserName.Equals("turtle", StringComparison.OrdinalIgnoreCase)),
-                            TimeStamp = DateTime.Now.AddDays(-i),
-                            Content = "QUESTION QUESTION QUESTION " + i.ToString()
-                        }
-                    },
-                };
-                answer.QuestionDetail.AddNotification();
-                answer.AddNotification();
+                var detail = questionsService.SaveQuestionDetail("admin", "turtle", "This is a test question " + i.ToString());
+                detail.TimeStamp.AddDays(-i);
+
+                var answer = answersService.SaveAnswer("admin", "This is a test answer to question #" + i.ToString(), detail.QuestionDetailId);
+                answer.TimeStamp = answer.TimeStamp.AddDays(-i).AddMinutes(35);
                 AddRandomComments(answer);
-                _context.Answers.Add(answer);
             }
         }
 
@@ -125,38 +100,17 @@ namespace KotaeteMVC.Context.Initializers
 
         private void AskQuestion(ApplicationUser askingUser, ApplicationUser askedUser, string question, DateTime time, bool seen = false)
         {
-            var qst = new Question()
-            {
-                AskedBy = askingUser,
-                Content = question,
-                TimeStamp = time
-            };
-            var qstDetail = new QuestionDetail()
-            {
-                AskedBy = askingUser,
-                AskedTo = askedUser,
-                Active = true,
-                SeenByUser = seen,
-                Question = qst,
-                TimeStamp = qst.TimeStamp
-            };
-            qstDetail.AddNotification();
-            _context.Questions.Add(qst);
-            _context.QuestionDetails.Add(qstDetail);
+            var questionsService = new QuestionsService(_context, 10);
+            var qstDetail = questionsService.SaveQuestionDetail(askedUser.UserName, askingUser.UserName, question);
+            qstDetail.TimeStamp = time;
+            qstDetail.SeenByUser = seen;
+            qstDetail.Question.TimeStamp = time;
         }
 
-        private void SetFollowing(ApplicationUser followingUser, params ApplicationUser[] followedUser)
+        private void SetFollowing(ApplicationUser followingUser, params ApplicationUser[] followedUsers)
         {
-            var relationships = followedUser.Select(followed => new Relationship()
-            {
-                DestinationUser = followed,
-                SourceUser = followingUser,
-                RelationshipType = RelationshipType.Friendship,
-                TimeStamp = DateTime.Now,
-                Active = true
-            });
-            relationships.ToList().ForEach(rel => rel.AddNotifications());
-            _context.Relationships.AddRange(relationships);
+            var usersService = new UsersService(_context, 10);
+            followedUsers.ToList().ForEach(user => usersService.FollowUser(user.UserName, followingUser.UserName));
         }
 
         private void InitializeRoles()
