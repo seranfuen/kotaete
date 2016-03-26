@@ -116,12 +116,17 @@ namespace KotaeteMVC.Service
             };
             try
             {
-                questionDetail.Answered = true;
-                questionDetail.SeenByUser = true;
-                answer.AddNotification();
-                _context.Answers.Add(answer);
-                _context.SaveChanges();
-                return answer;
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    questionDetail.Answered = true;
+                    questionDetail.SeenByUser = true;
+                    _context.Answers.Add(answer);
+                    _context.SaveChanges();
+                    answer.AddNotification();
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return answer;
+                }
             }
             catch (Exception e)
             {

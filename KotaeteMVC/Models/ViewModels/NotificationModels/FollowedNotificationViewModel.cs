@@ -11,7 +11,7 @@ namespace KotaeteMVC.Models.ViewModels.NotificationModels
         {
             CurrentUserFollowing,
             CurrentUserFollowed,
-            NotCurerntUser
+            NotCurrentUser
         }
 
         public ProfileViewModel FollowedBy { get; set; }

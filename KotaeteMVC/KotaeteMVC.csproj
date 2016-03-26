@@ -251,6 +251,8 @@
     <Compile Include="Models\ViewModels\NotificationModels\AnswerLikeNotificationViewModel.cs" />
     <Compile Include="Models\ViewModels\NotificationModels\CommentNotificationViewModel.cs" />
     <Compile Include="Models\ViewModels\NotificationModels\FollowedNotificationViewModel.cs" />
+    <Compile Include="Models\ViewModels\NotificationModels\NotificationsListViewModel.cs" />
+    <Compile Include="Models\ViewModels\NotificationModels\NotificationViewModel.cs" />
     <Compile Include="Models\ViewModels\NotificationModels\QuestionAskedNotificationViewModel.cs" />
     <Compile Include="Models\ViewModels\QuestionDetailViewModel.cs" />
     <Compile Include="Models\ViewModels\ErrorViewModel.cs" />
@@ -401,10 +403,14 @@
     <Content Include="Views\Answers\CommentList.cshtml" />
     <Content Include="Views\Shared\CommentButton.cshtml" />
     <Content Include="Views\Answers\AnswerProfileDetail.cshtml" />
+    <Content Include="Views\Notifications\AnswerNotification.cshtml" />
+    <Content Include="Views\Notifications\AnswerLikeNotification.cshtml" />
+    <Content Include="Views\Notifications\CommentNotification.cshtml" />
+    <Content Include="Views\Notifications\QuestionNotification.cshtml" />
+    <Content Include="Views\Notifications\RelationshipNotification.cshtml" />
+    <Content Include="Views\Notifications\Notifications.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Notifications\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

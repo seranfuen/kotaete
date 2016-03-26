@@ -1,0 +1,14 @@
+﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.NotificationsListViewModel
+
+@{
+    Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
+}
+
+@section Profile {
+    @Html.Partial("Profile", Model.Profile)
+}
+
+@foreach (var notifiction in Model.NotificationEntities)
+{
+    Html.RenderAction("Notification", "Notifications", new { @eventEntity = notifiction });
+}
