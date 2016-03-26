@@ -1,5 +1,8 @@
-﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.QuestionAskedNotificationViewModel
+﻿@using KotaeteMVC.Helpers
+@using Resources
+@model KotaeteMVC.Models.ViewModels.NotificationModels.QuestionAskedNotificationViewModel
 
-<div>
-    @Model.AskingUser.ScreenName asked you a question!
+<div class="notification">
+    <img class="mini-avatar" src="@Model.AskingUser.AvatarUrl" alt="@Model.AskingUser.ScreenName" />
+    @Html.RouteLink(Model.AskingUser.ScreenName, "userProfile", new { @userName = Model.AskingUser.User.UserName }) @string.Format(NotificationStrings.QuestionNotifictionBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))
 </div>

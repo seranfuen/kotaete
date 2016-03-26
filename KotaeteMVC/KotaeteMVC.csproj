@@ -187,6 +187,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NavbarStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\NotificationStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\QuestionStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -449,6 +454,10 @@
     <Content Include="App_GlobalResources\EventStrings.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EventStrings.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\NotificationStrings.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>NotificationStrings.Designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

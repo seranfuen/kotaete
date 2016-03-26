@@ -1,14 +1,20 @@
-﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.NotificationsListViewModel
+﻿@using Resources
+@model KotaeteMVC.Models.ViewModels.NotificationModels.NotificationsListViewModel
 
 @{
     Layout = "~/Views/Shared/_ProfileContentLayout.cshtml";
+    ViewBag.Title = NotificationStrings.NotificationsTitle;
 }
 
 @section Profile {
     @Html.Partial("Profile", Model.Profile)
 }
 
+<h2>@NotificationStrings.NotifictionsHeader</h2>
+
 @foreach (var notifiction in Model.NotificationEntities)
 {
-    Html.RenderAction("Notification", "Notifications", new { @eventEntity = notifiction });
+    <div class="notification-item row">
+        @Html.Action("Notification", "Notifications", new { @eventEntity = notifiction })
+    </div>
 }

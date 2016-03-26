@@ -313,3 +313,7 @@ textarea {
 .footer-button {
     padding: 14px;
 }
+
+.notification-item {
+    margin-bottom: 10px;
+}

@@ -1,5 +1,10 @@
-﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.AnsweredNotificationViewModel
+﻿@using KotaeteMVC.Models.ViewModels.NotificationModels
+@model AnsweredNotificationViewModel
 
-<div>
-    @Model.AnsweringUser.ScreenName answered your question!
+@if (Model.AnswerNotificationType == AnsweredNotificationViewModel.AnswerNotificationTypeEnum.CurrentUserAnswer)
+{
+<div class="notification">
+        <img class="mini-avatar" src="@Model.AnsweringUser.AvatarUrl" alt="@Model.AnsweringUser.ScreenName" />
+        @Model.AnsweringUser.ScreenName answered your question
 </div>
+}
