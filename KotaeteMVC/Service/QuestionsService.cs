@@ -73,7 +73,7 @@ namespace KotaeteMVC.Service
                 AskedTo = askedToUser,
                 Question = question,
                 SeenByUser = false,
-                Active = false,
+                Active = true,
                 TimeStamp = question.TimeStamp
             };
             _context.QuestionDetails.Add(questionDetail);

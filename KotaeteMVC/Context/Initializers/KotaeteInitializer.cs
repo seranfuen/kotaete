@@ -70,7 +70,7 @@ namespace KotaeteMVC.Context.Initializers
         {
             var userStore = new UserStore<ApplicationUser>(_context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            userManager.Create(user, "norm1944");
+            userManager.Create(user, "1");
             userManager.AddToRole(user.Id, role);
         }
 

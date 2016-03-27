@@ -12,6 +12,7 @@ namespace KotaeteMVC.Models.ViewModels.NotificationModels
             CurrentUserAnswer,
             CurrentUserCommentedAnswer,
             CommentingUserIsAnsweringUser,
+            CurrentUserAskedQuestion
         }
 
         public int AnswerId { get; set; }

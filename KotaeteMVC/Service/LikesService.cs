@@ -61,16 +61,21 @@ namespace KotaeteMVC.Service
                     ApplicationUser = currentUser,
                     TimeStamp = DateTime.Now
                 };
-                answerLike.AddNotification();
-                _context.AnswerLikes.Add(answerLike);
-                try
+                using (var transaction = _context.Database.BeginTransaction())
                 {
-                    _context.SaveChanges();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    return false;
+                    _context.AnswerLikes.Add(answerLike);
+                    try
+                    {
+                        _context.SaveChanges();
+                        answerLike.AddNotification();
+                        _context.SaveChanges();
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
                 }
             }
         }

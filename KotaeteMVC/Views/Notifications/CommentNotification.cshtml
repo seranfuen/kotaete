@@ -1,5 +1,21 @@
-﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.CommentNotificationViewModel
+﻿@using KotaeteMVC.Helpers
+@using Resources
+@using KotaeteMVC.Models.ViewModels.NotificationModels
+@model CommentNotificationViewModel
 
-<div>
-    @Model.CommentingUser.ScreenName commented!
+<div class="notification notification-link" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
+    <img class="notification-avatar" src="@Model.CommentingUser.AvatarUrl" alt="@Model.CommentingUser.ScreenName" />
+    @Html.RouteLink(Model.CommentingUser.ScreenName, "userProfile", new { @userName = Model.CommentingUser.User.UserName })
+    @if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAnswer)
+    {
+        <span>@string.Format(NotificationStrings.CommentUserAnswerNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))</span>
+    }
+    else if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAskedQuestion)
+    {
+        <span>@string.Format(NotificationStrings.CommentQuestionUserNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))</span>
+    }
+    else if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserCommentedAnswer)
+    {
+        <span>@string.Format(NotificationStrings.CommentUserAlsoCommentedNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))</span>
+    }
 </div>

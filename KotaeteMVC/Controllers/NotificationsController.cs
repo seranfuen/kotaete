@@ -135,7 +135,11 @@ namespace KotaeteMVC.Controllers
             {
                 return CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAnswer;
             }
-            if (comment.User == comment.Answer.User)
+            else if (IsCurrentUser(comment.Answer.QuestionDetail.AskedBy.UserName) && !IsCurrentUser(comment.User))
+            {
+                return CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAskedQuestion;
+            }
+            else if (comment.User == comment.Answer.User)
             {
                 return CommentNotificationViewModel.CommentNotificationTypeEnum.CommentingUserIsAnsweringUser;
             }
@@ -237,7 +241,7 @@ namespace KotaeteMVC.Controllers
         private bool IsCurrentUser(string userName)
         {
             var currentUser = _notificationsService.GetCurrentUserName();
-            return userName.Equals(currentUser, System.StringComparison.InvariantCultureIgnoreCase);
+            return userName.Equals(currentUser, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

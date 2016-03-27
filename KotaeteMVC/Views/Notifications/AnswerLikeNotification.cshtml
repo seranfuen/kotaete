@@ -1,5 +1,8 @@
-﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.AnswerLikeNotificationViewModel
+﻿@using Resources
+@using KotaeteMVC.Helpers
+@model KotaeteMVC.Models.ViewModels.NotificationModels.AnswerLikeNotificationViewModel
 
-<div>
-    @Model.LikingUser.ScreenName just liked your answer!
+<div class="notification notification-link" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
+    <img class="notification-avatar" src="@Model.LikingUser.AvatarUrl" alt="@Model.LikingUser.ScreenName" />
+    @Html.RouteLink(Model.LikingUser.ScreenName, "userProfile", new { @userName = Model.LikingUser.User.UserName }) @string.Format(NotificationStrings.AnswerLikeNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))
 </div>

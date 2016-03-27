@@ -1,10 +1,12 @@
-﻿@using KotaeteMVC.Models.ViewModels.NotificationModels
+﻿@using Resources
+@using KotaeteMVC.Models.ViewModels.NotificationModels
+@using KotaeteMVC.Helpers
 @model AnsweredNotificationViewModel
 
 @if (Model.AnswerNotificationType == AnsweredNotificationViewModel.AnswerNotificationTypeEnum.CurrentUserAnswer)
 {
-<div class="notification">
-        <img class="mini-avatar" src="@Model.AnsweringUser.AvatarUrl" alt="@Model.AnsweringUser.ScreenName" />
-        @Model.AnsweringUser.ScreenName answered your question
-</div>
+    <div class="notification notification-link" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
+        <img class="notification-avatar" src="@Model.AnsweringUser.AvatarUrl" alt="@Model.AnsweringUser.ScreenName" />
+        @Html.RouteLink(Model.AnsweringUser.ScreenName, "userProfile", new { @userName = Model.AnsweringUser.User.UserName }) @string.Format(NotificationStrings.AnswerNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))
+    </div>
 }

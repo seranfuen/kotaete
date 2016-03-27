@@ -12,9 +12,13 @@
 
 <h2>@NotificationStrings.NotifictionsHeader</h2>
 
-@foreach (var notifiction in Model.NotificationEntities)
+@foreach (var notification in Model.NotificationEntities)
 {
     <div class="notification-item row">
-        @Html.Action("Notification", "Notifications", new { @eventEntity = notifiction })
+        @Html.Action("Notification", "Notifications", new { @eventEntity = notification })
     </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/App/notifications.js")
 }

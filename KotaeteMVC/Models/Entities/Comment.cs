@@ -22,6 +22,7 @@ namespace KotaeteMVC.Models.Entities
         {
             var commentingUsers = Answer.Comments.Select(comment => comment.User).ToList();
             commentingUsers.Add(Answer.User);
+            commentingUsers.Add(Answer.QuestionDetail.AskedBy);
             var query = from user in commentingUsers
                         where user != User
                         select user;
@@ -32,7 +33,7 @@ namespace KotaeteMVC.Models.Entities
         {
             user.Notifications.Add(new Notification()
             {
-                AllowNotificationAlert = true,
+                 AllowNotificationAlert = true,
                  EntityId = CommentId,
                  User = user,
                  TimeStamp = TimeStamp,

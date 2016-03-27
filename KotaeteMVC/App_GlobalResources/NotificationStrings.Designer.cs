@@ -61,6 +61,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to liked your answer {0}.
+        /// </summary>
+        internal static string AnswerLikeNotificationBody {
+            get {
+                return ResourceManager.GetString("AnswerLikeNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to answered your question {0}.
+        /// </summary>
+        internal static string AnswerNotificationBody {
+            get {
+                return ResourceManager.GetString("AnswerNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to commented a question you asked {0}.
+        /// </summary>
+        internal static string CommentQuestionUserNotificationBody {
+            get {
+                return ResourceManager.GetString("CommentQuestionUserNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to commented an answer that you also commented {0}.
+        /// </summary>
+        internal static string CommentUserAlsoCommentedNotificationBody {
+            get {
+                return ResourceManager.GetString("CommentUserAlsoCommentedNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to commented your answer {0}.
+        /// </summary>
+        internal static string CommentUserAnswerNotificationBody {
+            get {
+                return ResourceManager.GetString("CommentUserAnswerNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notifications.
         /// </summary>
         internal static string NotificationsTitle {
@@ -81,9 +126,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to asked you a question {0}.
         /// </summary>
-        internal static string QuestionNotifictionBody {
+        internal static string QuestionNotificationBody {
             get {
-                return ResourceManager.GetString("QuestionNotifictionBody", resourceCulture);
+                return ResourceManager.GetString("QuestionNotificationBody", resourceCulture);
             }
         }
     }

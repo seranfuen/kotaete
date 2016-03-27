@@ -24,25 +24,32 @@ namespace KotaeteMVC.Service
             {
                 return null;
             }
-            var user = GetCurrentUser();
-            var commentEntity = answer.AddComment(user, comment);
-            try
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                _context.SaveChanges();
-                var model = new CommentViewModel()
+                var user = GetCurrentUser();
+                var commentEntity = answer.AddComment(user, comment);
+                try
                 {
-                    AnswerId = answerId,
-                    AvatarUrl = GetAvatarUrl(user),
-                    Comment = commentEntity,
-                    CommentParagraphs = comment.SplitLines(),
-                    ScreenName = GetUserScreenName(user.UserName),
-                    UserName = user.UserName,
-                    TimeAgo = TimeHelper.GetTimeAgo(commentEntity.TimeStamp)
-                };
-                return model;
-            }   catch (Exception e)
-            {
-                return null;
+                    _context.SaveChanges();
+                    commentEntity.AddNotifications();
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    var model = new CommentViewModel()
+                    {
+                        AnswerId = answerId,
+                        AvatarUrl = GetAvatarUrl(user),
+                        Comment = commentEntity,
+                        CommentParagraphs = comment.SplitLines(),
+                        ScreenName = GetUserScreenName(user.UserName),
+                        UserName = user.UserName,
+                        TimeAgo = TimeHelper.GetTimeAgo(commentEntity.TimeStamp),
+                    };
+                    return model;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
         }
 
@@ -101,7 +108,7 @@ namespace KotaeteMVC.Service
                 return null;
             }
             var questionDetail = _context.QuestionDetails.FirstOrDefault(qstDetail => qstDetail.QuestionDetailId == questionDetailId);
-            if (questionDetail == null || questionDetail.Answered || questionDetail.Active)
+            if (questionDetail == null)
             {
                 return null;
             }
@@ -182,7 +189,7 @@ namespace KotaeteMVC.Service
         private AnswerProfileViewModel GetAnswerModel(Answer answer, bool allComments)
         {
             var likesService = new LikesService(_context, _pageSize);
-            var comments = allComments ? GetCommentModels(_context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && !cmnt.Active).ToList()) : ExtractFirstCommentViewModels(answer);
+            var comments = allComments ? GetCommentModels(_context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && cmnt.Active).ToList()) : ExtractFirstCommentViewModels(answer);
             return new AnswerProfileViewModel()
             {
                 Answer = answer,

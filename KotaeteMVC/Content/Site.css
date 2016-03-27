@@ -316,4 +316,24 @@ textarea {
 
 .notification-item {
     margin-bottom: 10px;
+    border: 1px solid grey;
+}
+
+.notification-avatar {
+    height: 40px;
+    width: auto;
+    border: 1px solid #BDBBFF;
+    border-radius: 6px;
+    float:left;
+    margin-right: 10px;
+}
+
+.notification {
+    padding: 10px;
+    padding-bottom: 30px;
+}
+
+.notification-link:hover {
+    background-color: azure;
+    cursor: pointer;
 }

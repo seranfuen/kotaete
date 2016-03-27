@@ -2,7 +2,7 @@
 @using Resources
 @model KotaeteMVC.Models.ViewModels.NotificationModels.QuestionAskedNotificationViewModel
 
-<div class="notification">
-    <img class="mini-avatar" src="@Model.AskingUser.AvatarUrl" alt="@Model.AskingUser.ScreenName" />
-    @Html.RouteLink(Model.AskingUser.ScreenName, "userProfile", new { @userName = Model.AskingUser.User.UserName }) @string.Format(NotificationStrings.QuestionNotifictionBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))
+<div class="notification" data-notification-link="@Url.RouteUrl("Inbox")">
+    <img class="notification-avatar" src="@Model.AskingUser.AvatarUrl" alt="@Model.AskingUser.ScreenName" />
+    @Html.RouteLink(Model.AskingUser.ScreenName, "userProfile", new { @userName = Model.AskingUser.User.UserName }) @string.Format(NotificationStrings.QuestionNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))
 </div>

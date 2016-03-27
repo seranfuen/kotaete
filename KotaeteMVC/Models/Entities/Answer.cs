@@ -44,15 +44,15 @@ namespace KotaeteMVC.Models.Entities
 
         public void AddNotification()
         {
-            QuestionDetail.AskedTo.Notifications.Add(new Notification()
+            QuestionDetail.AskedBy.Notifications.Add(new Notification()
             {
                 AllowNotificationAlert = true,
                 EntityId = AnswerId,
                 Seen = false,
                 TimeStamp = TimeStamp,
                 Type = Notification.NotificationType.Answer,
-                User = QuestionDetail.AskedTo,
-                UserId = QuestionDetail.AskedTo.Id
+                User = QuestionDetail.AskedBy,
+                UserId = QuestionDetail.AskedBy.Id
             });
         }
 
@@ -61,7 +61,7 @@ namespace KotaeteMVC.Models.Entities
             var comment = new Comment()
             {
                 Answer = this,
-                AnswerId = this.AnswerId,
+                AnswerId = AnswerId,
                 User = user,
                 UserId = user.Id,
                 Content = content,
@@ -69,7 +69,6 @@ namespace KotaeteMVC.Models.Entities
                 TimeStamp = DateTime.Now.AddDays((new Random()).Next(0, 15))
             };
             Comments.Add(comment);
-            comment.AddNotifications();
             return comment;
         }
     }

@@ -315,6 +315,7 @@
     <Content Include="Images\Headers\mio.jpg" />
     <Content Include="Scripts\App\alerts.js" />
     <Content Include="Scripts\App\answers.js" />
+    <Content Include="Scripts\App\notifications.js" />
     <Content Include="Scripts\App\paginator.js" />
     <Content Include="Scripts\App\profile.js" />
     <Content Include="Scripts\App\questions.js" />
