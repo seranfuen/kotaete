@@ -83,11 +83,17 @@ function OnFormKeyDown(e) {
     }
 }
 
-function OnCommentSuccess(data, location, commentLocation) {
+function OnCommentSuccess(data, location, commentLocation, answerId) {
     var newComment = $(data);
     $(location).append(newComment);
     newComment.hide().fadeIn('slow');
-    $(commentLocation + " textarea").val('');
+    $(commentLocation + " textarea").val('')
+    var commentButton = $("#comment-button-" + answerId);
+    var commentNo = parseInt(commentButton.text()) || 0;
+    var image = commentButton.find('img').detach();
+    image.attr('src', '/Images/comments-on.png');
+    commentButton.text(" " + (commentNo + 1));
+    commentButton.prepend(image);
 }
 
 $(function () {

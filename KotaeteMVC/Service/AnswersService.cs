@@ -176,7 +176,7 @@ namespace KotaeteMVC.Service
 
         public int GetCommentNumber(int answerId)
         {
-            return _context.Comments.Count(comment => comment.Active == false && comment.AnswerId == answerId);
+            return _context.Comments.Count(comment => comment.Active && comment.AnswerId == answerId);
         }
 
         private IEnumerable<AnswerProfileViewModel> GetAnswerModels(IEnumerable<Answer> answers)
@@ -189,7 +189,7 @@ namespace KotaeteMVC.Service
         private AnswerProfileViewModel GetAnswerModel(Answer answer, bool allComments)
         {
             var likesService = new LikesService(_context, _pageSize);
-            var comments = allComments ? GetCommentModels(_context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && cmnt.Active).ToList()) : ExtractFirstCommentViewModels(answer);
+            var comments = allComments ? GetCommentModels(GetCommentsFor(answer).ToList()) : ExtractFirstCommentViewModels(answer);
             return new AnswerProfileViewModel()
             {
                 Answer = answer,
@@ -213,6 +213,11 @@ namespace KotaeteMVC.Service
             };
         }
 
+        private IQueryable<Comment> GetCommentsFor(Answer answer)
+        {
+            return _context.Comments.Where(cmnt => cmnt.AnswerId == answer.AnswerId && cmnt.Active);
+        }
+
         public bool HasManyCommentPages(int answerId)
         {
             return GetCommentNumber(answerId) > CommentPageSize;
@@ -220,7 +225,7 @@ namespace KotaeteMVC.Service
 
         private List<CommentViewModel> ExtractFirstCommentViewModels(Answer answer)
         {
-            var comments = answer.Comments.Where(comment => comment.Active == false).OrderBy(comment => comment.TimeStamp).Take(CommentPageSize);
+            var comments = answer.Comments.Where(comment => comment.Active).OrderBy(comment => comment.TimeStamp).Take(CommentPageSize);
             return GetCommentModels(comments.ToList());
         }
 

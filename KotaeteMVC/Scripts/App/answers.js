@@ -1,7 +1,6 @@
 ﻿$(function () {
     AttachCommentButtonEvents();
     Paginator.AddSuccessCallback(AttachCommentButtonEvents);
-
 });
 
 function AttachCommentButtonEvents() {

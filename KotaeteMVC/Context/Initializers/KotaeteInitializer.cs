@@ -70,7 +70,9 @@ namespace KotaeteMVC.Context.Initializers
         {
             var userStore = new UserStore<ApplicationUser>(_context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            userManager.Create(user, "1");
+            var validator = (MinimumLengthValidator)userManager.PasswordValidator;
+            validator.RequiredLength = 1;
+            var result = userManager.Create(user, "1");
             userManager.AddToRole(user.Id, role);
         }
 

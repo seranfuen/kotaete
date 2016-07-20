@@ -7,7 +7,7 @@
     @using (Ajax.BeginForm("CreateComment", "Answers", null, new AjaxOptions
     {
         HttpMethod = "POST",
-        OnSuccess = string.Format("OnCommentSuccess(data, '#{0}', '#{1}')", "comments-" + Model.AnswerId, id),
+        OnSuccess = string.Format("OnCommentSuccess(data, '#{0}', '#{1}', '{2}')", "comments-" + Model.AnswerId, id, Model.AnswerId),
         OnFailure = "OnCommentFailure"
     }, new { @id= "comment_" + Model.AnswerId, @class = "panel-body" }))
     {
