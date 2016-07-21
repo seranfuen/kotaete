@@ -19,7 +19,7 @@ namespace KotaeteMVC.Service
 
         public CommentViewModel CreateComment(int answerId, string comment)
         {
-            var answer = _context.Answers.FirstOrDefault(ans => ans.AnswerId == answerId && ans.Active == false);
+            var answer = _context.Answers.FirstOrDefault(ans => ans.AnswerId == answerId && ans.Active);
             if (answer == null)
             {
                 return null;
@@ -115,7 +115,7 @@ namespace KotaeteMVC.Service
             var answer = new Answer()
             {
                 Content = content,
-                Active = false,
+                Active = true,
                 QuestionDetailId = questionDetailId,
                 QuestionDetail = questionDetail,
                 TimeStamp = DateTime.Now,
@@ -151,7 +151,7 @@ namespace KotaeteMVC.Service
         {
             var query = from answer in _context.Answers
                         where answer.QuestionDetail.AskedBy.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) &&
-                        answer.Active == false
+                        answer.Active
                         orderby answer.TimeStamp descending
                         select answer;
             return query;
@@ -244,11 +244,11 @@ namespace KotaeteMVC.Service
             return commentModels.ToList();
         }
 
-        private IQueryable<Answer> GetAnswersQuery(string userName)
+        private IOrderedQueryable<Answer> GetAnswersQuery(string userName)
         {
             var query = from answer in _context.Answers
                         where answer.User.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) &&
-                        answer.Active == false
+                        answer.Active
                         orderby answer.TimeStamp descending
                         select answer;
             return query;
@@ -256,14 +256,14 @@ namespace KotaeteMVC.Service
 
         public List<CommentViewModel> GetComments(int answerId, int page)
         {
-            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Active == false).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
+            var commentsQuery = _context.Comments.Where(comment => comment.AnswerId == answerId && comment.Active).OrderBy(comment => comment.TimeStamp).ThenBy(comment => comment.CommentId);
             var commentList = GetPageFor(commentsQuery, page, CommentPageSize);
             return GetCommentModels(commentList.ToList());
         }
 
         internal AnswerProfileViewModel GetAnswerDetail(int answerId)
         {
-            var answer = _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Active == false);
+            var answer = _context.Answers.FirstOrDefault(answ => answ.AnswerId == answerId && answ.Active);
             if (answer == null)
             {
                 return null;
