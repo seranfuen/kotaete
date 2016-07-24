@@ -265,6 +265,8 @@ namespace KotaeteMVC.Service
             currentUser.Bio = userModel.Bio;
             currentUser.Location = userModel.Location;
             currentUser.Homepage = userModel.Homepage;
+            currentUser.Twitter = userModel.Twitter;
+            currentUser.Birthday = userModel.Birthday;
             try
             {
                 _context.SaveChanges();

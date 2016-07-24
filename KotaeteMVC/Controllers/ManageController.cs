@@ -337,7 +337,7 @@ namespace KotaeteMVC.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult EditProfile([Bind(Include = "Avatar, Header, ScreenName, Location, Bio, Homepage")] ApplicationUser userModel)
+        public ActionResult EditProfile([Bind(Include = "Avatar, Header, ScreenName, Location, Bio, Homepage, Twitter, Birthday")] ApplicationUser userModel)
         {
             var result = _usersService.SaveProfile(userModel);
             if (result == ProfileSaveResult.OK)

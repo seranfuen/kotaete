@@ -337,3 +337,7 @@ textarea {
     background-color: azure;
     cursor: pointer;
 }
+
+#profile-editor {
+    width: 600px;
+}

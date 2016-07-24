@@ -120,6 +120,9 @@
   <data name="EditBioLabel" xml:space="preserve">
     <value>Say something about yourself</value>
   </data>
+  <data name="EditBirthdayLabel" xml:space="preserve">
+    <value>Your Birthday</value>
+  </data>
   <data name="EditHomepageLabel" xml:space="preserve">
     <value>Your homepage</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="EditSaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="EditTwitterLabel" xml:space="preserve">
+    <value>Twitter</value>
   </data>
   <data name="EnableJSAvatar" xml:space="preserve">
     <value>Please enable Javascript to be able to upload your avatar and header</value>

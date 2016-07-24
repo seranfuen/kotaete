@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your Birthday.
+        /// </summary>
+        internal static string EditBirthdayLabel {
+            get {
+                return ResourceManager.GetString("EditBirthdayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your homepage.
         /// </summary>
         internal static string EditHomepageLabel {
@@ -120,6 +129,15 @@ namespace Resources {
         internal static string EditSaveButton {
             get {
                 return ResourceManager.GetString("EditSaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twitter.
+        /// </summary>
+        internal static string EditTwitterLabel {
+            get {
+                return ResourceManager.GetString("EditTwitterLabel", resourceCulture);
             }
         }
         

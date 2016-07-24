@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
@@ -63,6 +64,15 @@ namespace KotaeteMVC.Models.Entities
         [ScaffoldColumn(false)]
         [Display(ResourceType = typeof(UsersStrings), Name = "EditHomepageLabel")]
         public virtual string Homepage { get; set; }
+
+        [ScaffoldColumn(false)]
+        [Display(ResourceType = typeof(UsersStrings), Name = "EditTwitterLabel")]
+        public virtual string Twitter { get; set; }
+
+        [ScaffoldColumn(false)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public virtual DateTimeOffset Birthday { get; set; }
+
 
         public virtual List<Comment> Comments { get; set; }
 

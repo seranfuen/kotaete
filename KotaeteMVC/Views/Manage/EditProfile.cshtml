@@ -7,7 +7,7 @@
 }
 @Styles.Render("~/Content/cropper.min.css")
 
-<div class="container">
+<div class="container" id="profile-editor">
     <h2>@UsersStrings.EditProfileTitle (@Model.UserName)</h2>
 
     <div id="enable-js" class="jumbotron">@UsersStrings.EnableJSAvatar</div>
@@ -45,6 +45,7 @@
         @Html.AntiForgeryToken()
         @Html.Hidden("Avatar", null, new { @id = "avatar-image" });
         @Html.Hidden("Header", null, new { @id = "header-image" });
+        <div class="row"></div>
         <div class="form-group">
             @Html.Label("ScreenName", UsersStrings.ScreenNameLabel, new { @class = "control-label" })
             @Html.TextBoxFor(model => model.ScreenName, new { @class = "form-control" })
@@ -54,12 +55,21 @@
             @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
         </div>
         <div class="form-group">
+            @Html.Label("Twitter", UsersStrings.EditTwitterLabel, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.Twitter, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
             @Html.Label("Homepage", UsersStrings.EditHomepageLabel, new { @class = "control-label" })
             @Html.TextBoxFor(model => model.Homepage, new { @class = "form-control" })
         </div>
         <div class="form-group">
             @Html.Label("Bio", UsersStrings.EditBioLabel, new { @class = "control-label" })
             @Html.TextAreaFor(model => model.Bio, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Birthday", UsersStrings.EditBirthdayLabel, new { @class = "control-label" })
+            @Html.TextBox("Birthday", Model.Birthday.ToString("dd-MM-yyyy"), new { @class = "birthday", type = "date" })
         </div>
 
         <div class="form-group">
