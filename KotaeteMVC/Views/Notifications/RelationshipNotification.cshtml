@@ -1,5 +1,18 @@
-﻿@model KotaeteMVC.Models.ViewModels.NotificationModels.FollowedNotificationViewModel
+﻿@using Resources
+@using KotaeteMVC.Helpers
+@model KotaeteMVC.Models.ViewModels.NotificationModels.FollowedNotificationViewModel
 
-<div>
-    @Model.FollowedBy.ScreenName is now following you
+@if (Model.FollowType == KotaeteMVC.Models.ViewModels.NotificationModels.FollowedNotificationViewModel.FollowTypeEnum.CurrentUserFollowed)
+{
+<div class="notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.FollowedBy.User.UserName })">
+    <img class="notification-avatar" src="@Model.FollowedBy.AvatarUrl" alt="@Model.FollowedBy.ScreenName" />
+    @string.Format(NotificationStrings.BeingFollowedLabel, Model.FollowedBy.ScreenName, TimeHelper.GetTimeAgo(Model.TimeStamp))
 </div>
+}
+else
+{
+    <div class="notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.UserFollowed.User.UserName })">
+        <img class="notification-avatar" src="@Model.UserFollowed.AvatarUrl" alt="@Model.UserFollowed.ScreenName" />
+        @string.Format(NotificationStrings.FollowedByLabel, Model.UserFollowed.ScreenName, TimeHelper.GetTimeAgo(Model.TimeStamp))
+    </div>
+}

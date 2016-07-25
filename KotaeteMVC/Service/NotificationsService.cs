@@ -24,6 +24,8 @@ namespace KotaeteMVC.Service
                            group notification by new { Type = notification.Type, EntityId = notification.EntityId } into g
                            select g;
 
+            // Do another query for questions answered by users being followed
+
             var query = from g in subQuery.ToList()
                         select (g.OrderByDescending(notification => notification.TimeStamp).FirstOrDefault());
 

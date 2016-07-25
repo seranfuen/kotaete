@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} started following you {1}.
+        /// </summary>
+        internal static string BeingFollowedLabel {
+            get {
+                return ResourceManager.GetString("BeingFollowedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to commented a question you asked {0}.
         /// </summary>
         internal static string CommentQuestionUserNotificationBody {
@@ -102,6 +111,24 @@ namespace Resources {
         internal static string CommentUserAnswerNotificationBody {
             get {
                 return ResourceManager.GetString("CommentUserAnswerNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You started following {0} {1}.
+        /// </summary>
+        internal static string FollowedByLabel {
+            get {
+                return ResourceManager.GetString("FollowedByLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} answered a question {1}.
+        /// </summary>
+        internal static string FriendAnswerNotificationBody {
+            get {
+                return ResourceManager.GetString("FriendAnswerNotificationBody", resourceCulture);
             }
         }
         

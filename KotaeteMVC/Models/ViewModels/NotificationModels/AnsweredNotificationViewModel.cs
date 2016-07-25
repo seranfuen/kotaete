@@ -10,6 +10,7 @@ namespace KotaeteMVC.Models.ViewModels.NotificationModels
         public enum AnswerNotificationTypeEnum
         {
             CurrentUserAnswer,
+            FollowingAnswer,
             OtherAnswers
         }
         public ProfileViewModel AnsweringUser { get; set; }
