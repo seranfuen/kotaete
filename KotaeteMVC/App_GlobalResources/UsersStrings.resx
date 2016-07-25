@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AgeLabel" xml:space="preserve">
+    <value>Age</value>
+  </data>
   <data name="EditBioLabel" xml:space="preserve">
     <value>Say something about yourself</value>
   </data>
@@ -213,6 +216,9 @@
   </data>
   <data name="ScreenNameLabel" xml:space="preserve">
     <value>Your name</value>
+  </data>
+  <data name="TwitterLabel" xml:space="preserve">
+    <value>Twitter</value>
   </data>
   <data name="UnfollowButton" xml:space="preserve">
     <value>Unfollow</value>

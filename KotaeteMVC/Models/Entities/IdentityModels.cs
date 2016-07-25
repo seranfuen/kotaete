@@ -71,7 +71,7 @@ namespace KotaeteMVC.Models.Entities
 
         [ScaffoldColumn(false)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public virtual DateTimeOffset Birthday { get; set; }
+        public virtual DateTimeOffset? Birthday { get; set; }
 
 
         public virtual List<Comment> Comments { get; set; }

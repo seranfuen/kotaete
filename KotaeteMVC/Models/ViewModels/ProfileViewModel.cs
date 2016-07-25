@@ -25,6 +25,8 @@ namespace KotaeteMVC.Models.ViewModels
 
         public string Homepage { get; set; }
 
+        public int? Age { get; set; }
+
         public int QuestionsAsked { get; set; }
 
         public int QuestionsReplied { get; set; }

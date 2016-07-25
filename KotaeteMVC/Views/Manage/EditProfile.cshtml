@@ -69,7 +69,7 @@
 
         <div class="form-group">
             @Html.Label("Birthday", UsersStrings.EditBirthdayLabel, new { @class = "control-label" })
-            @Html.TextBox("Birthday", Model.Birthday.ToString("dd-MM-yyyy"), new { @class = "birthday", type = "date" })
+            @Html.TextBox("Birthday", Model.Birthday.HasValue ? Model.Birthday.Value.ToString("yyyy-MM-dd") : null, new { @class = "birthday", type = "date" })
         </div>
 
         <div class="form-group">

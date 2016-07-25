@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age.
+        /// </summary>
+        internal static string AgeLabel {
+            get {
+                return ResourceManager.GetString("AgeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Say something about yourself.
         /// </summary>
         internal static string EditBioLabel {
@@ -345,6 +354,15 @@ namespace Resources {
         internal static string ScreenNameLabel {
             get {
                 return ResourceManager.GetString("ScreenNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twitter.
+        /// </summary>
+        internal static string TwitterLabel {
+            get {
+                return ResourceManager.GetString("TwitterLabel", resourceCulture);
             }
         }
         

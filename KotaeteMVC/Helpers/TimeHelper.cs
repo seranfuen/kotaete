@@ -25,5 +25,16 @@ namespace KotaeteMVC.Helpers
                 return MainGlobal.JustNow;
             }
         }
+
+        public static int? GetAge(DateTimeOffset birthday)
+        {
+            var today = DateTimeOffset.Now;
+            var age = today.Year - birthday.Year;
+            if (birthday > today.AddYears(-age))
+            {
+                age--;
+            }
+            return age;
+        }
     }
 }

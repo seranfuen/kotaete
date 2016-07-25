@@ -35,7 +35,6 @@
             }
         </div>
 
-
         <div class="profile-body">
 
             @if (!string.IsNullOrWhiteSpace(Model.Bio))
@@ -44,12 +43,28 @@
                     <p>@Model.Bio</p>
                 </div>
             }
+
+            @if (Model.Age.HasValue)
+            {
+                <div class="row">
+                    <p>@UsersStrings.AgeLabel: @Model.Age.Value.ToString()</p>
+                </div>
+            }
+
             @if (!string.IsNullOrWhiteSpace(Model.Location))
             {
                 <div class="row">
                     <p>@UsersStrings.LocationLabel: @Model.Location</p>
                 </div>
             }
+
+            @if (!string.IsNullOrWhiteSpace(Model.User.Twitter))
+            {
+                <div class="row">
+                    <p>@UsersStrings.TwitterLabel: <a href="http://twitter.com/@Model.User.Twitter">@@@Model.User.Twitter</a></p>
+                </div>
+            }
+
             @if (!string.IsNullOrWhiteSpace(Model.Homepage))
             {
                 <div class="row">

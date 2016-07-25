@@ -406,7 +406,8 @@ namespace KotaeteMVC.Service
                 FollowerCount = GetFollowerCount(profileUser),
                 FollowingCount = GetFollowingCount(profileUser),
                 FollowButton = GetFollowButtonViewModel(profileUser.UserName, isCurrentUserFollowing, currentUser != null),
-                AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id)
+                AnswerLikesCount = _context.AnswerLikes.Count(like => like.Active && like.ApplicationUserId == profileUser.Id),
+                Age = currentUser.Birthday.HasValue ? Helpers.TimeHelper.GetAge(currentUser.Birthday.Value) : null
             };
         }
     }

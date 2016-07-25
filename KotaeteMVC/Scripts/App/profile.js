@@ -17,7 +17,7 @@ function BindCropperReloading(inputSelector, imageCropperSelector, imageSelector
             reader.onload = function (e) {
                 $(imageCropperSelector).html('<img class="image-border" id="' + imageSelector.substr(1) + '" />');
                 $(imageSelector).cropper("replace", e.target.result);
-                $(imageSelector).cropper('destroy').cropper({ viewMode: 3, aspectRatio: cropperAspectRatio });
+                $(imageSelector).cropper('destroy').cropper({ viewMode: 1, aspectRatio: cropperAspectRatio });
                 $(imageSelector).cropper('setDragMode', 'move');
             }
             reader.readAsDataURL(this.files[0]);
