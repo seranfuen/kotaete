@@ -3,7 +3,7 @@
 @using KotaeteMVC.Models.ViewModels.NotificationModels
 @model CommentNotificationViewModel
 
-<div class="notification notification-link" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
+<div class="notification comment-notification notification-link" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
     <img class="notification-avatar" src="@Model.CommentingUser.AvatarUrl" alt="@Model.CommentingUser.ScreenName" />
     @Html.RouteLink(Model.CommentingUser.ScreenName, "userProfile", new { @userName = Model.CommentingUser.User.UserName })
     @if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAnswer)

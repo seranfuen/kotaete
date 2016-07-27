@@ -315,8 +315,10 @@ textarea {
 }
 
 .notification-item {
-    margin-bottom: 10px;
-    border: 1px solid grey;
+    margin-bottom: 15px;
+    -webkit-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.5);
 }
 
 .notification-avatar {
@@ -333,8 +335,43 @@ textarea {
     padding-bottom: 30px;
 }
 
+.answer-notification 
+{
+    background-color: #66ffb3;
+}
+
+.following-answer-notification 
+{
+    background-color: #e6fff2;
+}
+
+.relationship-notification 
+{
+    background-color: #ffdab3;
+}
+
+.following-relationship-notification 
+{
+    background-color: #fff3e6;
+}
+
+.answer-like-notification 
+{
+    background-color: #ffcce7;
+}
+
+.question-notification 
+{
+    background-color: #b3d9ff;
+}
+
+.comment-notification 
+{
+    background-color: #ffff99;
+}
+
 .notification-link:hover {
-    background-color: azure;
+    background-color: white;
     cursor: pointer;
 }
 

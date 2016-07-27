@@ -56,7 +56,8 @@ namespace KotaeteMVC.Service
                 SourceUser = userFollowing,
                 DestinationUser = userToFollow,
                 RelationshipType = RelationshipType.Friendship,
-                TimeStamp = DateTime.Now
+                TimeStamp = DateTime.Now,
+                Active = true
             };
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -211,6 +212,13 @@ namespace KotaeteMVC.Service
         public ApplicationUser GetUserWithName(string userName)
         {
             return _context.Users.FirstOrDefault(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool IsCurrentFollowing(string followingUserName)
+        {
+            var currentUser = GetCurrentUser();
+            var otherUser = GetUserWithName(followingUserName);
+            return IsFollowing(currentUser, otherUser);
         }
 
         public bool IsFollowing(ApplicationUser followingUser, ApplicationUser followedUser)

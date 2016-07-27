@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels.NotificationModels
 {
@@ -12,7 +9,7 @@ namespace KotaeteMVC.Models.ViewModels.NotificationModels
             CurrentUserAnswer,
             CurrentUserCommentedAnswer,
             CommentingUserIsAnsweringUser,
-            CurrentUserAskedQuestion
+            CurrentUserAskedQuestion,
         }
 
         public int AnswerId { get; set; }

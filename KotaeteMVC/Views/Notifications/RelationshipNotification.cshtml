@@ -4,15 +4,22 @@
 
 @if (Model.FollowType == KotaeteMVC.Models.ViewModels.NotificationModels.FollowedNotificationViewModel.FollowTypeEnum.CurrentUserFollowed)
 {
-<div class="notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.FollowedBy.User.UserName })">
+<div class="notification relationship-notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.FollowedBy.User.UserName })">
     <img class="notification-avatar" src="@Model.FollowedBy.AvatarUrl" alt="@Model.FollowedBy.ScreenName" />
     @string.Format(NotificationStrings.BeingFollowedLabel, Model.FollowedBy.ScreenName, TimeHelper.GetTimeAgo(Model.TimeStamp))
 </div>
 }
-else
+else if (Model.FollowType == KotaeteMVC.Models.ViewModels.NotificationModels.FollowedNotificationViewModel.FollowTypeEnum.CurrentUserFollowing)
 {
-    <div class="notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.UserFollowed.User.UserName })">
+    <div class="notification relationship-notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.UserFollowed.User.UserName })">
         <img class="notification-avatar" src="@Model.UserFollowed.AvatarUrl" alt="@Model.UserFollowed.ScreenName" />
         @string.Format(NotificationStrings.FollowedByLabel, Model.UserFollowed.ScreenName, TimeHelper.GetTimeAgo(Model.TimeStamp))
+    </div>
+}
+else if (Model.FollowType == KotaeteMVC.Models.ViewModels.NotificationModels.FollowedNotificationViewModel.FollowTypeEnum.FriendRelationship)
+{
+    <div class="notification following-relationship-notification relationship-notification notification-link" data-notification-link="@Url.RouteUrl("userProfile", new { @userName = Model.UserFollowed.User.UserName })">
+        <img class="notification-avatar" src="@Model.UserFollowed.AvatarUrl" alt="@Model.UserFollowed.ScreenName" />
+        @string.Format(NotificationStrings.FriendRelationshipBody, Model.FollowedBy.ScreenName, Model.UserFollowed.ScreenName, TimeHelper.GetTimeAgo(Model.TimeStamp))
     </div>
 }

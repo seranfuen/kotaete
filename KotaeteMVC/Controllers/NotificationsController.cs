@@ -25,14 +25,24 @@ namespace KotaeteMVC.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            var listNotifications = _notificationsService.GetLastUserNotifications(currentUser, 20);
+
+            var model = GetNotificationsListViewModel(currentUser, 20, true);
+
+            return View("Notifications", model);
+        }
+
+        private NotificationsListViewModel GetNotificationsListViewModel(string userName, int notificationCount, bool showFriendAlerts)
+        {
+            var listNotifications = _notificationsService.GetLastUserNotifications(userName, notificationCount, false, false, showFriendAlerts);
             var profile = GetProfileFor(_notificationsService.GetCurrentUser());
+            var listNotificationEntities = listNotifications.Select(notification => GetNotificationEntity(notification)).ToList();
+
             var model = new NotificationsListViewModel()
             {
                 Profile = profile,
-                NotificationEntities = listNotifications.Select(notification => GetNotificationEntity(notification)).ToList()
+                NotificationEntities = listNotificationEntities
             };
-            return View("Notifications", model);
+            return model;
         }
 
         public ActionResult Notification(IEventEntity eventEntity)
@@ -65,9 +75,14 @@ namespace KotaeteMVC.Controllers
 
         private AnsweredNotificationViewModel GetAnsweredNotificationModel(Answer answer)
         {
-            var type = IsCurrentUser(answer.QuestionDetail.AskedBy.UserName) ?
-                AnsweredNotificationViewModel.AnswerNotificationTypeEnum.CurrentUserAnswer :
-                AnsweredNotificationViewModel.AnswerNotificationTypeEnum.OtherAnswers;
+            var type = AnsweredNotificationViewModel.AnswerNotificationTypeEnum.OtherAnswers;
+            if (IsCurrentUser(answer.QuestionDetail.AskedBy.UserName))
+            {
+                type = AnsweredNotificationViewModel.AnswerNotificationTypeEnum.CurrentUserAnswer;
+            } else if (_notificationsService.IsCurrentFollowing(answer.User.UserName))
+            {
+                type = AnsweredNotificationViewModel.AnswerNotificationTypeEnum.FollowingAnswer;
+            }
 
             var model = new AnsweredNotificationViewModel()
             {
@@ -230,7 +245,10 @@ namespace KotaeteMVC.Controllers
             {
                 type = FollowedNotificationViewModel.FollowTypeEnum.CurrentUserFollowed;
             }
-
+            else if (_notificationsService.IsCurrentFollowing(relationship.SourceUser.UserName) || _notificationsService.IsCurrentFollowing(relationship.DestinationUser.UserName))
+            {
+                type = FollowedNotificationViewModel.FollowTypeEnum.FriendRelationship;
+            }
             return type;
         }
 

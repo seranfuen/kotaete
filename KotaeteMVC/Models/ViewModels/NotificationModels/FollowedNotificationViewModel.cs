@@ -11,6 +11,7 @@ namespace KotaeteMVC.Models.ViewModels.NotificationModels
         {
             CurrentUserFollowing,
             CurrentUserFollowed,
+            FriendRelationship,
             NotCurrentUser
         }
 

@@ -121,7 +121,8 @@
     <value>liked your answer {0}</value>
   </data>
   <data name="AnswerNotificationBody" xml:space="preserve">
-    <value>answered your question {0}</value>
+    <value>{0} answered your question {1}</value>
+    <comment>{0} =user that answered, {1} =time ago</comment>
   </data>
   <data name="BeingFollowedLabel" xml:space="preserve">
     <value>{0} started following you {1}</value>
@@ -141,8 +142,12 @@
     <comment>{0} = user you started folllwing, {1} =time ago</comment>
   </data>
   <data name="FriendAnswerNotificationBody" xml:space="preserve">
-    <value>{0} answered a question {1}</value>
-    <comment>{0} =user, {1} =time ago</comment>
+    <value>{0} answered {1}'s question {2}</value>
+    <comment>{0} =user, {1} =user who asked, {2} =time ago</comment>
+  </data>
+  <data name="FriendRelationshipBody" xml:space="preserve">
+    <value>{0} started following {1} {2}</value>
+    <comment>{0} =following user, {1} = followed user, {2} =time ago</comment>
   </data>
   <data name="NotificationsTitle" xml:space="preserve">
     <value>Notifications</value>

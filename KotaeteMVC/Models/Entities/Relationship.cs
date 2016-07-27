@@ -20,11 +20,11 @@ namespace KotaeteMVC.Models.Entities
         public bool Active { get; set; }
 
         [Required]
-        [ForeignKey("DestinationUserId")]
+        [ForeignKey("SourceUserId")]
         public virtual ApplicationUser SourceUser { get; set; }
 
         [Required]
-        [ForeignKey("SourceUserId")]
+        [ForeignKey("DestinationUserId")]
         public virtual ApplicationUser DestinationUser { get; set; }
 
         public virtual string DestinationUserId { get; set; }

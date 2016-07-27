@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to answered your question {0}.
+        ///   Looks up a localized string similar to {0} answered your question {1}.
         /// </summary>
         internal static string AnswerNotificationBody {
             get {
@@ -124,11 +124,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} answered a question {1}.
+        ///   Looks up a localized string similar to {0} answered {1}&apos;s question {2}.
         /// </summary>
         internal static string FriendAnswerNotificationBody {
             get {
                 return ResourceManager.GetString("FriendAnswerNotificationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} started following {1} {2}.
+        /// </summary>
+        internal static string FriendRelationshipBody {
+            get {
+                return ResourceManager.GetString("FriendRelationshipBody", resourceCulture);
             }
         }
         
