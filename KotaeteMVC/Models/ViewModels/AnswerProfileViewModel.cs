@@ -19,10 +19,6 @@ namespace KotaeteMVC.Models.ViewModels
 
         public List<string> AnswerParagraphs { set; get; }
 
-        public string AskedTimeAgo { get; set; }
-
-        public string RepliedTimeAgo { get; set; }
-
         public AnswerLikeViewModel LikesModel { get; set; }
 
         public int TotalComments { get; set; }

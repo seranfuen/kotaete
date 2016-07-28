@@ -5,8 +5,12 @@ using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels.NotificationModels
 {
-    public class AnswerLikeNotificationViewModel
+    public class AnswerLikeNotificationViewModel : NotificationViewModel
     {
+        public AnswerLikeNotificationViewModel(object entity, bool seen) : base(entity, seen)
+        {
+        }
+
         public enum AnswerLikeNotificationTypeEnum
         {
             CurrentUserAnswer,

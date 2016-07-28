@@ -15,7 +15,7 @@
 @foreach (var notification in Model.NotificationEntities)
 {
     <div class="notification-item row">
-        @Html.Action("Notification", "Notifications", new { @eventEntity = notification })
+        @Html.Action("Notification", "Notifications", new { @eventEntity = notification, @seen = Model.SeenDictionary[notification] })
     </div>
 }
 

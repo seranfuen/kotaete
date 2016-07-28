@@ -35,37 +35,35 @@ namespace KotaeteMVC.Controllers
         {
             var listNotifications = _notificationsService.GetLastUserNotifications(userName, notificationCount, false, false, showFriendAlerts);
             var profile = GetProfileFor(_notificationsService.GetCurrentUser());
-            var listNotificationEntities = listNotifications.Select(notification => GetNotificationEntity(notification)).ToList();
+            var dictionarySeen = listNotifications.ToDictionary(key => GetNotificationEntity(key), value => value.Seen);
+            var lastDate = listNotifications.Max(not => not.TimeStamp);
+            _notificationsService.UpdateSeenNotifications(lastDate);
 
-            var model = new NotificationsListViewModel()
-            {
-                Profile = profile,
-                NotificationEntities = listNotificationEntities
-            };
+            var model = new NotificationsListViewModel(dictionarySeen, profile);
             return model;
         }
 
-        public ActionResult Notification(IEventEntity eventEntity)
+        public ActionResult Notification(IEventEntity eventEntity, bool seen)
         {
             if (eventEntity is Comment)
             {
-                return GetCommentNotificationPartialView(eventEntity as Comment);
+                return GetCommentNotificationPartialView(eventEntity as Comment, seen);
             }
             else if (eventEntity is Answer)
             {
-                return GetAnswerNotificationPartialView(eventEntity as Answer);
+                return GetAnswerNotificationPartialView(eventEntity as Answer, seen);
             }
             else if (eventEntity is AnswerLike)
             {
-                return GetAnswerLikedNotificationPartialView(eventEntity as AnswerLike);
+                return GetAnswerLikedNotificationPartialView(eventEntity as AnswerLike, seen);
             }
             else if (eventEntity is QuestionDetail)
             {
-                return GetQuestionAskedNotificationPartialView(eventEntity as QuestionDetail);
+                return GetQuestionAskedNotificationPartialView(eventEntity as QuestionDetail, seen);
             }
             else if (eventEntity is Relationship)
             {
-                return GetRelationshipNotificationPartialView(eventEntity as Relationship);
+                return GetRelationshipNotificationPartialView(eventEntity as Relationship, seen);
             }
             else
             {
@@ -73,7 +71,7 @@ namespace KotaeteMVC.Controllers
             }
         }
 
-        private AnsweredNotificationViewModel GetAnsweredNotificationModel(Answer answer)
+        private AnsweredNotificationViewModel GetAnsweredNotificationModel(Answer answer, bool seen)
         {
             var type = AnsweredNotificationViewModel.AnswerNotificationTypeEnum.OtherAnswers;
             if (IsCurrentUser(answer.QuestionDetail.AskedBy.UserName))
@@ -84,7 +82,7 @@ namespace KotaeteMVC.Controllers
                 type = AnsweredNotificationViewModel.AnswerNotificationTypeEnum.FollowingAnswer;
             }
 
-            var model = new AnsweredNotificationViewModel()
+            var model = new AnsweredNotificationViewModel(answer, seen)
             {
                 AnswerId = answer.AnswerId,
                 QuestionDetailId = answer.QuestionDetailId,
@@ -96,18 +94,18 @@ namespace KotaeteMVC.Controllers
             return model;
         }
 
-        private ActionResult GetAnswerLikedNotificationPartialView(AnswerLike answerLLike)
+        private ActionResult GetAnswerLikedNotificationPartialView(AnswerLike answerLike, bool seen)
         {
-            var model = GetAnswerLikeNotificationModel(answerLLike);
+            var model = GetAnswerLikeNotificationModel(answerLike, seen);
             return PartialView("AnswerLikeNotification", model);
         }
 
-        private AnswerLikeNotificationViewModel GetAnswerLikeNotificationModel(AnswerLike like)
+        private AnswerLikeNotificationViewModel GetAnswerLikeNotificationModel(AnswerLike like, bool seen)
         {
             var type = IsCurrentUser(like.Answer.User.UserName) ? AnswerLikeNotificationViewModel.AnswerLikeNotificationTypeEnum.CurrentUserAnswer :
                 AnswerLikeNotificationViewModel.AnswerLikeNotificationTypeEnum.OtherUsers;
 
-            var model = new AnswerLikeNotificationViewModel()
+            var model = new AnswerLikeNotificationViewModel(like, seen)
             {
                 AnswerId = like.AnswerId,
                 AnswerLikeNotificationType = type,
@@ -118,16 +116,16 @@ namespace KotaeteMVC.Controllers
             return model;
         }
 
-        private ActionResult GetAnswerNotificationPartialView(Answer answer)
+        private ActionResult GetAnswerNotificationPartialView(Answer answer, bool seen)
         {
-            var model = GetAnsweredNotificationModel(answer);
+            var model = GetAnsweredNotificationModel(answer, seen);
             return PartialView("AnswerNotification", model);
         }
 
-        private CommentNotificationViewModel GetCommentNotificationModel(Comment comment)
+        private CommentNotificationViewModel GetCommentNotificationModel(Comment comment, bool seen)
         {
             var type = GetCommentNotificationType(comment);
-            var model = new CommentNotificationViewModel()
+            var model = new CommentNotificationViewModel(comment, seen)
             {
                 AnswerId = comment.AnswerId,
                 AnsweringUser = GetProfileFor(comment.Answer.User),
@@ -138,9 +136,9 @@ namespace KotaeteMVC.Controllers
             return model;
         }
 
-        private ActionResult GetCommentNotificationPartialView(Comment comment)
+        private ActionResult GetCommentNotificationPartialView(Comment comment, bool seen)
         {
-            var model = GetCommentNotificationModel(comment);
+            var model = GetCommentNotificationModel(comment, seen);
             return PartialView("CommentNotification", model);
         }
 
@@ -196,9 +194,9 @@ namespace KotaeteMVC.Controllers
             return _notificationsService.GetUserProfile(user.UserName);
         }
 
-        private QuestionAskedNotificationViewModel GetQuestionAskedNotificationModel(QuestionDetail questionDetail)
+        private QuestionAskedNotificationViewModel GetQuestionAskedNotificationModel(QuestionDetail questionDetail, bool seen)
         {
-            var model = new QuestionAskedNotificationViewModel()
+            var model = new QuestionAskedNotificationViewModel(questionDetail, seen)
             {
                 AskedUser = GetProfileFor(questionDetail.AskedTo),
                 AskingUser = GetProfileFor(questionDetail.AskedBy),
@@ -208,18 +206,18 @@ namespace KotaeteMVC.Controllers
             return model;
         }
 
-        private ActionResult GetQuestionAskedNotificationPartialView(QuestionDetail questionDetail)
+        private ActionResult GetQuestionAskedNotificationPartialView(QuestionDetail questionDetail, bool seen)
         {
-            var model = GetQuestionAskedNotificationModel(questionDetail);
+            var model = GetQuestionAskedNotificationModel(questionDetail, seen);
             return PartialView("QuestionNotification", model);
         }
 
-        private FollowedNotificationViewModel GetRelationshipNotificationModel(Relationship relationship)
+        private FollowedNotificationViewModel GetRelationshipNotificationModel(Relationship relationship, bool seen)
         {
             var currentUser = _notificationsService.GetCurrentUserName();
             FollowedNotificationViewModel.FollowTypeEnum type = GetRelationshipNotificationType(relationship, currentUser);
 
-            var model = new FollowedNotificationViewModel()
+            var model = new FollowedNotificationViewModel(relationship, seen)
             {
                 FollowedBy = GetProfileFor(relationship.SourceUser),
                 UserFollowed = GetProfileFor(relationship.DestinationUser),
@@ -229,9 +227,9 @@ namespace KotaeteMVC.Controllers
             return model;
         }
 
-        private ActionResult GetRelationshipNotificationPartialView(Relationship relationship)
+        private ActionResult GetRelationshipNotificationPartialView(Relationship relationship, bool seen)
         {
-            var model = GetRelationshipNotificationModel(relationship);
+            var model = GetRelationshipNotificationModel(relationship, seen);
             return PartialView("RelationshipNotification", model);
         }
         private FollowedNotificationViewModel.FollowTypeEnum GetRelationshipNotificationType(Relationship relationship, string currentUser)

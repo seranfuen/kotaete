@@ -23,7 +23,6 @@ namespace KotaeteMVC.Models.Entities
 
         [Required]
         public virtual NotificationType Type { get; set; }
-        [Required]
         public virtual ApplicationUser User { get; set; }
         [Required]
         public virtual string UserId { get; set; }

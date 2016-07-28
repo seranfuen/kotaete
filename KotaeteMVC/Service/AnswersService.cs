@@ -42,7 +42,6 @@ namespace KotaeteMVC.Service
                         CommentParagraphs = comment.SplitLines(),
                         ScreenName = GetUserScreenName(user.UserName),
                         UserName = user.UserName,
-                        TimeAgo = TimeHelper.GetTimeAgo(commentEntity.TimeStamp),
                     };
                     return model;
                 }
@@ -194,10 +193,8 @@ namespace KotaeteMVC.Service
             {
                 Answer = answer,
                 AnswerParagraphs = answer.Content.SplitLines(),
-                RepliedTimeAgo = TimeHelper.GetTimeAgo(answer.TimeStamp),
                 QuestionParagraphs = answer.QuestionDetail.Question.Content.SplitLines(),
                 AskerAvatarUrl = GetAvatarUrl(answer.QuestionDetail.AskedBy),
-                AskedTimeAgo = TimeHelper.GetTimeAgo(answer.QuestionDetail.TimeStamp),
                 ReplierAvatarUrl = GetAvatarUrl(answer.User),
                 LikesModel = new AnswerLikeViewModel()
                 {
@@ -235,7 +232,6 @@ namespace KotaeteMVC.Service
             {
                 ScreenName = comment.User.ScreenName,
                 Comment = comment,
-                TimeAgo = TimeHelper.GetTimeAgo(comment.TimeStamp),
                 AvatarUrl = GetAvatarUrl(comment.User),
                 CommentParagraphs = comment.Content.SplitLines(),
                 UserName = comment.User.UserName,

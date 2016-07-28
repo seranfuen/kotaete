@@ -6,14 +6,16 @@
 @if (Model.AnswerNotificationType == AnsweredNotificationViewModel.AnswerNotificationTypeEnum.CurrentUserAnswer)
 {
     <div class="notification notification-link answer-notification user-answer-notification" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
-        <img class="notification-avatar" src="@Model.AnsweringUser.AvatarUrl" alt="@Model.AnsweringUser.ScreenName" />
-        @string.Format(NotificationStrings.AnswerNotificationBody, Model.AnsweringUser.ScreenName, @TimeHelper.GetTimeAgo(Model.TimeStamp))
+        @Html.Partial("NotificationAvatar", Model.AnsweringUser)
+        <p>@Html.Partial("TimeAgoSpan", Model.TimeStamp, new ViewDataDictionary { { "ToUpperFirst", true } })</p>
+        <p>@string.Format(NotificationStrings.AnswerNotificationBody, Model.AnsweringUser.ScreenName)</p>
     </div>
 }
 else if (Model.AnswerNotificationType == AnsweredNotificationViewModel.AnswerNotificationTypeEnum.FollowingAnswer)
 {
     <div class="notification notification-link answer-notification following-answer-notification" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
-        <img class="notification-avatar" src="@Model.AnsweringUser.AvatarUrl" alt="@Model.AnsweringUser.ScreenName" />
-        @string.Format(NotificationStrings.FriendAnswerNotificationBody, Model.AnsweringUser.User.ScreenName, Model.AskingUser.ScreenName, @TimeHelper.GetTimeAgo(Model.TimeStamp))
+        @Html.Partial("NotificationAvatar", Model.AnsweringUser)
+        <p>@Html.Partial("TimeAgoSpan", Model.TimeStamp, new ViewDataDictionary { { "ToUpperFirst", true } })</p>
+        @string.Format(NotificationStrings.FriendAnswerNotificationBody, Model.AnsweringUser.User.ScreenName, Model.AskingUser.ScreenName)
     </div>
 }

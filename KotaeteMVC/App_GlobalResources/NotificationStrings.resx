@@ -118,36 +118,40 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AnswerLikeNotificationBody" xml:space="preserve">
-    <value>liked your answer {0}</value>
+    <value>{0} liked your answer</value>
+    <comment>{0} =user who liked the answer</comment>
   </data>
   <data name="AnswerNotificationBody" xml:space="preserve">
-    <value>{0} answered your question {1}</value>
-    <comment>{0} =user that answered, {1} =time ago</comment>
+    <value>{0} answered your question</value>
+    <comment>{0} =user that answered</comment>
   </data>
   <data name="BeingFollowedLabel" xml:space="preserve">
-    <value>{0} started following you {1}</value>
-    <comment>{0} = user that is following you, {1} = time ago</comment>
+    <value>{0} started following you</value>
+    <comment>{0} = user that is following you</comment>
   </data>
   <data name="CommentQuestionUserNotificationBody" xml:space="preserve">
-    <value>commented a question you asked {0}</value>
+    <value>{0} commented a question you asked</value>
+    <comment>{0} =user who commented</comment>
   </data>
   <data name="CommentUserAlsoCommentedNotificationBody" xml:space="preserve">
-    <value>commented an answer that you also commented {0}</value>
+    <value>{0} commented an answer that you also commented</value>
+    <comment>{0} =user who commented</comment>
   </data>
   <data name="CommentUserAnswerNotificationBody" xml:space="preserve">
-    <value>commented your answer {0}</value>
+    <value>{0} commented your answer</value>
+    <comment>{0} =user who commented</comment>
   </data>
   <data name="FollowedByLabel" xml:space="preserve">
-    <value>You started following {0} {1}</value>
-    <comment>{0} = user you started folllwing, {1} =time ago</comment>
+    <value>You started following {0}</value>
+    <comment>{0} = user you started folllwing</comment>
   </data>
   <data name="FriendAnswerNotificationBody" xml:space="preserve">
-    <value>{0} answered {1}'s question {2}</value>
-    <comment>{0} =user, {1} =user who asked, {2} =time ago</comment>
+    <value>{0} answered {1}'s question</value>
+    <comment>{0} =user, {1} =user who asked</comment>
   </data>
   <data name="FriendRelationshipBody" xml:space="preserve">
-    <value>{0} started following {1} {2}</value>
-    <comment>{0} =following user, {1} = followed user, {2} =time ago</comment>
+    <value>{0} started following {1}</value>
+    <comment>{0} =following user, {1} = followed user</comment>
   </data>
   <data name="NotificationsTitle" xml:space="preserve">
     <value>Notifications</value>
@@ -156,7 +160,7 @@
     <value>Your recent notifications</value>
   </data>
   <data name="QuestionNotificationBody" xml:space="preserve">
-    <value>asked you a question {0}</value>
-    <comment>{0} = time ago</comment>
+    <value>{0} asked you a question</value>
+    <comment>{0} = user who asked the question</comment>
   </data>
 </root>

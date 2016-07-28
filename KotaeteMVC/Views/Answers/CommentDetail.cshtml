@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
         <div class="row question-meta">
-            @Html.ActionLink(@Model.ScreenName, "Index", "User", new { @userName = Model.UserName }, null) @AnswerStrings.CommentedHeader <span class="timestamp" title="@String.Format("{0:F}", Model.Comment.TimeStamp)">@Model.TimeAgo</span>
+            @Html.ActionLink(@Model.ScreenName, "Index", "User", new { @userName = Model.UserName }, null) @AnswerStrings.CommentedHeader @Html.Partial("TimeAgoSpan", Model.Comment.TimeStamp)
 </div>
         <div class="row question-content">
             @foreach (var paragraph in Model.CommentParagraphs)

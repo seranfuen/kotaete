@@ -44,8 +44,9 @@ namespace KotaeteMVC.Models.Entities
                 Seen = false,
                 TimeStamp = TimeStamp,
                 User = AskedTo,
+                UserId = AskedTo.Id,
                 Type = Notification.NotificationType.Question,
-                EntityId = QuestionDetailId   
+                EntityId = QuestionDetailId
             });
         }
     }

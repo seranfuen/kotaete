@@ -5,8 +5,12 @@ using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels.NotificationModels
 {
-    public class QuestionAskedNotificationViewModel
+    public class QuestionAskedNotificationViewModel : NotificationViewModel
     {
+        public QuestionAskedNotificationViewModel(object entity, bool seen) : base(entity, seen)
+        {
+        }
+
         public ProfileViewModel AskingUser { get; set; }
         public ProfileViewModel AskedUser { get; set; }
         public int QuestionDetailId { get; set; }

@@ -2,8 +2,12 @@
 
 namespace KotaeteMVC.Models.ViewModels.NotificationModels
 {
-    public class CommentNotificationViewModel
+    public class CommentNotificationViewModel : NotificationViewModel
     {
+        public CommentNotificationViewModel(object entity, bool seen) : base(entity, seen)
+        {
+        }
+
         public enum CommentNotificationTypeEnum
         {
             CurrentUserAnswer,

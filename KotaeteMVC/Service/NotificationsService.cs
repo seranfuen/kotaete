@@ -35,8 +35,22 @@ namespace KotaeteMVC.Service
 
             notifications.AddRange(GetFriendRelationshipNotifications(following, notifications));
             notifications.AddRange(GetFriendAnsweredNotifications(following, notifications));
-
             return notifications.OrderByDescending(not => not.TimeStamp).Take(count).ToList();
+        }
+
+        public void UpdateSeenNotifications(DateTime lastDate)
+        {
+            var query =
+                from notification in _context.Notifications
+                where !notification.Seen && notification.TimeStamp <= lastDate
+                select notification;
+
+            var listNotifications = query.ToList();
+            foreach (var notification in listNotifications)
+            {
+                notification.Seen = true;
+            }
+            _context.SaveChanges();
         }
 
         private List<Notification> GetFriendRelationshipNotifications(List<string> followingUserIds, List<Notification> userNotificationsToFilter)

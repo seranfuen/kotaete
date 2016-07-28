@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace KotaeteMVC.Models.ViewModels.NotificationModels
 {
-    public class FollowedNotificationViewModel
+    public class FollowedNotificationViewModel : NotificationViewModel
     {
+        public FollowedNotificationViewModel(object entity, bool seen) : base(entity, seen)
+        {
+        }
+
         public enum FollowTypeEnum
         {
             CurrentUserFollowing,

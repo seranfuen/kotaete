@@ -4,18 +4,20 @@
 @model CommentNotificationViewModel
 
 <div class="notification comment-notification notification-link" data-notification-link="@Url.RouteUrl("Answer", new { @answerId = Model.AnswerId })">
-    <img class="notification-avatar" src="@Model.CommentingUser.AvatarUrl" alt="@Model.CommentingUser.ScreenName" />
-    @Html.RouteLink(Model.CommentingUser.ScreenName, "userProfile", new { @userName = Model.CommentingUser.User.UserName })
+    @Html.Partial("NotificationAvatar", Model.CommentingUser)
+    <p>@Html.Partial("TimeAgoSpan", Model.TimeStamp, new ViewDataDictionary { { "ToUpperFirst", true } })</p>
+    <p>
     @if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAnswer)
     {
-        <span>@string.Format(NotificationStrings.CommentUserAnswerNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))</span>
+        <span>@string.Format(NotificationStrings.CommentUserAnswerNotificationBody, Model.CommentingUser.ScreenName)</span>
     }
     else if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserAskedQuestion)
     {
-        <span>@string.Format(NotificationStrings.CommentQuestionUserNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))</span>
+        <span>@string.Format(NotificationStrings.CommentQuestionUserNotificationBody, Model.CommentingUser.ScreenName)</span>
     }
     else if (Model.CommentNotificationType == CommentNotificationViewModel.CommentNotificationTypeEnum.CurrentUserCommentedAnswer)
     {
-        <span>@string.Format(NotificationStrings.CommentUserAlsoCommentedNotificationBody, @TimeHelper.GetTimeAgo(Model.TimeStamp))</span>
+        <span>@string.Format(NotificationStrings.CommentUserAlsoCommentedNotificationBody, Model.CommentingUser.ScreenName)</span>
     }
+    </p>
 </div>

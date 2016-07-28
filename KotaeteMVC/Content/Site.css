@@ -322,17 +322,17 @@ textarea {
 }
 
 .notification-avatar {
-    height: 40px;
+    height: 60px;
     width: auto;
     border: 1px solid #BDBBFF;
     border-radius: 6px;
-    float:left;
+    float: left;
     margin-right: 10px;
 }
 
-.notification {
+.notification 
+{
     padding: 10px;
-    padding-bottom: 30px;
 }
 
 .answer-notification 
@@ -365,13 +365,18 @@ textarea {
     background-color: #b3d9ff;
 }
 
+.question-notification.seen 
+{
+    background-color: #e6f2ff;
+}
+
 .comment-notification 
 {
     background-color: #ffff99;
 }
 
 .notification-link:hover {
-    background-color: white;
+    background-color: honeydew;
     cursor: pointer;
 }
 

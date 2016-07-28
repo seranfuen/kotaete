@@ -518,6 +518,8 @@
     <Content Include="Views\Notifications\QuestionNotification.cshtml" />
     <Content Include="Views\Notifications\RelationshipNotification.cshtml" />
     <Content Include="Views\Notifications\Notifications.cshtml" />
+    <Content Include="Views\Shared\TimeAgoSpan.cshtml" />
+    <Content Include="Views\Shared\NotificationAvatar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

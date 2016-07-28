@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to liked your answer {0}.
+        ///   Looks up a localized string similar to {0} liked your answer.
         /// </summary>
         internal static string AnswerLikeNotificationBody {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} answered your question {1}.
+        ///   Looks up a localized string similar to {0} answered your question.
         /// </summary>
         internal static string AnswerNotificationBody {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} started following you {1}.
+        ///   Looks up a localized string similar to {0} started following you.
         /// </summary>
         internal static string BeingFollowedLabel {
             get {
@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to commented a question you asked {0}.
+        ///   Looks up a localized string similar to {0} commented a question you asked.
         /// </summary>
         internal static string CommentQuestionUserNotificationBody {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to commented an answer that you also commented {0}.
+        ///   Looks up a localized string similar to {0} commented an answer that you also commented.
         /// </summary>
         internal static string CommentUserAlsoCommentedNotificationBody {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to commented your answer {0}.
+        ///   Looks up a localized string similar to {0} commented your answer.
         /// </summary>
         internal static string CommentUserAnswerNotificationBody {
             get {
@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You started following {0} {1}.
+        ///   Looks up a localized string similar to You started following {0}.
         /// </summary>
         internal static string FollowedByLabel {
             get {
@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} answered {1}&apos;s question {2}.
+        ///   Looks up a localized string similar to {0} answered {1}&apos;s question.
         /// </summary>
         internal static string FriendAnswerNotificationBody {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} started following {1} {2}.
+        ///   Looks up a localized string similar to {0} started following {1}.
         /// </summary>
         internal static string FriendRelationshipBody {
             get {
@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to asked you a question {0}.
+        ///   Looks up a localized string similar to {0} asked you a question.
         /// </summary>
         internal static string QuestionNotificationBody {
             get {

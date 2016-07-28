@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
                 <div class="row question-meta">
-                    @Html.ActionLink(@Model.Answer.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedBy.UserName }, null) @AnswerStrings.AskedHeader <span class="timestamp" title="@String.Format("{0:F}", Model.Answer.QuestionDetail.TimeStamp)">@Model.AskedTimeAgo</span>
+                    @Html.ActionLink(@Model.Answer.QuestionDetail.AskedBy.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedBy.UserName }, null) @AnswerStrings.AskedHeader @Html.Partial("TimeAgoSpan", Model.Answer.QuestionDetail.TimeStamp)
                 </div>
                 <div class="row question-content">
                     @foreach (var paragraph in Model.QuestionParagraphs)
@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-10 col-sm-10 col-xs-10 question-panel-right">
             <div class="row question-meta">
-                @Html.ActionLink(@Model.Answer.QuestionDetail.AskedTo.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedTo.UserName }, null) <a href="@Url.RouteUrl("Answer", new { @answerId = Model.Answer.AnswerId })"> @AnswerStrings.RepliedHeader <span class="timestamp" title="@String.Format("{0:F}", Model.Answer.TimeStamp)">@Model.RepliedTimeAgo</span></a>
+                @Html.ActionLink(@Model.Answer.QuestionDetail.AskedTo.ScreenName, "Index", "User", new { @userName = Model.Answer.QuestionDetail.AskedTo.UserName }, null) <a href="@Url.RouteUrl("Answer", new { @answerId = Model.Answer.AnswerId })"> @AnswerStrings.RepliedHeader @Html.Partial("TimeAgoSpan", Model.Answer.TimeStamp)</a>
             </div>
             <div class="row question-content">
                 @foreach (var paragraph in Model.AnswerParagraphs)
