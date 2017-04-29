@@ -292,10 +292,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Database1.mdf" />
-    <Content Include="App_Data\Database1_log.ldf">
-      <DependentUpon>Database1.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -306,17 +302,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\ajax-loader.gif" />
-    <Content Include="Images\Avatars\anonymous.jpg" />
-    <Content Include="Images\Avatars\DSCF2744.JPG" />
-    <Content Include="Images\Avatars\Illya.jpg" />
-    <Content Include="Images\Avatars\Kuro.jpg" />
-    <Content Include="Images\Avatars\maria.jpg" />
-    <Content Include="Images\Avatars\mikan3b.jpg" />
-    <Content Include="Images\Avatars\mio.jpg" />
-    <Content Include="Images\Headers\Illya.jpg" />
-    <Content Include="Images\Headers\Kuro.jpg" />
-    <Content Include="Images\Headers\mio.jpg" />
     <Content Include="Scripts\App\alerts.js" />
     <Content Include="Scripts\App\answers.js" />
     <Content Include="Scripts\App\notifications.js" />
@@ -409,6 +394,7 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <None Include="Properties\PublishProfiles\sergioangelverbo.es.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -521,7 +507,9 @@
     <Content Include="Views\Shared\TimeAgoSpan.cshtml" />
     <Content Include="Views\Shared\NotificationAvatar.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

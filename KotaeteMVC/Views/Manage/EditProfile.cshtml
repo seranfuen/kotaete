@@ -14,28 +14,32 @@
 
     <div class="col-md-12 hidden" id="profile-image-editor">
         <div class="row">
+            <div class="col-md-5" id="header-file-chooser">
+                @Html.Label(UsersStrings.UploadHeaderLabel)
+                <input id="header-input" type="file" accept="image/*" />
+            </div>
+        </div>
+        <div class="row">
             <div id="header-cropper" class="col-md-7">
                 <img id="header" @if (!string.IsNullOrWhiteSpace(@ViewBag.Header))
                 {
                     @:class="image-border" alt = "@Model.ScreenName" src = "@ViewBag.Header" 
                 }/>
             </div>
-            <div class="col-md-5" id="header-file-chooser">
-                @Html.Label(UsersStrings.UploadHeaderLabel)
-                <input id="header-input" type="file" accept="image/*" />
-            </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-5" id="avatar-file-chooser">
+                @Html.Label(UsersStrings.UploadAvatarLabel)
+                <input id="avatar-input" type="file" accept="image/*" />
+            </div>
+        </div>
         <div class="row">
             <div id="avatar-cropper" class="col-md-7">
                 <img id="avatar" @if (!string.IsNullOrWhiteSpace(@ViewBag.Avatar))
                 {
                     @:class="image-border" alt = "@Model.ScreenName" src = "@ViewBag.Avatar" 
                 }/>
-            </div>
-            <div class="col-md-5" id="avatar-file-chooser">
-                @Html.Label(UsersStrings.UploadAvatarLabel)
-                <input id="avatar-input" type="file" accept="image/*" />
             </div>
         </div>
     </div>

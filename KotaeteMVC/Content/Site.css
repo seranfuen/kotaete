@@ -43,7 +43,7 @@ textarea {
 
 
 .user-name {
-    font-size:1.2em;
+    font-size: 1.2em;
     margin-left: 10px;
     font-weight: 600;
     text-transform: capitalize;
@@ -71,12 +71,12 @@ textarea {
     margin-bottom: 0.5em;
 }
 
-.follow-indication span {
-    width:100%;
-    display:block;
-    padding: 0.5em;
-    border-radius: 0px;
-}
+    .follow-indication span {
+        width: 100%;
+        display: block;
+        padding: 0.5em;
+        border-radius: 0px;
+    }
 
 .user-alert {
     padding-top: 10px;
@@ -101,31 +101,31 @@ textarea {
     padding-right: 10px;
 }
 
-.profile-stats-container p {
-    display: block;
-    padding: 0px;
-    margin: 0px;
-    text-align: center;
-}
+    .profile-stats-container p {
+        display: block;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+    }
 
-.profile-stats-container .row {
-    margin-top: 5px;
-}
+    .profile-stats-container .row {
+        margin-top: 5px;
+    }
 
 .question-asked-avatar {
     min-width: 60px;
     max-width: 60px;
 }
 
-.question-asked-avatar a:hover > img {
+    .question-asked-avatar a:hover > img {
         border: 1px solid #1713FF;
-}
+    }
 
-.question-asked-avatar a > img {
-    height: auto;
-    width: 40px;
-    border: 1px solid #BDBBFF;
-}
+    .question-asked-avatar a > img {
+        height: auto;
+        width: 40px;
+        border: 1px solid #BDBBFF;
+    }
 
 .question-panel-right .row {
     padding-left: 10px;
@@ -152,8 +152,18 @@ textarea {
 .error-container {
     margin-top: 50px;
 }
+
 .navbar {
     border: 0px !important;
+    background-color: mediumblue;
+}
+
+.navbar a {
+    color: white !important;
+}
+
+.navbar a:hover {
+    color: silver !important;
 }
 
 .navbar-avatar-img {
@@ -170,10 +180,9 @@ textarea {
 }
 
 .login input,
-.login text
-{
- min-width: 0% !important;
- max-width: 300px;
+.login text {
+    min-width: 0% !important;
+    max-width: 300px;
 }
 
 .login {
@@ -225,15 +234,15 @@ textarea {
     padding-bottom: 3px;
 }
 
-.like-button, .like-button form  {
+.like-button, .like-button form {
     display: inline !important;
 }
 
-.like-button button {
-    padding: 0px;
-    outline: none;
-    border: none !important;
-}
+    .like-button button {
+        padding: 0px;
+        outline: none;
+        border: none !important;
+    }
 
 .comment-list {
     margin-top: 10px;
@@ -243,7 +252,7 @@ textarea {
     padding: 20px 20px 20px 50px;
 }
 
-.answer-comment-panel{
+.answer-comment-panel {
     padding: 0px !important;
 }
 
@@ -330,48 +339,39 @@ textarea {
     margin-right: 10px;
 }
 
-.notification 
-{
+.notification {
     padding: 10px;
 }
 
-.answer-notification 
-{
+.answer-notification {
     background-color: #66ffb3;
 }
 
-.following-answer-notification 
-{
+.following-answer-notification {
     background-color: #e6fff2;
 }
 
-.relationship-notification 
-{
+.relationship-notification {
     background-color: #ffdab3;
 }
 
-.following-relationship-notification 
-{
+.following-relationship-notification {
     background-color: #fff3e6;
 }
 
-.answer-like-notification 
-{
+.answer-like-notification {
     background-color: #ffcce7;
 }
 
-.question-notification 
-{
+.question-notification {
     background-color: #b3d9ff;
 }
 
-.question-notification.seen 
-{
-    background-color: #e6f2ff;
-}
+    .question-notification.seen {
+        background-color: #e6f2ff;
+    }
 
-.comment-notification 
-{
+.comment-notification {
     background-color: #ffff99;
 }
 
@@ -382,4 +382,47 @@ textarea {
 
 #profile-editor {
     width: 600px;
+}
+
+.main-jumbotron {
+    padding: 5em 10em;
+    text-align: center;
+    background-color: #e2e2fa;
+}
+
+#content-highlight {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.highlight {
+    padding: 0;
+    border: 1px solid mediumblue;
+    border-radius: 5px;
+    height: 250px;
+}
+
+    .highlight ul {
+        display: inline;
+        list-style-type: none;
+    }
+
+    .highlight h2 {
+        margin: 0 0 1em 0;
+        color: white;
+        background-color: mediumblue;
+        display: block;
+        padding: 0.5em;
+    }
+
+.note {
+    font-size: 0.8em;
+    font-style: italic;
+    color: grey;
+}
+
+footer {
+    text-align: center;
+    margin-top: 3em;
 }

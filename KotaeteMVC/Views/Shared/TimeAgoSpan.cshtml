@@ -1,0 +1,4 @@
+@model DateTime?
+@using KotaeteMVC.Helpers;
+
+<span class="timestamp" title="@Model.ToString()">@TimeHelper.GetTimeAgo(Model)</span>
