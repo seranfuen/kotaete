@@ -9,7 +9,7 @@ using KotaeteMVC.Service;
 
 namespace KotaeteMVC.Context.Initializers
 {
-    internal class KotaeteInitializer : DropCreateDatabaseAlways<KotaeteDbContext>
+    internal class KotaeteInitializer : CreateDatabaseIfNotExists<KotaeteDbContext>
     {
         private KotaeteDbContext _context;
 

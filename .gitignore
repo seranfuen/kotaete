@@ -210,3 +210,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/KotaeteMVC/Godaddy.Web.config
+/KotaeteMVC/Web.Release.config
